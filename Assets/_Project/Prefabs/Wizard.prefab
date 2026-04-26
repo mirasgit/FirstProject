@@ -27,12 +27,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2202366500708894728}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 2385974025381496950}
+  m_Father: {fileID: 1570751064765062943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5418145535396259534
 SpriteRenderer:
@@ -192,7 +192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 115}
+  m_AnchoredPosition: {x: 0, y: 120}
   m_SizeDelta: {x: 30, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2795803756408978383
@@ -319,11 +319,44 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2761744451938863202}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.7, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
+  m_Father: {fileID: 1570751064765062943}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2994409050748674529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1570751064765062943}
+  m_Layer: 6
+  m_Name: VisualRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1570751064765062943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2994409050748674529}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6462875526743891797}
+  - {fileID: 929471247601482222}
   m_Father: {fileID: 2385974025381496950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5724761400001412960
@@ -336,6 +369,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2385974025381496950}
   - component: {fileID: 5657507541371862829}
+  - component: {fileID: 5455666780557975157}
+  - component: {fileID: 5063231017309306132}
+  - component: {fileID: 3025100474640138322}
+  - component: {fileID: 5804883697193863740}
   - component: {fileID: 1242169335362000836}
   - component: {fileID: 3745464728001427542}
   m_Layer: 6
@@ -358,8 +395,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 929471247601482222}
-  - {fileID: 6462875526743891797}
+  - {fileID: 1570751064765062943}
   - {fileID: 1419627270665686091}
   - {fileID: 6337722486778711863}
   m_Father: {fileID: 0}
@@ -376,20 +412,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b335b2d308fb10f4d854b509749120aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wizard
-  <_maxHealth>k__BackingField: 80
-  <_currentHealth>k__BackingField: 0
-  _maxDamage: 20
-  _currentDamage: 0
+  _character: {fileID: 5455666780557975157}
   _attackPoint: {fileID: 6462875526743891797}
   _whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
-  _facingDirection: 1
-  FacingRight: 1
   _projectile: {fileID: 6625403975366836989, guid: 12a94a3136db99e42a30a78b518d0c00, type: 3}
-  _weaknessDuration: 2
-  _weaknessCoefficient: 0.3
-  _weaknessProbabilityInPercent: 30
+  _weaknessDuration: 4
+  _weaknessCoefficient: 0.8
+  _weaknessProbabilityInPercent: 50
+--- !u!114 &5455666780557975157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724761400001412960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4536c17c8a7444287e344895924c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Character
+  <Stats>k__BackingField: {fileID: 5063231017309306132}
+  <Effects>k__BackingField: {fileID: 3025100474640138322}
+  <CharAnimator>k__BackingField: {fileID: 5804883697193863740}
+  <Attack>k__BackingField: {fileID: 5657507541371862829}
+  _visualRoot: {fileID: 1570751064765062943}
+  <_facingDirection>k__BackingField: 1
+  FacingRight: 1
+--- !u!114 &5063231017309306132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724761400001412960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
+  <_maxHealth>k__BackingField: 100
+  <_currentHealth>k__BackingField: 0
+  <_maxDamage>k__BackingField: 10
+  <_currentDamage>k__BackingField: 0
+--- !u!114 &3025100474640138322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724761400001412960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c95539ab316634f905fa7e918b21c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterEffects
+  _isWeak: 0
+  _isWeaknessApplied: 0
+  _isPoisoned: 0
+  _isPoisonApplied: 0
+  _isStunned: 0
+  _isStunApplied: 0
+--- !u!114 &5804883697193863740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724761400001412960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc545b208a20c34da5764f74d164912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
 --- !u!70 &1242169335362000836
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -499,7 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 295b11ffb320f9a49a62cf11c70663ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterUI
-  _character: {fileID: 5657507541371862829}
+  _character: {fileID: 5455666780557975157}
   _healthFillImage: {fileID: 1562939942407856079}
   _effectText: {fileID: 5731759458142719591}
   _floatingTextSpawnPoint: {fileID: 6337722486778711863}
@@ -681,7 +777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 608196791376539068, guid: e0498e192e0ced94381dec9295c7dbb5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 110
+      value: 115
       objectReference: {fileID: 0}
     - target: {fileID: 608196791376539068, guid: e0498e192e0ced94381dec9295c7dbb5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -695,6 +791,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4423720048853627343, guid: e0498e192e0ced94381dec9295c7dbb5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: cfc49e5792d6e4d488e17daede72c5d0, type: 3}
     - target: {fileID: 4423720048853627343, guid: e0498e192e0ced94381dec9295c7dbb5, type: 3}
       propertyPath: m_FillAmount
       value: 1

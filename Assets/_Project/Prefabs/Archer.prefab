@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1501212520798276816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 876811886570482319}
+  m_Layer: 0
+  m_Name: VisualRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &876811886570482319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501212520798276816}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3618089564186918922}
+  - {fileID: 1397880232827074860}
+  m_Father: {fileID: 3622445823953754381}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3542380473271867655
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 295b11ffb320f9a49a62cf11c70663ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterUI
-  _character: {fileID: 7737760106707873101}
+  _character: {fileID: 4919403921253785362}
   _healthFillImage: {fileID: 9031272296865252757}
   _effectText: {fileID: 2560826028689933659}
   _floatingTextSpawnPoint: {fileID: 4984847759455334601}
@@ -77,12 +110,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3674105721090573594}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 3622445823953754381}
+  m_Father: {fileID: 876811886570482319}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6634386139382264006
 SpriteRenderer:
@@ -289,7 +322,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3622445823953754381}
-  - component: {fileID: 7737760106707873101}
+  - component: {fileID: 7699877746165023426}
+  - component: {fileID: 4919403921253785362}
+  - component: {fileID: 6108262068848876214}
+  - component: {fileID: 7992089572208649469}
+  - component: {fileID: 4291898121581258513}
   - component: {fileID: 752842750349444620}
   - component: {fileID: 2368573923609754915}
   m_Layer: 6
@@ -312,13 +349,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3618089564186918922}
-  - {fileID: 1397880232827074860}
+  - {fileID: 876811886570482319}
   - {fileID: 2342864475158548764}
   - {fileID: 4984847759455334601}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7737760106707873101
+--- !u!114 &7699877746165023426
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -327,24 +363,84 @@ MonoBehaviour:
   m_GameObject: {fileID: 7266667683711529744}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c6e61851ccb384f893feb92957a3da, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d2089f2d79f5fb448a9be44e8ed2999, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Ranger
-  <_maxHealth>k__BackingField: 100
-  <_currentHealth>k__BackingField: 0
-  _maxDamage: 10
-  _currentDamage: 0
+  m_EditorClassIdentifier: Assembly-CSharp::ArcherAttack
+  _character: {fileID: 4919403921253785362}
   _attackPoint: {fileID: 1397880232827074860}
   _whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
-  _facingDirection: 1
-  FacingRight: 1
   _projectile: {fileID: 3678856024982396375, guid: 5d43bedc16e1052498f7c628316f5cb9, type: 3}
-  _effectDuration: 2
+  _poisonDuration: 3
   _poisonInterval: 0.5
   _poisonTickDamage: 2
-  _poisonProbabilityInPercent: 99
+  _poisonProbabilityInPercent: 50
+--- !u!114 &4919403921253785362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266667683711529744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4536c17c8a7444287e344895924c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Character
+  <Stats>k__BackingField: {fileID: 7992089572208649469}
+  <Effects>k__BackingField: {fileID: 6108262068848876214}
+  <CharAnimator>k__BackingField: {fileID: 4291898121581258513}
+  <Attack>k__BackingField: {fileID: 7699877746165023426}
+  _visualRoot: {fileID: 876811886570482319}
+  <_facingDirection>k__BackingField: 1
+  FacingRight: 1
+--- !u!114 &6108262068848876214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266667683711529744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c95539ab316634f905fa7e918b21c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterEffects
+  _isWeak: 0
+  _isWeaknessApplied: 0
+  _isPoisoned: 0
+  _isPoisonApplied: 0
+  <_isStunned>k__BackingField: 0
+  _isStunApplied: 0
+--- !u!114 &7992089572208649469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266667683711529744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
+  <_maxHealth>k__BackingField: 100
+  <_currentHealth>k__BackingField: 0
+  <_maxDamage>k__BackingField: 10
+  <_currentDamage>k__BackingField: 0
+--- !u!114 &4291898121581258513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266667683711529744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc545b208a20c34da5764f74d164912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
 --- !u!50 &752842750349444620
 Rigidbody2D:
   serializedVersion: 5
@@ -464,12 +560,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7568015736829286266}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.67, y: -0.53, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.6700001, y: -0.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3622445823953754381}
+  m_Father: {fileID: 876811886570482319}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9139955666589584696
 GameObject:
@@ -695,6 +791,26 @@ PrefabInstance:
     - target: {fileID: 608196791376539068, guid: e0498e192e0ced94381dec9295c7dbb5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423720048853627343, guid: e0498e192e0ced94381dec9295c7dbb5, type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423720048853627343, guid: e0498e192e0ced94381dec9295c7dbb5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: cfc49e5792d6e4d488e17daede72c5d0, type: 3}
+    - target: {fileID: 4423720048853627343, guid: e0498e192e0ced94381dec9295c7dbb5, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423720048853627343, guid: e0498e192e0ced94381dec9295c7dbb5, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423720048853627343, guid: e0498e192e0ced94381dec9295c7dbb5, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4423720048853627343, guid: e0498e192e0ced94381dec9295c7dbb5, type: 3}
       propertyPath: m_FillAmount
