@@ -8,7 +8,7 @@ public class WarriorAttack : CharacterAttack
     [SerializeField] private bool _enemyDetected;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _attackRadius;
-    [SerializeField] private bool canMove = true;
+    [SerializeField] private bool _canMove = true;
     [SerializeField] private float _stunDuration = 1f;
     [SerializeField] private int _stunProbabilityInPercent;
 
@@ -43,7 +43,7 @@ public class WarriorAttack : CharacterAttack
         foreach (Collider2D enemy in enemyColliders)
         {
             Character entityTarget = enemy.GetComponent<Character>();
-            entityTarget.TakeDamage(_character.Stats._currentDamage);
+            entityTarget.TakeDamage(_character.Stats.CurrentDamage);
             if (_random.Next(1, 101) <= _stunProbabilityInPercent)
             {
                 entityTarget.Effects.SetStun(_stunDuration);
@@ -53,8 +53,8 @@ public class WarriorAttack : CharacterAttack
 
     protected void HandleMovement()
     {
-        if (canMove)
-            _rb.linearVelocity = new Vector2(_character._facingDirection * _moveSpeed, _rb.linearVelocity.y);
+        if (_canMove)
+            _rb.linearVelocity = new Vector2(_character.FacingDirection * _moveSpeed, _rb.linearVelocity.y);
         else
         {
             _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
@@ -63,23 +63,23 @@ public class WarriorAttack : CharacterAttack
 
     private void HandleAttack()
     {
-        if (_character._isDead) return;
+        if (_character.IsDead) return;
 
-        if (_character.canAttack && _enemyDetected)
+        if (_character.CanAttack && _enemyDetected)
         {
             _character.CharAnimator._anim.SetBool("Attack", true);
         }
         else
         {
             _character.CharAnimator._anim.SetBool("Attack", false);
-            if (_character.Effects._isStunned)
-                canMove = false;
+            if (_character.Effects.IsStunned)
+                _canMove = false;
         }
     }
 
     public void EnableMovement(bool enable)
     {
-        canMove = enable;
+        _canMove = enable;
     }
     private void OnDrawGizmos()
     {

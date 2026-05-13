@@ -17,9 +17,9 @@ public class WizardAttack : CharacterAttack
     public void SpawnProjectile()
     {
         Fireball newProjectile = Instantiate(_projectile, _attackPoint.position, _attackPoint.rotation);
-        newProjectile.SetFacingDirection(_character._facingDirection);
-        newProjectile.SetDamage(_character.Stats._currentDamage);
-        newProjectile.Initialize(_character._projectileRegistry);
+        newProjectile.SetFacingDirection(_character.FacingDirection);
+        newProjectile.SetDamage(_character.Stats.CurrentDamage);
+        newProjectile.Initialize(_character.ProjectileRegistry);
         if (_random.Next(1, 101) <= _weaknessProbabilityInPercent)
         {
             newProjectile.SetEffect(_weaknessDuration, _weaknessCoefficient);
@@ -27,9 +27,9 @@ public class WizardAttack : CharacterAttack
     }
     private void HandleAttack()
     {
-        if (_character._battleStarted)
+        if (_character.BattleStarted)
         {
-            if (_character.canAttack && !_character._isDead)
+            if (_character.CanAttack && !_character.IsDead)
             {
                 _character.CharAnimator._anim.SetTrigger("Attack");
             }

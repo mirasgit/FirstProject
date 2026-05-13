@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class RangerEvents : MonoBehaviour
 {
-    private ArcherAttack entity;
+    private ArcherAttack _entity;
     private void Awake()
     {
-        entity = GetComponentInParent<ArcherAttack>();
+        _entity = GetComponentInParent<ArcherAttack>();
     }
-    public void SpawnProjectile() => entity.SpawnProjectile();
+    public void SpawnProjectile() => _entity.SpawnProjectile();
 
 }

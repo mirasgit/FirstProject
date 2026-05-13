@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 public class CharacterEffects : MonoBehaviour
@@ -7,16 +8,18 @@ public class CharacterEffects : MonoBehaviour
     [SerializeField] private bool _isWeaknessApplied;
     [SerializeField] private bool _isPoisoned;
     [SerializeField] private bool _isPoisonApplied;
-    [field:SerializeField] public bool _isStunned {  get; private set; }
+    [field:SerializeField] public bool IsStunned {  get; private set; }
     [SerializeField] private bool _isStunApplied;
 
     private Coroutine _effectCoroutine;
-    public float _appliedEffectDuration {  get; private set; }
+    public float AppliedEffectDuration {  get; private set; }
     private float _appliedWeaknessCoefficient;
     private float _appliedPoisonInterval;
     private float _appliedPoisonTickDamage;
 
     private Character _character;
+    public event Action<string> EffectShown;
+    public event Action EffectHidden;
 
     private void Awake()
     {
@@ -26,15 +29,23 @@ public class CharacterEffects : MonoBehaviour
     {
         HandleEffects();
     }
+    private void ShowEffect(string effectName)
+    {
+        EffectShown?.Invoke(effectName);
+    }
+    private void HideEffect()
+    {
+        EffectHidden?.Invoke();
+    }
     public void SetStun(float duration) //Stun
     {
-        _isStunned = true;
-        _appliedEffectDuration = duration;
+        IsStunned = true;
+        AppliedEffectDuration = duration;
     }
     public void SetWeakness(float duration, float coefficient) //weakness
     {
         _isWeak = true;
-        _appliedEffectDuration = duration;
+        AppliedEffectDuration = duration;
         _appliedWeaknessCoefficient = coefficient;
     }
 
@@ -42,7 +53,7 @@ public class CharacterEffects : MonoBehaviour
     {
         if (_isPoisoned) { return; }
         _isPoisoned = true;
-        _appliedEffectDuration = duration;
+        AppliedEffectDuration = duration;
         _appliedPoisonInterval = interval;
         _appliedPoisonTickDamage = tickDamage;
     }
@@ -51,53 +62,53 @@ public class CharacterEffects : MonoBehaviour
         _character.EnableAttack(false);
         _character.EnableMovement(false);
         _character.CharAnimator._anim.SetBool("Stun", true);
-        _character._characterUI.ShowEffect("ќглушение");
-        yield return new WaitForSeconds(_appliedEffectDuration);
-        _character._characterUI.HideEffect();
+        ShowEffect("ќглушение");
+        yield return new WaitForSeconds(AppliedEffectDuration);
+        HideEffect();
         _character.CharAnimator._anim.SetBool("Stun", false);
         _character.EnableAttack(true);
         _character.EnableMovement(true);
-        _isStunned = false;
+        IsStunned = false;
         _isStunApplied = false;
     }
     protected IEnumerator WeaknessCo()
     {
-        float reducedDmg = _character.Stats._maxDamage * (1 - _appliedWeaknessCoefficient);
+        float reducedDmg = _character.Stats.MaxDamage * (1 - _appliedWeaknessCoefficient);
         _character.Stats.ChangeDamage(reducedDmg);
-        _character._characterUI.ShowEffect("—лабость");
-        yield return new WaitForSeconds(_appliedEffectDuration);
-        _character._characterUI.HideEffect();
-        _character.Stats.ChangeDamage(_character.Stats._maxDamage);
+        ShowEffect("—лабость");
+        yield return new WaitForSeconds(AppliedEffectDuration);
+        HideEffect();
+        _character.Stats.ChangeDamage(_character.Stats.MaxDamage);
         _isWeak = false;
         _isWeaknessApplied = false;
     }
     protected IEnumerator PoisonCo()
     {
         float elapsed = 0f;
-        _character._characterUI.ShowEffect("яд");
-        while (elapsed < _appliedEffectDuration)
+        ShowEffect("яд");
+        while (elapsed < AppliedEffectDuration)
         {
             _character.TakeDamage(_appliedPoisonTickDamage);
             yield return new WaitForSeconds(_appliedPoisonInterval);
             elapsed += _appliedPoisonInterval;
         }
-        _character._characterUI.HideEffect();
+        HideEffect();
         _isPoisoned = false;
         _isPoisonApplied = false;
     }
     protected void HandleEffects()
     {
-        if (_isStunned && !_character._isDead && _character._battleStarted && !_isStunApplied)
+        if (IsStunned && !_character.IsDead && _character.BattleStarted && !_isStunApplied)
         {
             _isStunApplied = true;
             PlayEffectApplication(StunCo());
         }
-        if (_isWeak && !_character._isDead && _character._battleStarted && !_isWeaknessApplied)
+        if (_isWeak && !_character.IsDead && _character.BattleStarted && !_isWeaknessApplied)
         {
             _isWeaknessApplied = true;
             PlayEffectApplication(WeaknessCo());
         }
-        if (_isPoisoned && !_character._isDead && _character._battleStarted && !_isPoisonApplied)
+        if (_isPoisoned && !_character.IsDead && _character.BattleStarted && !_isPoisonApplied)
         {
             _isPoisonApplied = true;
             PlayEffectApplication(PoisonCo());
@@ -117,10 +128,10 @@ public class CharacterEffects : MonoBehaviour
         _isPoisoned = false;
         _isPoisonApplied = false;
 
-        _isStunned = false;
+        IsStunned = false;
         _isStunApplied = false;
 
-        _appliedEffectDuration = 0f;
+        AppliedEffectDuration = 0f;
         _appliedWeaknessCoefficient = 0f;
         _appliedPoisonInterval = 0f;
         _appliedPoisonTickDamage = 0f;
@@ -133,9 +144,9 @@ public class CharacterEffects : MonoBehaviour
                 _character.CharAnimator._anim.SetBool("Stun", false);
 
             if (_character.Stats != null)
-                _character.Stats.ChangeDamage(_character.Stats._maxDamage);
+                _character.Stats.ChangeDamage(_character.Stats.MaxDamage);
 
-            _character._characterUI?.HideEffect();
+            _character.CharacterUI?.HideEffect();
         }
     }
     protected void PlayEffectApplication(IEnumerator effect)

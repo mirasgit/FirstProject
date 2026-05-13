@@ -41,13 +41,13 @@ public class BattleFlow : MonoBehaviour
 
         if (_leftCharacter == null || _rightCharacter == null) return;
 
-        if (_leftCharacter._isDead)
+        if (_leftCharacter.IsDead)
         {
             _battleFinished = true;
             _battleView.ShowWinner("Right won");
             
         }
-        else if (_rightCharacter._isDead)
+        else if (_rightCharacter.IsDead)
         {
             _battleFinished = true;
             _battleView.ShowWinner("Left won");

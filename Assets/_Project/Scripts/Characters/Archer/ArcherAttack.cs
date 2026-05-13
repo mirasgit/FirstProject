@@ -17,8 +17,8 @@ public class ArcherAttack : CharacterAttack
     public void SpawnProjectile()
     {
         Arrow newProjectile = Instantiate(_projectile, _attackPoint.position, _attackPoint.rotation);
-        newProjectile.SetFacingDirection(_character._facingDirection);
-        newProjectile.SetDamage(_character.Stats._currentDamage);
+        newProjectile.SetFacingDirection(_character.FacingDirection);
+        newProjectile.SetDamage(_character.Stats.CurrentDamage);
         newProjectile.Initialize(_character.ProjectileRegistry);
         if (_random.Next(1, 101) <= _poisonProbabilityInPercent)
         {
@@ -27,9 +27,9 @@ public class ArcherAttack : CharacterAttack
     }
     private void HandleAttack()
     {
-        if (_character._battleStarted)
+        if (_character.BattleStarted)
         {
-            if (_character.canAttack && !_character._isDead)
+            if (_character.CanAttack && !_character.IsDead)
             {
                 _character.CharAnimator._anim.SetTrigger("Attack");
             }

@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class WizardEvents : MonoBehaviour
 {
-    private WizardAttack entity;
+    private WizardAttack _entity;
     private void Awake()
     {
-        entity = GetComponentInParent<WizardAttack>();
+        _entity = GetComponentInParent<WizardAttack>();
     }
-    public void SpawnProjectile() => entity.SpawnProjectile();
+    public void SpawnProjectile() => _entity.SpawnProjectile();
 
 }

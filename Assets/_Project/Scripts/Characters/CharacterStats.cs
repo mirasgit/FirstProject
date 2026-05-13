@@ -2,30 +2,28 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    [field: SerializeField] public float _maxHealth { get; private set; } = 100;
-    [field: SerializeField] public float _currentHealth { get; private set; }
-    [field: SerializeField] public float _maxDamage { get; private set; } = 10;
-    [field: SerializeField] public float _currentDamage {  get; private set; }
+    [field: SerializeField] public float MaxHealth { get; private set; } = 100;
+    [field: SerializeField] public float CurrentHealth { get; private set; }
+    [field: SerializeField] public float MaxDamage { get; private set; } = 10;
+    [field: SerializeField] public float CurrentDamage {  get; private set; }
 
     private void Awake()
     {
-        _currentHealth = _maxHealth;
-        _currentDamage = _maxDamage;
+        CurrentHealth = MaxHealth;
+        CurrentDamage = MaxDamage;
     }
 
     public void ResetCharacterStats()
     {
-        _currentHealth = _maxHealth;
+        CurrentHealth = MaxHealth;
     }
     public void TakeDamage(float damage)
     {
-        Debug.Log("Stats take damage, HP:" + _currentHealth);
-        _currentHealth -= damage;
-        Debug.Log("Stats took damage, HP:" + _currentHealth);
+        CurrentHealth -= damage;
         
     }
     public void ChangeDamage(float damage)
     {
-        _currentDamage = damage;
+        CurrentDamage = damage;
     }
 }
