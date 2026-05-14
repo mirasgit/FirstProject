@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BattleFlow : MonoBehaviour
+public class BattleFlow 
 {
     private CharacterFactory _characterFactory;
     private BattleView _battleView;
@@ -11,24 +11,24 @@ public class BattleFlow : MonoBehaviour
     private Character _rightCharacter;
     private bool _battleStarted;
     private bool _battleFinished;
-    public void Initialize(
-        CharacterFactory characterFactory,
-        BattleView battleView,
-        BattleCleanupService battleCleanupService,
-        Transform leftSpawnPoint,
-        Transform rightSpawnPoint)
+    public BattleFlow(
+       CharacterFactory characterFactory,
+       BattleView battleView,
+       BattleCleanupService cleanupService,
+       Transform leftSpawnPoint,
+       Transform rightSpawnPoint)
     {
         _characterFactory = characterFactory;
         _battleView = battleView;
-        _battleCleanupService = battleCleanupService;
+        _battleCleanupService = cleanupService;
         _leftSpawnPoint = leftSpawnPoint;
         _rightSpawnPoint = rightSpawnPoint;
-   }
-    private void Start()
+    }
+    public void ShowStartScreen()
     {
         _battleView.ShowStartScreen();
     }
-    private void Update()
+    public void Tick(float deltaTime)
     {
         CheckForDeath();
     }

@@ -21,7 +21,7 @@ public class Character : MonoBehaviour
     public bool BattleStarted { get; private set; } = false;
 
     public bool CanMove { get; private set; }
-    public bool IsDead { get; private set; } = false;
+    [field: SerializeField] public bool IsDead { get; private set; } = false;
     public bool CanAttack { get; private set; } = true;
     public ProjectileRegistry ProjectileRegistry {  get; private set; }
 
@@ -54,8 +54,6 @@ public class Character : MonoBehaviour
         {
             Stats.TakeDamage(damage);
             HealthChanged?.Invoke(Stats.CurrentHealth, Stats.MaxHealth);
-            //if (CharacterUI != null)
-            //    CharacterUI.ShowDamage(damage);
             DamageTaken?.Invoke(damage);
         }
     }
@@ -82,7 +80,7 @@ public class Character : MonoBehaviour
 
     private void HandleDeath()
     {
-        if (Stats.CurrentHealth <= 0 || IsDead)
+        if (Stats.CurrentHealth > 0 || IsDead)
         {
             return;
         }

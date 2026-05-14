@@ -4,8 +4,12 @@ using UnityEngine;
 public class CharacterFactory : MonoBehaviour
 {
     [SerializeField] private List<Character> _characterPrefabs;
-    [SerializeField] private ProjectileRegistry _projectileRegistry;
+    private ProjectileRegistry _projectileRegistry;
 
+    public void Initialize(ProjectileRegistry projectileRegistry)
+    {
+        _projectileRegistry = projectileRegistry;
+    }
     public Character SpawnRandomCharacter(Transform spawnPoint, bool facingRight)
     {
         int randomIndex = Random.Range(0, _characterPrefabs.Count);

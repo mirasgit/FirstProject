@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,11 +12,18 @@ public class BattleEntryPoint : MonoBehaviour
 
     private void Awake()
     {
-        _battleFlow = _compositionRoot.GetBattleFlow();
+        _battleFlow = _compositionRoot.Compose();
         _startButton.onClick.AddListener(OnStartButtonClicked);
         _restartButton.onClick.AddListener(OnRestartButtonClicked);
     }
-
+    private void Start()
+    {
+        _battleFlow.ShowStartScreen();
+    }
+    private void Update()
+    {
+        _battleFlow.Tick(Time.deltaTime);
+    }
     private void OnStartButtonClicked()
     {
         _battleFlow.StartBattle();

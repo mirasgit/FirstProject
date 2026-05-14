@@ -1,8 +1,13 @@
 using UnityEngine;
 
-public class BattleCleanupService : MonoBehaviour
+public class BattleCleanupService
 {
-    [SerializeField] private ProjectileRegistry _projectileRegistry;
+    private ProjectileRegistry _projectileRegistry;
+
+    public BattleCleanupService(ProjectileRegistry projectileRegistry)
+    {
+        _projectileRegistry = projectileRegistry;
+    }
     public void ClearAllProjectiles()
     {
         _projectileRegistry.DestroyAll();
@@ -13,6 +18,6 @@ public class BattleCleanupService : MonoBehaviour
             return;
 
 
-        Destroy(character.gameObject);
+        UnityEngine.Object.Destroy(character.gameObject);
     }
 }

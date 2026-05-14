@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileRegistry : MonoBehaviour
+public class ProjectileRegistry
 {
     private List<Projectile> _projectiles = new();
     public void Register(Projectile projectile)
@@ -35,7 +35,7 @@ public class ProjectileRegistry : MonoBehaviour
                 continue;
             }
 
-            Destroy(projectile.gameObject);
+            Object.Destroy(projectile.gameObject);
         }
 
         _projectiles.Clear();
