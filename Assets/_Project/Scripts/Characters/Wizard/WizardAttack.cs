@@ -29,7 +29,7 @@ public class WizardAttack : CharacterAttack
     {
         if (_character.BattleStarted)
         {
-            if (_character.CanAttack && !_character.IsDead)
+            if (_character.CanAttack() && !_character.IsDead)
             {
                 _character.CharAnimator._anim.SetTrigger("Attack");
             }

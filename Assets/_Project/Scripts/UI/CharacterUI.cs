@@ -23,11 +23,6 @@ public class CharacterUI : MonoBehaviour
     {
         _character.HealthChanged += OnHealthChanged;
         _character.DamageTaken += OnDamageTaken;
-        if (_character.Effects != null)
-        {
-            _character.Effects.EffectShown += ShowEffect;
-            _character.Effects.EffectHidden += HideEffect;
-        }
     }
     
     private void Start()
@@ -45,11 +40,6 @@ public class CharacterUI : MonoBehaviour
     {
         _character.HealthChanged -= OnHealthChanged;
         _character.DamageTaken -= OnDamageTaken;
-        if (_character.Effects != null)
-        {
-            _character.Effects.EffectShown -= ShowEffect;
-            _character.Effects.EffectHidden -= HideEffect;
-        }
     }
     private void OnHealthChanged(float currentHealth, float maxHealth)
     {

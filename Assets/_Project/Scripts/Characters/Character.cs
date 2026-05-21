@@ -1,3 +1,4 @@
+using FirstProject.CharacterEffect;
 using System;
 using UnityEngine;
 
@@ -7,10 +8,10 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
 
-    [field: SerializeField] public CharacterStats Stats { get; private set; }
-    [field: SerializeField] public CharacterEffects Effects { get; private set; }
-    [field: SerializeField] public CharacterAnimator CharAnimator { get; private set; }
-    [field:SerializeField] public CharacterAttack Attack { get; private set; }
+    public CharacterStats Stats { get; private set; }
+    public CharacterEffects Effects { get; private set; }
+    public CharacterAnimator CharAnimator { get; private set; }
+    public CharacterAttack Attack { get; private set; }
 
     [SerializeField] private Transform _visualRoot;
     [field: SerializeField] public int FacingDirection { get; private set; } = 1;
@@ -19,10 +20,7 @@ public class Character : MonoBehaviour
 
     public CharacterUI CharacterUI { get; private set;}
     public bool BattleStarted { get; private set; } = false;
-
-    public bool CanMove { get; private set; }
     [field: SerializeField] public bool IsDead { get; private set; } = false;
-    public bool CanAttack { get; private set; } = true;
     public ProjectileRegistry ProjectileRegistry {  get; private set; }
 
     public event Action<float, float> HealthChanged;
@@ -38,18 +36,15 @@ public class Character : MonoBehaviour
         Attack = GetComponent<CharacterAttack>();
     }
 
-    private void Update()
-    {
-        HandleDeath();
-    }
-
     public void InitializeProjectileRegistry(ProjectileRegistry projectileRegistry)
     {
         ProjectileRegistry = projectileRegistry;
+        Effects.Initialize(this);
     }
 
     public void TakeDamage(float damage)
     {
+        HandleDeath();
         if (!IsDead)
         {
             Stats.TakeDamage(damage);
@@ -58,13 +53,18 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void EnableAttack(bool enable)
+    public void ApplyEffect(CharacterApplicableEffect effect)
     {
-        CanAttack = enable;
+        HandleDeath();
+        if (!IsDead)
+        {
+            Effects.Apply(effect);
+        }
     }
-    public void EnableMovement(bool enable) // only for Warrior as it requires canMove
+
+    public bool CanAttack()
     {
-        CanMove = enable;
+        return !IsDead && !Effects.HasEffect(EffectType.Stun);
     }
     public void StartBattle()
     {
@@ -74,7 +74,7 @@ public class Character : MonoBehaviour
     public void ResetCharacterState()
     {
         Stats.ResetCharacterStats();
-        Effects.ResetEffects();
+        //Effects.ResetEffects();
         BattleStarted = false;
     }
 
@@ -93,9 +93,7 @@ public class Character : MonoBehaviour
         BattleStarted = false;
         gameObject.layer = LayerMask.NameToLayer("DeadCharacter");
         CharAnimator._anim.SetTrigger("Die");
-        Effects.ResetEffects();
-        CanAttack = false;
-        CanMove = false;
+        //Effects.ResetEffects();
     }
 
 

@@ -24,12 +24,13 @@ public class Projectile : MonoBehaviour
     private void Update()
     {
         HandleMovement();
-        HandleDestroy();
     }
     public void Initialize(ProjectileRegistry projectileRegistry)
     {
         _projectileRegistry = projectileRegistry;
         _projectileRegistry.Register(this);
+
+        Destroy(gameObject, _secondsToDestroy);
     }
 
     protected virtual void OnDestroy()
@@ -53,18 +54,6 @@ public class Projectile : MonoBehaviour
     {
         _rb.linearVelocity = new Vector2(_facingDirection * _moveSpeed, _rb.linearVelocity.y);
     } 
-
-    private void HandleDestroy()
-    {
-        if(_destroyHandlerCoroutine != null)
-            StopCoroutine(_destroyHandlerCoroutine);
-        StartCoroutine(DestroyHandlerCo());
-    }
-    private IEnumerator DestroyHandlerCo()
-    {
-        yield return _waitDestroy;
-        Destroy(this.gameObject);
-    }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.TryGetComponent(out Character target))

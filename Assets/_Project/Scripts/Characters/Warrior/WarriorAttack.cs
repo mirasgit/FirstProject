@@ -1,3 +1,5 @@
+using FirstProject.CharacterEffect;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -13,10 +15,11 @@ public class WarriorAttack : CharacterAttack
     [SerializeField] private int _stunProbabilityInPercent;
 
     private Rigidbody2D _rb;
-
+    private StunEffect stun;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        stun = new StunEffect(_stunDuration);
     }
     private void Update()
     {
@@ -37,6 +40,7 @@ public class WarriorAttack : CharacterAttack
         _character.CharAnimator._anim.SetFloat("xVelocity", _rb.linearVelocity.x);
     }
 
+    
     public void DamageTargets()
     {
         Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRadius, _whatIsTarget);
@@ -46,7 +50,7 @@ public class WarriorAttack : CharacterAttack
             entityTarget.TakeDamage(_character.Stats.CurrentDamage);
             if (_random.Next(1, 101) <= _stunProbabilityInPercent)
             {
-                entityTarget.Effects.SetStun(_stunDuration);
+                entityTarget.ApplyEffect(stun);
             }
         }
     }
@@ -65,15 +69,13 @@ public class WarriorAttack : CharacterAttack
     {
         if (_character.IsDead) return;
 
-        if (_character.CanAttack && _enemyDetected)
+        if (_character.CanAttack() && _enemyDetected)
         {
             _character.CharAnimator._anim.SetBool("Attack", true);
         }
         else
         {
             _character.CharAnimator._anim.SetBool("Attack", false);
-            if (_character.Effects.IsStunned)
-                _canMove = false;
         }
     }
 

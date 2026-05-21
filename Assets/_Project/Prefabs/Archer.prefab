@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 3622445823953754381}
   - component: {fileID: 7699877746165023426}
   - component: {fileID: 4919403921253785362}
-  - component: {fileID: 6108262068848876214}
+  - component: {fileID: 9112426007132765227}
   - component: {fileID: 7992089572208649469}
   - component: {fileID: 4291898121581258513}
   - component: {fileID: 752842750349444620}
@@ -388,14 +388,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4536c17c8a7444287e344895924c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character
-  <Stats>k__BackingField: {fileID: 7992089572208649469}
-  <Effects>k__BackingField: {fileID: 6108262068848876214}
-  <CharAnimator>k__BackingField: {fileID: 4291898121581258513}
-  <Attack>k__BackingField: {fileID: 7699877746165023426}
   _visualRoot: {fileID: 876811886570482319}
-  <_facingDirection>k__BackingField: 1
+  <FacingDirection>k__BackingField: 1
   FacingRight: 1
---- !u!114 &6108262068848876214
+  <IsDead>k__BackingField: 0
+--- !u!114 &9112426007132765227
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -404,15 +401,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7266667683711529744}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41c95539ab316634f905fa7e918b21c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 3131e6862e6c24540a61a4e1422a0968, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterEffects
-  _isWeak: 0
-  _isWeaknessApplied: 0
-  _isPoisoned: 0
-  _isPoisonApplied: 0
-  <_isStunned>k__BackingField: 0
-  _isStunApplied: 0
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.CharacterEffect.CharacterEffects
 --- !u!114 &7992089572208649469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,10 +416,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  <_maxHealth>k__BackingField: 100
-  <_currentHealth>k__BackingField: 0
-  <_maxDamage>k__BackingField: 10
-  <_currentDamage>k__BackingField: 0
+  <MaxHealth>k__BackingField: 100
+  <CurrentHealth>k__BackingField: 0
+  <MaxDamage>k__BackingField: 10
+  <CurrentDamage>k__BackingField: 0
 --- !u!114 &4291898121581258513
 MonoBehaviour:
   m_ObjectHideFlags: 0

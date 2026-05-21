@@ -426,10 +426,10 @@ GameObject:
   - component: {fileID: 5151742448753200029}
   - component: {fileID: 3637227649246280339}
   - component: {fileID: 3821051896798324541}
-  - component: {fileID: 1879253433459692267}
   - component: {fileID: 1306747922896148782}
   - component: {fileID: 5757287688980802880}
   - component: {fileID: 6445705411544394733}
+  - component: {fileID: 2320580648201096190}
   m_Layer: 6
   m_Name: 'Warrior '
   m_TagString: Untagged
@@ -475,7 +475,7 @@ MonoBehaviour:
   _enemyDetected: 0
   _moveSpeed: 3.5
   _attackRadius: 1
-  canMove: 1
+  _canMove: 1
   _stunDuration: 1
   _stunProbabilityInPercent: 50
 --- !u!114 &3637227649246280339
@@ -490,13 +490,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4536c17c8a7444287e344895924c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character
-  <Stats>k__BackingField: {fileID: 1306747922896148782}
-  <Effects>k__BackingField: {fileID: 1879253433459692267}
-  <CharAnimator>k__BackingField: {fileID: 3821051896798324541}
-  <Attack>k__BackingField: {fileID: 5151742448753200029}
   _visualRoot: {fileID: 4106942442036054939}
-  <_facingDirection>k__BackingField: 1
+  <FacingDirection>k__BackingField: 1
   FacingRight: 1
+  <IsDead>k__BackingField: 0
 --- !u!114 &3821051896798324541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,24 +506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc545b208a20c34da5764f74d164912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
---- !u!114 &1879253433459692267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5058306753275247096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41c95539ab316634f905fa7e918b21c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterEffects
-  _isWeak: 0
-  _isWeaknessApplied: 0
-  _isPoisoned: 0
-  _isPoisonApplied: 0
-  <_isStunned>k__BackingField: 0
-  _isStunApplied: 0
 --- !u!114 &1306747922896148782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,10 +518,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  <_maxHealth>k__BackingField: 100
-  <_currentHealth>k__BackingField: 0
-  <_maxDamage>k__BackingField: 10
-  <_currentDamage>k__BackingField: 0
+  <MaxHealth>k__BackingField: 100
+  <CurrentHealth>k__BackingField: 0
+  <MaxDamage>k__BackingField: 10
+  <CurrentDamage>k__BackingField: 0
 --- !u!70 &5757287688980802880
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -607,6 +586,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2320580648201096190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5058306753275247096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3131e6862e6c24540a61a4e1422a0968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.CharacterEffect.CharacterEffects
 --- !u!1 &5751680680662128995
 GameObject:
   m_ObjectHideFlags: 0

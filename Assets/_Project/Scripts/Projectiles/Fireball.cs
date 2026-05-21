@@ -1,19 +1,22 @@
+using FirstProject.CharacterEffect;
 using UnityEngine;
 
 public class Fireball : Projectile
 {
-    private float _weaknessCoefficient;
+    WeaknessEffect weakness;
     public void SetEffect(float duration, float coefficient)
     {
-        _effectDuration = duration;
-        _weaknessCoefficient = coefficient;
+        weakness = new WeaknessEffect(duration, coefficient);
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Character target))
         {
             target.TakeDamage(_damage);
-            target.Effects.SetWeakness(_effectDuration, _weaknessCoefficient);
+            if (weakness != null)
+            {
+            target.ApplyEffect(weakness);
+            }
             Destroy(gameObject);
         }
     }
