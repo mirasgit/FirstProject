@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace FirstProject.CharacterEffect
 
         private List<CharacterApplicableEffect> _effects = new List<CharacterApplicableEffect>();
 
+        public event Action<CharacterApplicableEffect> EffectApplied;
+        public event Action EffectEnded;
         public void Initialize(Character character)
         {
             _character = character;
@@ -21,19 +24,15 @@ namespace FirstProject.CharacterEffect
                 return;
 
             _effects.Add(effect);
-
-            _character.CharacterUI.ShowEffect(effect.Name);
-
+            EffectApplied?.Invoke(effect);
             StartCoroutine(RunEffect(effect));
         }
 
         private IEnumerator RunEffect(CharacterApplicableEffect effect)
         {
             yield return effect.Run(_character);
-
+            EffectEnded?.Invoke();
             _effects.Remove(effect);
-
-            _character.CharacterUI.HideEffect();
         }
 
         public bool HasEffect(EffectType type)

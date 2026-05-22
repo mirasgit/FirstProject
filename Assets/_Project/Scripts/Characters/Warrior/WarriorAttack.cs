@@ -58,7 +58,7 @@ public class WarriorAttack : CharacterAttack
     protected void HandleMovement()
     {
         if (_canMove)
-            _rb.linearVelocity = new Vector2(_character.FacingDirection * _moveSpeed, _rb.linearVelocity.y);
+            _rb.linearVelocity = new Vector2(_character.FacingDirection() * _moveSpeed, _rb.linearVelocity.y);
         else
         {
             _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);

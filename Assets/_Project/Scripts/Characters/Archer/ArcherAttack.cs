@@ -17,9 +17,9 @@ public class ArcherAttack : CharacterAttack
     public void SpawnProjectile()
     {
         Arrow newProjectile = Instantiate(_projectile, _attackPoint.position, _attackPoint.rotation);
-        newProjectile.SetFacingDirection(_character.FacingDirection);
+        newProjectile.SetFacingDirection(_character.FacingDirection());
         newProjectile.SetDamage(_character.Stats.CurrentDamage);
-        newProjectile.Initialize(_character.ProjectileRegistry);
+        newProjectile.Initialize(_projectileRegistry);
         if (_random.Next(1, 101) <= _poisonProbabilityInPercent)
         {
             newProjectile.SetEffect(_poisonDuration, _poisonInterval, _poisonTickDamage);

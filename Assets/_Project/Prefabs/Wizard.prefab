@@ -372,9 +372,11 @@ GameObject:
   - component: {fileID: 5455666780557975157}
   - component: {fileID: 5063231017309306132}
   - component: {fileID: 5804883697193863740}
-  - component: {fileID: 1242169335362000836}
-  - component: {fileID: 3745464728001427542}
   - component: {fileID: 6903690955061750165}
+  - component: {fileID: 7865228796654353449}
+  - component: {fileID: 880696086918870284}
+  - component: {fileID: 3745464728001427542}
+  - component: {fileID: 1242169335362000836}
   m_Layer: 6
   m_Name: Wizard
   m_TagString: Untagged
@@ -433,10 +435,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4536c17c8a7444287e344895924c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character
-  _visualRoot: {fileID: 1570751064765062943}
-  <FacingDirection>k__BackingField: 1
-  FacingRight: 1
-  <IsDead>k__BackingField: 0
 --- !u!114 &5063231017309306132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,6 +463,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc545b208a20c34da5764f74d164912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
+--- !u!114 &6903690955061750165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724761400001412960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3131e6862e6c24540a61a4e1422a0968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.CharacterEffect.CharacterEffects
+--- !u!114 &7865228796654353449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724761400001412960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b28e1131f3592448cb469c0725cff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterDeath
+  <IsDead>k__BackingField: 0
+--- !u!114 &880696086918870284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724761400001412960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523793a25237794ebb303b4d907abae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterFacing
+  _visualRoot: {fileID: 1570751064765062943}
+  FacingRight: 1
+  <FacingDirection>k__BackingField: 1
+--- !u!50 &3745464728001427542
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724761400001412960}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!70 &1242169335362000836
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -502,45 +567,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.1183207, y: -0.06338608}
   m_Size: {x: 0.8887677, y: 2.6311343}
   m_Direction: 0
---- !u!50 &3745464728001427542
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5724761400001412960}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!114 &6903690955061750165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5724761400001412960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3131e6862e6c24540a61a4e1422a0968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.CharacterEffect.CharacterEffects
 --- !u!1 &6370875970807714773
 GameObject:
   m_ObjectHideFlags: 0

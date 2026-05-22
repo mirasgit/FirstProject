@@ -17,7 +17,10 @@ public class CharacterFactory : MonoBehaviour
 
         Character character = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
         character.SetFacingRight(facingRight);
-        character.InitializeProjectileRegistry(_projectileRegistry);
+        character.InitializeEffects();
+        CharacterUI characterUI = character.GetComponentInChildren<CharacterUI>();
+        characterUI.Initialize(character);  
+        character.Attack.InitializeProjectileRegistry(_projectileRegistry);
 
         return character;
     }

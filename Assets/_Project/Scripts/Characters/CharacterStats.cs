@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -6,6 +8,10 @@ public class CharacterStats : MonoBehaviour
     [field: SerializeField] public float CurrentHealth { get; private set; }
     [field: SerializeField] public float MaxDamage { get; private set; } = 10;
     [field: SerializeField] public float CurrentDamage {  get; private set; }
+
+    public event Action<float, float> HealthChanged;
+
+    public event Action<float> DamageTaken;
 
     private void Awake()
     {
@@ -20,7 +26,9 @@ public class CharacterStats : MonoBehaviour
     public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
-        
+        HealthChanged?.Invoke(CurrentHealth, MaxHealth);
+        DamageTaken?.Invoke(damage);
+
     }
     public void ChangeDamage(float damage)
     {

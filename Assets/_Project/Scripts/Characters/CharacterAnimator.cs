@@ -8,4 +8,9 @@ public class CharacterAnimator : MonoBehaviour
     {
         _anim = GetComponentInChildren<Animator>();
     }
+
+    public void PlayDeath()
+    {
+        _anim.SetTrigger("Die");
+    }
 }

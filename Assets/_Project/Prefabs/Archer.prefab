@@ -327,8 +327,10 @@ GameObject:
   - component: {fileID: 9112426007132765227}
   - component: {fileID: 7992089572208649469}
   - component: {fileID: 4291898121581258513}
-  - component: {fileID: 752842750349444620}
+  - component: {fileID: 898170992770469707}
+  - component: {fileID: 5653099707580177873}
   - component: {fileID: 2368573923609754915}
+  - component: {fileID: 752842750349444620}
   m_Layer: 6
   m_Name: Archer
   m_TagString: Untagged
@@ -388,10 +390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4536c17c8a7444287e344895924c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character
-  _visualRoot: {fileID: 876811886570482319}
-  <FacingDirection>k__BackingField: 1
-  FacingRight: 1
-  <IsDead>k__BackingField: 0
 --- !u!114 &9112426007132765227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,33 +430,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc545b208a20c34da5764f74d164912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
---- !u!50 &752842750349444620
-Rigidbody2D:
-  serializedVersion: 5
+--- !u!114 &898170992770469707
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7266667683711529744}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b28e1131f3592448cb469c0725cff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterDeath
+  <IsDead>k__BackingField: 0
+--- !u!114 &5653099707580177873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266667683711529744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523793a25237794ebb303b4d907abae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterFacing
+  _visualRoot: {fileID: 876811886570482319}
+  FacingRight: 1
+  <FacingDirection>k__BackingField: 1
 --- !u!70 &2368573923609754915
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -496,6 +495,33 @@ CapsuleCollider2D:
   m_Offset: {x: 0.05420649, y: -1.0063066}
   m_Size: {x: 0.6968677, y: 2.78477}
   m_Direction: 0
+--- !u!50 &752842750349444620
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266667683711529744}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &7428289765011802869
 GameObject:
   m_ObjectHideFlags: 0
