@@ -1,31 +1,34 @@
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using FirstProject.Common;
 
-public class CharacterDeath : MonoBehaviour
+namespace FirstProject.Characters
 {
-    private CharacterAnimator _charAnimator;
-    [field: SerializeField] public bool IsDead { get; private set; } = false;
-
-    private void Awake()
+    public class CharacterDeath : MonoBehaviour
     {
-        _charAnimator = GetComponent<CharacterAnimator>();
-    }
+        private CharacterAnimator _charAnimator;
+        [field: SerializeField] public bool IsDead { get; private set; } = false;
 
-    public void Die()
-    {
-        if (IsDead)
-            return;
+        private void Awake()
+        {
+            _charAnimator = GetComponent<CharacterAnimator>();
+        }
 
-        IsDead = true;
+        public void Die()
+        {
+            if (IsDead)
+                return;
 
-        gameObject.layer = LayerMask.NameToLayer(CharacterConstants.DeadCharacterLayer);
+            IsDead = true;
 
-        _charAnimator.PlayDeath();
-    }
-    public void ResetDeath()
-    {
-        IsDead = false;
+            gameObject.layer = LayerMask.NameToLayer(CharacterConstants.DeadCharacterLayer);
 
-        gameObject.layer = LayerMask.NameToLayer(CharacterConstants.CharacterLayer);
+            _charAnimator.PlayDeath();
+        }
+        public void ResetDeath()
+        {
+            IsDead = false;
+
+            gameObject.layer = LayerMask.NameToLayer(CharacterConstants.CharacterLayer);
+        }
     }
 }

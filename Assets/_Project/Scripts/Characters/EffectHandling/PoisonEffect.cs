@@ -1,6 +1,7 @@
-using FirstProject.CharacterEffect;
 using System.Collections;
 using UnityEngine;
+using FirstProject.CharacterEffect;
+using FirstProject.Characters;
 
 public class PoisonEffect : CharacterApplicableEffect
 {

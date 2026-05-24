@@ -1,27 +1,32 @@
 using System.Collections.Generic;
 using UnityEngine;
-
-public class CharacterFactory : MonoBehaviour
+using FirstProject.Projectiles;
+using FirstProject.UI;
+using FirstProject.Characters;
+namespace FirstProject.Battle
 {
-    [SerializeField] private List<Character> _characterPrefabs;
-    private ProjectileRegistry _projectileRegistry;
-
-    public void Initialize(ProjectileRegistry projectileRegistry)
+    public class CharacterFactory : MonoBehaviour
     {
-        _projectileRegistry = projectileRegistry;
-    }
-    public Character SpawnRandomCharacter(Transform spawnPoint, bool facingRight)
-    {
-        int randomIndex = Random.Range(0, _characterPrefabs.Count);
-        Character prefab = _characterPrefabs[randomIndex];
+        [SerializeField] private List<Character> _characterPrefabs;
+        private ProjectileRegistry _projectileRegistry;
 
-        Character character = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-        character.SetFacingRight(facingRight);
-        character.InitializeEffects();
-        CharacterUI characterUI = character.GetComponentInChildren<CharacterUI>();
-        characterUI.Initialize(character);  
-        character.Attack.InitializeProjectileRegistry(_projectileRegistry);
+        public void Initialize(ProjectileRegistry projectileRegistry)
+        {
+            _projectileRegistry = projectileRegistry;
+        }
+        public Character SpawnRandomCharacter(Transform spawnPoint, bool facingRight)
+        {
+            int randomIndex = Random.Range(0, _characterPrefabs.Count);
+            Character prefab = _characterPrefabs[randomIndex];
 
-        return character;
+            Character character = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
+            character.SetFacingRight(facingRight);
+            character.InitializeEffects();
+            CharacterUI characterUI = character.GetComponentInChildren<CharacterUI>();
+            characterUI.Initialize(character);
+            character.Attack.InitializeProjectileRegistry(_projectileRegistry);
+
+            return character;
+        }
     }
 }

@@ -1,40 +1,43 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleEntryPoint : MonoBehaviour
+namespace FirstProject.Battle
 {
-    [SerializeField] private BattleCompositionRoot _compositionRoot;
-    [SerializeField] private Button _startButton;
-    [SerializeField] private Button _restartButton;
+    public class BattleEntryPoint : MonoBehaviour
+    {
+        [SerializeField] private BattleCompositionRoot _compositionRoot;
+        [SerializeField] private Button _startButton;
+        [SerializeField] private Button _restartButton;
 
-    private BattleFlow _battleFlow;
+        private BattleFlow _battleFlow;
 
-    private void Awake()
-    {
-        _battleFlow = _compositionRoot.Compose();
-        _startButton.onClick.AddListener(OnStartButtonClicked);
-        _restartButton.onClick.AddListener(OnRestartButtonClicked);
-    }
-    private void Start()
-    {
-        _battleFlow.ShowStartScreen();
-    }
-    private void Update()
-    {
-        _battleFlow.Tick(Time.deltaTime);
-    }
-    private void OnStartButtonClicked()
-    {
-        _battleFlow.StartBattle();
-    }
+        private void Awake()
+        {
+            _battleFlow = _compositionRoot.Compose();
+            _startButton.onClick.AddListener(OnStartButtonClicked);
+            _restartButton.onClick.AddListener(OnRestartButtonClicked);
+        }
+        private void Start()
+        {
+            _battleFlow.ShowStartScreen();
+        }
+        private void Update()
+        {
+            _battleFlow.Tick(Time.deltaTime);
+        }
+        private void OnStartButtonClicked()
+        {
+            _battleFlow.StartBattle();
+        }
 
-    private void OnRestartButtonClicked()
-    {
-        _battleFlow.RestartBattle();
-    }
-    private void OnDestroy()
-    {
-        _startButton.onClick.RemoveListener(OnStartButtonClicked);
-        _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+        private void OnRestartButtonClicked()
+        {
+            _battleFlow.RestartBattle();
+        }
+        private void OnDestroy()
+        {
+            _startButton.onClick.RemoveListener(OnStartButtonClicked);
+            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+        }
     }
 }

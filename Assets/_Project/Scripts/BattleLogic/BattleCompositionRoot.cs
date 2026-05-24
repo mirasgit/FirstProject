@@ -1,26 +1,31 @@
 using UnityEngine;
+using FirstProject.UI;
+using FirstProject.Projectiles;
 
-public class BattleCompositionRoot : MonoBehaviour
+namespace FirstProject.Battle
 {
-    [SerializeField] private CharacterFactory _characterFactory;
-    [SerializeField] private BattleView _battleView;
-    [SerializeField] private Transform _leftSpawnPoint;
-    [SerializeField] private Transform _rightSpawnPoint;
-
-
-    public BattleFlow Compose()
+    public class BattleCompositionRoot : MonoBehaviour
     {
-        ProjectileRegistry projectileRegistry = new ProjectileRegistry();
-        BattleCleanupService cleanupService = new BattleCleanupService(projectileRegistry);
+        [SerializeField] private CharacterFactory _characterFactory;
+        [SerializeField] private BattleView _battleView;
+        [SerializeField] private Transform _leftSpawnPoint;
+        [SerializeField] private Transform _rightSpawnPoint;
 
-        _characterFactory.Initialize(projectileRegistry);
 
-        return new BattleFlow(
-            _characterFactory,
-            _battleView,
-            cleanupService,
-            _leftSpawnPoint,
-            _rightSpawnPoint
-        );
+        public BattleFlow Compose()
+        {
+            ProjectileRegistry projectileRegistry = new ProjectileRegistry();
+            BattleCleanupService cleanupService = new BattleCleanupService(projectileRegistry);
+
+            _characterFactory.Initialize(projectileRegistry);
+
+            return new BattleFlow(
+                _characterFactory,
+                _battleView,
+                cleanupService,
+                _leftSpawnPoint,
+                _rightSpawnPoint
+            );
+        }
     }
 }

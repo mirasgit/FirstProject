@@ -1,27 +1,30 @@
 using TMPro;
 using UnityEngine;
 
-public class FloatingText : MonoBehaviour
+namespace FirstProject.UI
 {
-    [SerializeField] private TMP_Text _text;
-    [SerializeField] private float _lifeTime = 1f;
-    [SerializeField] private float _moveSpeed = 1f;
-
-    private float _timer;
-
-    public void SetText(string textValue)
+    public class FloatingText : MonoBehaviour
     {
-        _text.text = textValue;
-    }
+        [SerializeField] private TMP_Text _text;
+        [SerializeField] private float _lifeTime = 1f;
+        [SerializeField] private float _moveSpeed = 1f;
 
-    private void Update()
-    {
-        transform.position += Vector3.down * (_moveSpeed * Time.deltaTime);
+        private float _timer;
 
-        _timer += Time.deltaTime;
-        if (_timer >= _lifeTime)
+        public void SetText(string textValue)
         {
-            Destroy(gameObject);
+            _text.text = textValue;
+        }
+
+        private void Update()
+        {
+            transform.position += Vector3.down * (_moveSpeed * Time.deltaTime);
+
+            _timer += Time.deltaTime;
+            if (_timer >= _lifeTime)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

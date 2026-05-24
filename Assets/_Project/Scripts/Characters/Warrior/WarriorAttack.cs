@@ -1,90 +1,91 @@
-using FirstProject.CharacterEffect;
-using Unity.VisualScripting;
 using UnityEngine;
+using FirstProject.CharacterEffect;
 
-
-public class WarriorAttack : CharacterAttack
+namespace FirstProject.Characters.Attack
 {
-
-    [Header("Warrior special info")]
-    [SerializeField] private bool _enemyDetected;
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _attackRadius;
-    [SerializeField] private bool _canMove = true;
-    [SerializeField] private float _stunDuration = 1f;
-    [SerializeField] private int _stunProbabilityInPercent;
-
-    private Rigidbody2D _rb;
-    private StunEffect stun;
-    private void Awake()
+    public class WarriorAttack : CharacterAttack
     {
-        _rb = GetComponent<Rigidbody2D>();
-        stun = new StunEffect(_stunDuration);
-    }
-    private void Update()
-    {
-        HandleAnimations();
-        HandleCollision();
-        HandleAttack();
-        HandleMovement();
-    }
 
-    //Warrior special methods
-    private void HandleCollision()
-    {
-        _enemyDetected = Physics2D.OverlapCircle(_attackPoint.position, _attackRadius, _whatIsTarget);
-    }
+        [Header("Warrior special info")]
+        [SerializeField] private bool _enemyDetected;
+        [SerializeField] private float _moveSpeed;
+        [SerializeField] private float _attackRadius;
+        [SerializeField] private bool _canMove = true;
+        [SerializeField] private float _stunDuration = 1f;
+        [SerializeField] private int _stunProbabilityInPercent;
 
-    private void HandleAnimations()
-    {
-        _character.CharAnimator._anim.SetFloat("xVelocity", _rb.linearVelocity.x);
-    }
-
-    
-    public void DamageTargets()
-    {
-        Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRadius, _whatIsTarget);
-        foreach (Collider2D enemy in enemyColliders)
+        private Rigidbody2D _rb;
+        private StunEffect stun;
+        private void Awake()
         {
-            Character entityTarget = enemy.GetComponent<Character>();
-            entityTarget.TakeDamage(_character.Stats.CurrentDamage);
-            if (_random.Next(1, 101) <= _stunProbabilityInPercent)
+            _rb = GetComponent<Rigidbody2D>();
+            stun = new StunEffect(_stunDuration);
+        }
+        private void Update()
+        {
+            HandleAnimations();
+            HandleCollision();
+            HandleAttack();
+            HandleMovement();
+        }
+
+        //Warrior special methods
+        private void HandleCollision()
+        {
+            _enemyDetected = Physics2D.OverlapCircle(_attackPoint.position, _attackRadius, _whatIsTarget);
+        }
+
+        private void HandleAnimations()
+        {
+            _character.CharAnimator._anim.SetFloat("xVelocity", _rb.linearVelocity.x);
+        }
+
+
+        public void DamageTargets()
+        {
+            Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRadius, _whatIsTarget);
+            foreach (Collider2D enemy in enemyColliders)
             {
-                entityTarget.ApplyEffect(stun);
+                Character entityTarget = enemy.GetComponent<Character>();
+                entityTarget.TakeDamage(_character.Stats.CurrentDamage);
+                if (_random.Next(1, 101) <= _stunProbabilityInPercent)
+                {
+                    entityTarget.ApplyEffect(stun);
+                }
             }
         }
-    }
 
-    protected void HandleMovement()
-    {
-        if (_canMove)
-            _rb.linearVelocity = new Vector2(_character.FacingDirection() * _moveSpeed, _rb.linearVelocity.y);
-        else
+        protected void HandleMovement()
         {
-            _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
+            if (_canMove)
+                _rb.linearVelocity = new Vector2(_character.FacingDirection() * _moveSpeed, _rb.linearVelocity.y);
+            else
+            {
+                _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
+            }
         }
-    }
 
-    private void HandleAttack()
-    {
-        if (_character.IsDead) return;
-
-        if (_character.CanAttack() && _enemyDetected)
+        private void HandleAttack()
         {
-            _character.CharAnimator._anim.SetBool("Attack", true);
-        }
-        else
-        {
-            _character.CharAnimator._anim.SetBool("Attack", false);
-        }
-    }
+            if (_character.IsDead) return;
 
-    public void EnableMovement(bool enable)
-    {
-        _canMove = enable;
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(_attackPoint.position, _attackRadius);
+            if (_character.CanAttack() && _enemyDetected)
+            {
+                _character.CharAnimator._anim.SetBool("Attack", true);
+            }
+            else
+            {
+                _character.CharAnimator._anim.SetBool("Attack", false);
+            }
+        }
+
+        public void EnableMovement(bool enable)
+        {
+            _canMove = enable;
+        }
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(_attackPoint.position, _attackRadius);
+        }
     }
 }

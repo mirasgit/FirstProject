@@ -1,78 +1,83 @@
-using FirstProject.CharacterEffect;
 using UnityEngine;
+using FirstProject.CharacterEffect;
+using FirstProject.Characters.Attack;
+using FirstProject.Common;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CapsuleCollider2D))]
-public class Character : MonoBehaviour
+namespace FirstProject.Characters
 {
-
-    public CharacterStats Stats { get; private set; }
-    public CharacterEffects Effects { get; private set; }
-    public CharacterAnimator CharAnimator { get; private set; }
-    public CharacterAttack Attack { get; private set; }   
-    public CharacterFacing Facing { get; private set; }
-    public CharacterDeath Death { get; private set; }
-    public bool BattleStarted { get; private set; } = false;
-    [field: SerializeField] public bool IsDead => Death.IsDead;
-    
-    protected void Awake()
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(CapsuleCollider2D))]
+    public class Character : MonoBehaviour
     {
-        Stats = GetComponent<CharacterStats>();
-        Effects = GetComponent<CharacterEffects>();
-        CharAnimator = GetComponent<CharacterAnimator>();
-        Attack = GetComponent<CharacterAttack>();
-        Facing = GetComponent<CharacterFacing>();
-        Death = GetComponent<CharacterDeath>();
-    }
-    public void InitializeEffects()
-    {
-        Effects.Initialize(this);
-    }
-    public void TakeDamage(float damage)
-    {
-        if (IsDead) return;
 
-        Stats.TakeDamage(damage);
+        public CharacterStats Stats { get; private set; }
+        public CharacterEffects Effects { get; private set; }
+        public CharacterAnimator CharAnimator { get; private set; }
+        public CharacterAttack Attack { get; private set; }
+        public CharacterFacing Facing { get; private set; }
+        public CharacterDeath Death { get; private set; }
+        public bool BattleStarted { get; private set; } = false;
+        [field: SerializeField] public bool IsDead => Death.IsDead;
 
-        if (Stats.CurrentHealth <= CharacterConstants.AliveHealthThreshold || IsDead)
+        protected void Awake()
         {
-            Die();
+            Stats = GetComponent<CharacterStats>();
+            Effects = GetComponent<CharacterEffects>();
+            CharAnimator = GetComponent<CharacterAnimator>();
+            Attack = GetComponent<CharacterAttack>();
+            Facing = GetComponent<CharacterFacing>();
+            Death = GetComponent<CharacterDeath>();
         }
-    }
+        public void InitializeEffects()
+        {
+            Effects.Initialize(this);
+        }
+        public void TakeDamage(float damage)
+        {
+            if (IsDead) return;
 
-    public void ApplyEffect(CharacterApplicableEffect effect)
-    {
-        if (IsDead) return;
+            Stats.TakeDamage(damage);
 
-        Effects.Apply(effect);
-        
-    }
+            if (Stats.CurrentHealth <= CharacterConstants.AliveHealthThreshold || IsDead)
+            {
+                Die();
+            }
+        }
 
-    public bool CanAttack()
-    {
-        return !IsDead && BattleStarted && !Effects.HasEffect(EffectType.Stun);
-    }
-    public void StartBattle()
-    {
-        BattleStarted = true;
+        public void ApplyEffect(CharacterApplicableEffect effect)
+        {
+            if (IsDead) return;
 
-    }
-    public void ResetCharacterState()
-    {
-        Stats.ResetCharacterStats();
-        //Effects.ResetEffects();
-        BattleStarted = false;
-    }
-    private void Die()
-    {
-        Death.Die();
-    }
+            Effects.Apply(effect);
 
-    #region Facing
-    public void SetFacingRight(bool facingRight)
-    {
-        Facing.SetFacingRight(facingRight);
+        }
+
+        public bool CanAttack()
+        {
+            return !IsDead && BattleStarted && !Effects.HasEffect(EffectType.Stun);
+        }
+        public void StartBattle()
+        {
+            BattleStarted = true;
+
+        }
+        public void ResetCharacterState()
+        {
+            Stats.ResetCharacterStats();
+            //Effects.ResetEffects();
+            BattleStarted = false;
+        }
+        private void Die()
+        {
+            Death.Die();
+        }
+
+        #region Facing
+        public void SetFacingRight(bool facingRight)
+        {
+            Facing.SetFacingRight(facingRight);
+        }
+        public int FacingDirection() => Facing.FacingDirection;
+        #endregion
     }
-    public int FacingDirection() => Facing.FacingDirection;
-    #endregion
 }

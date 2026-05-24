@@ -1,5 +1,5 @@
 using System.Collections;
-using UnityEngine;
+using FirstProject.Characters;
 
 namespace FirstProject.CharacterEffect
 {

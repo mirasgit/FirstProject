@@ -1,12 +1,16 @@
 using UnityEngine;
+using FirstProject.Characters.Attack;
 
-public class WizardEvents : MonoBehaviour
+namespace FirstProject.Characters
 {
-    private WizardAttack _entity;
-    private void Awake()
+    public class WizardEvents : MonoBehaviour
     {
-        _entity = GetComponentInParent<WizardAttack>();
-    }
-    public void SpawnProjectile() => _entity.SpawnProjectile();
+        private WizardAttack _entity;
+        private void Awake()
+        {
+            _entity = GetComponentInParent<WizardAttack>();
+        }
+        public void SpawnProjectile() => _entity.SpawnProjectile();
 
+    }
 }

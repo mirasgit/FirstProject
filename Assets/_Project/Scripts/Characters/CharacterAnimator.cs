@@ -1,16 +1,20 @@
 using UnityEngine;
 
-public class CharacterAnimator : MonoBehaviour
+namespace FirstProject.Characters
 {
-    public Animator _anim { get; private set; }
 
-    private void Awake()
+    public class CharacterAnimator : MonoBehaviour
     {
-        _anim = GetComponentInChildren<Animator>();
-    }
+        public Animator _anim { get; private set; }
 
-    public void PlayDeath()
-    {
-        _anim.SetTrigger("Die");
+        private void Awake()
+        {
+            _anim = GetComponentInChildren<Animator>();
+        }
+
+        public void PlayDeath()
+        {
+            _anim.SetTrigger("Die");
+        }
     }
 }

@@ -1,65 +1,68 @@
-using System.Collections;
 using UnityEngine;
+using FirstProject.Characters;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class Projectile : MonoBehaviour
+namespace FirstProject.Projectiles
 {
-    [SerializeField] protected int _facingDirection = 1;
-    [SerializeField] protected float _moveSpeed = 5f;
-    [SerializeField] protected float _damage;
-    [SerializeField] protected int _secondsToDestroy = 4;
-
-    protected ProjectileRegistry _projectileRegistry;
-    protected Rigidbody2D _rb;
-    protected float _effectDuration;
-    protected Coroutine _destroyHandlerCoroutine;
-    protected WaitForSeconds _waitDestroy;
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class Projectile : MonoBehaviour
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
-        _waitDestroy = new WaitForSeconds(_secondsToDestroy);
-    }
+        [SerializeField] protected int _facingDirection = 1;
+        [SerializeField] protected float _moveSpeed = 5f;
+        [SerializeField] protected float _damage;
+        [SerializeField] protected int _secondsToDestroy = 4;
 
-    private void Update()
-    {
-        HandleMovement();
-    }
-    public void Initialize(ProjectileRegistry projectileRegistry)
-    {
-        _projectileRegistry = projectileRegistry;
-        _projectileRegistry.Register(this);
-
-        Destroy(gameObject, _secondsToDestroy);
-    }
-
-    protected virtual void OnDestroy()
-    {
-        if (_projectileRegistry != null)
+        protected ProjectileRegistry _projectileRegistry;
+        protected Rigidbody2D _rb;
+        protected float _effectDuration;
+        protected Coroutine _destroyHandlerCoroutine;
+        protected WaitForSeconds _waitDestroy;
+        private void Awake()
         {
-            _projectileRegistry.Unregister(this);
+            _rb = GetComponent<Rigidbody2D>();
+            _rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
+            _waitDestroy = new WaitForSeconds(_secondsToDestroy);
         }
-    }
 
-    public void SetFacingDirection(int facingDirection)
-    {
-        _facingDirection = facingDirection;
-    }
-    
-    public void SetDamage(float damage)
-    {
-        _damage = damage;
-    }
-    private void HandleMovement()
-    {
-        _rb.linearVelocity = new Vector2(_facingDirection * _moveSpeed, _rb.linearVelocity.y);
-    } 
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.TryGetComponent(out Character target))
+        private void Update()
         {
-            target.TakeDamage(_damage);
-            Destroy(this.gameObject);
+            HandleMovement();
+        }
+        public void Initialize(ProjectileRegistry projectileRegistry)
+        {
+            _projectileRegistry = projectileRegistry;
+            _projectileRegistry.Register(this);
+
+            Destroy(gameObject, _secondsToDestroy);
+        }
+
+        protected virtual void OnDestroy()
+        {
+            if (_projectileRegistry != null)
+            {
+                _projectileRegistry.Unregister(this);
+            }
+        }
+
+        public void SetFacingDirection(int facingDirection)
+        {
+            _facingDirection = facingDirection;
+        }
+
+        public void SetDamage(float damage)
+        {
+            _damage = damage;
+        }
+        private void HandleMovement()
+        {
+            _rb.linearVelocity = new Vector2(_facingDirection * _moveSpeed, _rb.linearVelocity.y);
+        }
+        protected virtual void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.TryGetComponent(out Character target))
+            {
+                target.TakeDamage(_damage);
+                Destroy(this.gameObject);
+            }
         }
     }
 }

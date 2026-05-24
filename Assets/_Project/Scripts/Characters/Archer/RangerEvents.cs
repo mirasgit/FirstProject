@@ -1,13 +1,16 @@
 using UnityEngine;
+using FirstProject.Characters.Attack;
 
-
-public class RangerEvents : MonoBehaviour
+namespace FirstProject.Characters
 {
-    private ArcherAttack _entity;
-    private void Awake()
+    public class RangerEvents : MonoBehaviour
     {
-        _entity = GetComponentInParent<ArcherAttack>();
-    }
-    public void SpawnProjectile() => _entity.SpawnProjectile();
+        private ArcherAttack _entity;
+        private void Awake()
+        {
+            _entity = GetComponentInParent<ArcherAttack>();
+        }
+        public void SpawnProjectile() => _entity.SpawnProjectile();
 
+    }
 }

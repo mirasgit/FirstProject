@@ -1,43 +1,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileRegistry
+namespace FirstProject.Projectiles
 {
-    private List<Projectile> _projectiles = new();
-    public void Register(Projectile projectile)
+    public class ProjectileRegistry
     {
-
-        if (projectile == null){ return;}
-
-        if (_projectiles.Contains(projectile)) {return;}
-
-        _projectiles.Add(projectile);
-    }
-    public void Unregister(Projectile projectile)
-    {
-        if (projectile == null)
+        private List<Projectile> _projectiles = new();
+        public void Register(Projectile projectile)
         {
-            return;
+
+            if (projectile == null) { return; }
+
+            if (_projectiles.Contains(projectile)) { return; }
+
+            _projectiles.Add(projectile);
         }
-
-        _projectiles.Remove(projectile);
-    }
-
-    public void DestroyAll()
-    {
-        for (int index = _projectiles.Count - 1; index >= 0; index--)
+        public void Unregister(Projectile projectile)
         {
-            Projectile projectile = _projectiles[index];
-
             if (projectile == null)
             {
-                _projectiles.RemoveAt(index);
-                continue;
+                return;
             }
 
-            Object.Destroy(projectile.gameObject);
+            _projectiles.Remove(projectile);
         }
 
-        _projectiles.Clear();
+        public void DestroyAll()
+        {
+            for (int index = _projectiles.Count - 1; index >= 0; index--)
+            {
+                Projectile projectile = _projectiles[index];
+
+                if (projectile == null)
+                {
+                    _projectiles.RemoveAt(index);
+                    continue;
+                }
+
+                Object.Destroy(projectile.gameObject);
+            }
+
+            _projectiles.Clear();
+        }
     }
 }

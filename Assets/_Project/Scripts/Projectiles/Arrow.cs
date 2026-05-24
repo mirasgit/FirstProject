@@ -1,21 +1,26 @@
 using UnityEngine;
-public class Arrow : Projectile
+using FirstProject.Characters;
+
+namespace FirstProject.Projectiles
 {
-    private PoisonEffect poison;
-    public void SetEffect(float duration, float interval, float tickDamage)
+    public class Arrow : Projectile
     {
-        poison = new PoisonEffect(duration, interval, tickDamage);
-    }
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out Character target))
+        private PoisonEffect poison;
+        public void SetEffect(float duration, float interval, float tickDamage)
         {
-            target.TakeDamage(_damage);
-            if (poison != null)
+            poison = new PoisonEffect(duration, interval, tickDamage);
+        }
+        protected override void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.TryGetComponent(out Character target))
             {
-            target.ApplyEffect(poison);
+                target.TakeDamage(_damage);
+                if (poison != null)
+                {
+                    target.ApplyEffect(poison);
+                }
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
     }
 }

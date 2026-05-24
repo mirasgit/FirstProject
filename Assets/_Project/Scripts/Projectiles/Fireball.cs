@@ -1,23 +1,27 @@
-using FirstProject.CharacterEffect;
 using UnityEngine;
+using FirstProject.CharacterEffect;
+using FirstProject.Characters;
 
-public class Fireball : Projectile
+namespace FirstProject.Projectiles
 {
-    WeaknessEffect weakness;
-    public void SetEffect(float duration, float coefficient)
+    public class Fireball : Projectile
     {
-        weakness = new WeaknessEffect(duration, coefficient);
-    }
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out Character target))
+        WeaknessEffect weakness;
+        public void SetEffect(float duration, float coefficient)
         {
-            target.TakeDamage(_damage);
-            if (weakness != null)
+            weakness = new WeaknessEffect(duration, coefficient);
+        }
+        protected override void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.TryGetComponent(out Character target))
             {
-            target.ApplyEffect(weakness);
+                target.TakeDamage(_damage);
+                if (weakness != null)
+                {
+                    target.ApplyEffect(weakness);
+                }
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
     }
 }

@@ -1,22 +1,27 @@
+using FirstProject.Projectiles;
+using FirstProject.Characters;
 
-public class BattleCleanupService
+namespace FirstProject.Battle
 {
-    private ProjectileRegistry _projectileRegistry;
-
-    public BattleCleanupService(ProjectileRegistry projectileRegistry)
+    public class BattleCleanupService
     {
-        _projectileRegistry = projectileRegistry;
-    }
-    public void ClearAllProjectiles()
-    {
-        _projectileRegistry.DestroyAll();
-    }
-    public void DestroyCharacter(Character character)
-    {
-        if (character == null)
-            return;
+        private ProjectileRegistry _projectileRegistry;
+
+        public BattleCleanupService(ProjectileRegistry projectileRegistry)
+        {
+            _projectileRegistry = projectileRegistry;
+        }
+        public void ClearAllProjectiles()
+        {
+            _projectileRegistry.DestroyAll();
+        }
+        public void DestroyCharacter(Character character)
+        {
+            if (character == null)
+                return;
 
 
-        UnityEngine.Object.Destroy(character.gameObject);
+            UnityEngine.Object.Destroy(character.gameObject);
+        }
     }
 }

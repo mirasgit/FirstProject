@@ -1,21 +1,25 @@
 using UnityEngine;
+using FirstProject.Common;
 
-public class CharacterFacing : MonoBehaviour
+namespace FirstProject.Characters
 {
-    [SerializeField] private Transform _visualRoot;
-    [field: SerializeField] public bool FacingRight = true;
-    [field: SerializeField] public int FacingDirection { get; private set; } = CharacterConstants.RightDirection;
-
-    public void SetFacingRight(bool facingRight)
+    public class CharacterFacing : MonoBehaviour
     {
-        FacingRight = facingRight;
-        FacingDirection = facingRight ? CharacterConstants.RightDirection : CharacterConstants.LeftDirection;
+        [SerializeField] private Transform _visualRoot;
+        [field: SerializeField] public bool FacingRight = true;
+        [field: SerializeField] public int FacingDirection { get; private set; } = CharacterConstants.RightDirection;
 
-        float rotationY = facingRight ? CharacterConstants.RightRotationY : CharacterConstants.LeftRotationY;
+        public void SetFacingRight(bool facingRight)
+        {
+            FacingRight = facingRight;
+            FacingDirection = facingRight ? CharacterConstants.RightDirection : CharacterConstants.LeftDirection;
 
-        _visualRoot.localRotation = Quaternion.Euler(
-                CharacterConstants.ZeroRotation,
-                rotationY,
-                CharacterConstants.ZeroRotation);
+            float rotationY = facingRight ? CharacterConstants.RightRotationY : CharacterConstants.LeftRotationY;
+
+            _visualRoot.localRotation = Quaternion.Euler(
+                    CharacterConstants.ZeroRotation,
+                    rotationY,
+                    CharacterConstants.ZeroRotation);
+        }
     }
 }

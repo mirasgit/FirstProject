@@ -1,8 +1,12 @@
 using TMPro;
 using UnityEngine;
 
-public class BattleView : MonoBehaviour
+namespace FirstProject.UI
 {
+
+
+    public class BattleView : MonoBehaviour
+    {
         [SerializeField] private GameObject _startPanel;
         [SerializeField] private GameObject _winPanel;
         [SerializeField] private TMP_Text _winnerText;
@@ -24,4 +28,5 @@ public class BattleView : MonoBehaviour
             _winnerText.text = winnerText;
             _winPanel.SetActive(true);
         }
+    }
 }
