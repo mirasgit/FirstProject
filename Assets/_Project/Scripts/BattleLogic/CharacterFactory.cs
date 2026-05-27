@@ -18,13 +18,9 @@ namespace FirstProject.Battle
         {
             int randomIndex = Random.Range(0, _characterPrefabs.Count);
             Character prefab = _characterPrefabs[randomIndex];
-
             Character character = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-            character.SetFacingRight(facingRight);
-            character.InitializeEffects();
-            CharacterUI characterUI = character.GetComponentInChildren<CharacterUI>();
-            characterUI.Initialize(character);
-            character.Attack.InitializeProjectileRegistry(_projectileRegistry);
+            character.Initialize(_projectileRegistry, facingRight);
+            
 
             return character;
         }

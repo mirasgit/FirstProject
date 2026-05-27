@@ -32,7 +32,7 @@ namespace FirstProject.Battle
         {
             _battleView.ShowStartScreen();
         }
-        public void Tick(float deltaTime)
+        public void Tick()
         {
             CheckForDeath();
         }

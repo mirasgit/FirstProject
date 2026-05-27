@@ -19,11 +19,6 @@ namespace FirstProject.Characters
             CurrentHealth = MaxHealth;
             CurrentDamage = MaxDamage;
         }
-
-        public void ResetCharacterStats()
-        {
-            CurrentHealth = MaxHealth;
-        }
         public void TakeDamage(float damage)
         {
             CurrentHealth -= damage;

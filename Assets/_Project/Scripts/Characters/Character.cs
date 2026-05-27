@@ -2,11 +2,18 @@ using UnityEngine;
 using FirstProject.CharacterEffect;
 using FirstProject.Characters.Attack;
 using FirstProject.Common;
+using FirstProject.Projectiles;
+using FirstProject.UI;
 
 namespace FirstProject.Characters
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(CapsuleCollider2D))]
+    [RequireComponent(typeof(CharacterStats))]
+    [RequireComponent(typeof(CharacterEffects))]
+    [RequireComponent(typeof(CharacterAnimator))]
+    [RequireComponent(typeof(CharacterDeath))]
+    [RequireComponent(typeof(CharacterFacing))]
     public class Character : MonoBehaviour
     {
 
@@ -16,9 +23,10 @@ namespace FirstProject.Characters
         public CharacterAttack Attack { get; private set; }
         public CharacterFacing Facing { get; private set; }
         public CharacterDeath Death { get; private set; }
-        public bool BattleStarted { get; private set; } = false;
-        [field: SerializeField] public bool IsDead => Death.IsDead;
 
+        public bool BattleStarted { get; private set; } = false;
+        public bool IsDead => Death.IsDead;
+        private CharacterUI _characterUI;
         protected void Awake()
         {
             Stats = GetComponent<CharacterStats>();
@@ -27,14 +35,21 @@ namespace FirstProject.Characters
             Attack = GetComponent<CharacterAttack>();
             Facing = GetComponent<CharacterFacing>();
             Death = GetComponent<CharacterDeath>();
-        }
-        public void InitializeEffects()
-        {
+            _characterUI = GetComponentInChildren<CharacterUI>();
             Effects.Initialize(this);
+        }
+        public void Initialize(ProjectileRegistry projectileRegistry, bool FacingRight)
+        {
+            Attack.InitializeProjectileRegistry(projectileRegistry);
+            Facing.SetFacingRight(FacingRight);
+            _characterUI.Initialize(this);
         }
         public void TakeDamage(float damage)
         {
-            if (IsDead) return;
+            if (IsDead) 
+            { 
+                return;
+            }
 
             Stats.TakeDamage(damage);
 
@@ -56,28 +71,21 @@ namespace FirstProject.Characters
         {
             return !IsDead && BattleStarted && !Effects.HasEffect(EffectType.Stun);
         }
+
         public void StartBattle()
         {
             BattleStarted = true;
 
         }
-        public void ResetCharacterState()
-        {
-            Stats.ResetCharacterStats();
-            //Effects.ResetEffects();
-            BattleStarted = false;
-        }
+
         private void Die()
         {
             Death.Die();
         }
 
-        #region Facing
-        public void SetFacingRight(bool facingRight)
+        public int FacingDirection()
         {
-            Facing.SetFacingRight(facingRight);
+            return Facing.FacingDirection;
         }
-        public int FacingDirection() => Facing.FacingDirection;
-        #endregion
     }
 }

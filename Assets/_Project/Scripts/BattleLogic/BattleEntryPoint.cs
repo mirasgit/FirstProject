@@ -23,7 +23,7 @@ namespace FirstProject.Battle
         }
         private void Update()
         {
-            _battleFlow.Tick(Time.deltaTime);
+            _battleFlow.Tick();
         }
         private void OnStartButtonClicked()
         {

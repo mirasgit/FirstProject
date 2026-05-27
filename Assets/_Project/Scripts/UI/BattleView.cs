@@ -3,8 +3,6 @@ using UnityEngine;
 
 namespace FirstProject.UI
 {
-
-
     public class BattleView : MonoBehaviour
     {
         [SerializeField] private GameObject _startPanel;

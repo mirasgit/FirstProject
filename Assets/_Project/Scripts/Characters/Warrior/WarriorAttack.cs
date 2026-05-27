@@ -37,7 +37,7 @@ namespace FirstProject.Characters.Attack
 
         private void HandleAnimations()
         {
-            _character.CharAnimator._anim.SetFloat("xVelocity", _rb.linearVelocity.x);
+            _character.CharAnimator.SetVelocity(_rb.linearVelocity.x);
         }
 
 
@@ -71,11 +71,11 @@ namespace FirstProject.Characters.Attack
 
             if (_character.CanAttack() && _enemyDetected)
             {
-                _character.CharAnimator._anim.SetBool("Attack", true);
+                _character.CharAnimator.ToggleAttack(true);
             }
             else
             {
-                _character.CharAnimator._anim.SetBool("Attack", false);
+                _character.CharAnimator.ToggleAttack(false);
             }
         }
 

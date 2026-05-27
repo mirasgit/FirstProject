@@ -16,11 +16,11 @@ namespace FirstProject.CharacterEffect
 
         public override IEnumerator Run(Character character)
         {
-            character.CharAnimator._anim.SetBool("Stun", true);
+            character.CharAnimator.PlayStun();
 
             yield return new WaitForSeconds(_duration);
 
-            character.CharAnimator._anim.SetBool("Stun", false);
+            character.CharAnimator.StopPlayStun();
         }
     }
 }

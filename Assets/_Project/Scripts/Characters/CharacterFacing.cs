@@ -7,7 +7,7 @@ namespace FirstProject.Characters
     {
         [SerializeField] private Transform _visualRoot;
         [field: SerializeField] public bool FacingRight = true;
-        [field: SerializeField] public int FacingDirection { get; private set; } = CharacterConstants.RightDirection;
+        [field: SerializeField] public int FacingDirection { get; private set; }
 
         public void SetFacingRight(bool facingRight)
         {

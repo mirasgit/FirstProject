@@ -13,8 +13,6 @@ namespace FirstProject.Projectiles
 
         protected ProjectileRegistry _projectileRegistry;
         protected Rigidbody2D _rb;
-        protected float _effectDuration;
-        protected Coroutine _destroyHandlerCoroutine;
         protected WaitForSeconds _waitDestroy;
         private void Awake()
         {

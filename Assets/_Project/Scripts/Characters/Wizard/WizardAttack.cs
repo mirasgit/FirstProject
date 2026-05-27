@@ -34,7 +34,7 @@ namespace FirstProject.Characters.Attack
             {
                 if (_character.CanAttack() && !_character.IsDead)
                 {
-                    _character.CharAnimator._anim.SetTrigger("Attack");
+                    _character.CharAnimator.PlayAttack();
                 }
 
             }
