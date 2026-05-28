@@ -1,5 +1,4 @@
 using UnityEngine;
-using FirstProject.Common;
 
 namespace FirstProject.Characters
 {
@@ -8,6 +7,8 @@ namespace FirstProject.Characters
         private CharacterAnimator _charAnimator;
         [field: SerializeField] public bool IsDead { get; private set; } = false;
 
+        private const string DEAD_CHARACTER_LAYER = "DeadCharacter";
+        private const string CHARACTER_LAYER = "Character";
         private void Awake()
         {
             _charAnimator = GetComponent<CharacterAnimator>();
@@ -20,7 +21,7 @@ namespace FirstProject.Characters
 
             IsDead = true;
 
-            gameObject.layer = LayerMask.NameToLayer(CharacterConstants.DeadCharacterLayer);
+            gameObject.layer = LayerMask.NameToLayer(DEAD_CHARACTER_LAYER);
 
             _charAnimator.PlayDeath();
         }
@@ -28,7 +29,7 @@ namespace FirstProject.Characters
         {
             IsDead = false;
 
-            gameObject.layer = LayerMask.NameToLayer(CharacterConstants.CharacterLayer);
+            gameObject.layer = LayerMask.NameToLayer(CHARACTER_LAYER);
         }
     }
 }

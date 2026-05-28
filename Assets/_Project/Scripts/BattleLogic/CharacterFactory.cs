@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FirstProject.Projectiles;
-using FirstProject.UI;
 using FirstProject.Characters;
 namespace FirstProject.Battle
 {

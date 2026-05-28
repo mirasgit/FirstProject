@@ -1,7 +1,6 @@
 using UnityEngine;
 using FirstProject.CharacterEffect;
-using FirstProject.Characters.Attack;
-using FirstProject.Common;
+using FirstProject.Characters.Attack;   
 using FirstProject.Projectiles;
 using FirstProject.UI;
 
@@ -14,6 +13,7 @@ namespace FirstProject.Characters
     [RequireComponent(typeof(CharacterAnimator))]
     [RequireComponent(typeof(CharacterDeath))]
     [RequireComponent(typeof(CharacterFacing))]
+    [RequireComponent(typeof(CharacterAttack))]
     public class Character : MonoBehaviour
     {
 
@@ -27,6 +27,7 @@ namespace FirstProject.Characters
         public bool BattleStarted { get; private set; } = false;
         public bool IsDead => Death.IsDead;
         private CharacterUI _characterUI;
+        private const float ALIVE_HEALTH_THRESHOLD = 0f;
         protected void Awake()
         {
             Stats = GetComponent<CharacterStats>();
@@ -38,22 +39,17 @@ namespace FirstProject.Characters
             _characterUI = GetComponentInChildren<CharacterUI>();
             Effects.Initialize(this);
         }
-        public void Initialize(ProjectileRegistry projectileRegistry, bool FacingRight)
+        public void Initialize(ProjectileRegistry projectileRegistry, bool facingRight)
         {
             Attack.InitializeProjectileRegistry(projectileRegistry);
-            Facing.SetFacingRight(FacingRight);
+            Facing.SetFacingRight(facingRight);
             _characterUI.Initialize(this);
         }
         public void TakeDamage(float damage)
         {
-            if (IsDead) 
-            { 
-                return;
-            }
-
             Stats.TakeDamage(damage);
 
-            if (Stats.CurrentHealth <= CharacterConstants.AliveHealthThreshold || IsDead)
+            if (Stats.CurrentHealth <= ALIVE_HEALTH_THRESHOLD || IsDead)
             {
                 Die();
             }

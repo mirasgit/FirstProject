@@ -13,12 +13,10 @@ namespace FirstProject.Projectiles
 
         protected ProjectileRegistry _projectileRegistry;
         protected Rigidbody2D _rb;
-        protected WaitForSeconds _waitDestroy;
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
             _rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
-            _waitDestroy = new WaitForSeconds(_secondsToDestroy);
         }
 
         private void Update()
