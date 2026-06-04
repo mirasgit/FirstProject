@@ -21,11 +21,11 @@ namespace FirstProject.Characters.Attack
             _rb = GetComponent<Rigidbody2D>();
             stun = new StunEffect(_stunDuration);
         }
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
             HandleAnimations();
             HandleCollision();
-            HandleAttack();
             HandleMovement();
         }
 
@@ -37,7 +37,7 @@ namespace FirstProject.Characters.Attack
 
         private void HandleAnimations()
         {
-            _character.CharAnimator.SetVelocity(_rb.linearVelocity.x);
+            _character.SetVelocity(_rb.linearVelocity.x);
         }
 
 
@@ -47,7 +47,7 @@ namespace FirstProject.Characters.Attack
             foreach (Collider2D enemy in enemyColliders)
             {
                 Character entityTarget = enemy.GetComponent<Character>();
-                entityTarget.TakeDamage(_character.Stats.CurrentDamage);
+                entityTarget.TakeDamage(_character.GetCurrentDamage());
                 if (_random.Next(1, 101) <= _stunProbabilityInPercent)
                 {
                     entityTarget.ApplyEffect(stun);
@@ -65,17 +65,17 @@ namespace FirstProject.Characters.Attack
             }
         }
 
-        private void HandleAttack()
+        protected override void HandleAttack()
         {
             if (_character.IsDead) return;
 
             if (_character.CanAttack() && _enemyDetected)
             {
-                _character.CharAnimator.ToggleAttack(true);
+                _character.ToggleAttack(true);
             }
             else
             {
-                _character.CharAnimator.ToggleAttack(false);
+                _character.ToggleAttack(false);
             }
         }
 

@@ -5,13 +5,19 @@ namespace FirstProject.Projectiles
 {
     public class ProjectileRegistry
     {
-        private List<Projectile> _projectiles = new();
+        private readonly List<Projectile> _projectiles = new();
         public void Register(Projectile projectile)
         {
 
-            if (projectile == null) { return; }
+            if (projectile == null) 
+            {
+                return; 
+            }
 
-            if (_projectiles.Contains(projectile)) { return; }
+            if (_projectiles.Contains(projectile)) 
+            {
+                return; 
+            }
 
             _projectiles.Add(projectile);
         }

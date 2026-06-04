@@ -6,11 +6,11 @@ namespace FirstProject.Battle
 {
     public class BattleFlow
     {
-        private CharacterFactory _characterFactory;
-        private BattleView _battleView;
-        private BattleCleanupService _battleCleanupService;
-        private Transform _leftSpawnPoint;
-        private Transform _rightSpawnPoint;
+        private readonly CharacterFactory _characterFactory;
+        private readonly BattleView _battleView;
+        private readonly BattleCleanupService _battleCleanupService;
+        private readonly Transform _leftSpawnPoint;
+        private readonly Transform _rightSpawnPoint;
         private Character _leftCharacter;
         private Character _rightCharacter;
         private bool _battleStarted;
@@ -32,29 +32,34 @@ namespace FirstProject.Battle
         {
             _battleView.ShowStartScreen();
         }
-        public void Tick()
-        {
-            CheckForDeath();
-        }
 
         private void CheckForDeath()
         {
-            if (_battleStarted == false) return;
+            if (!_battleStarted)
+            {
+                return;
+            }
 
-            if (_battleFinished) return;
+            if (_battleFinished) 
+            {
+                return;
+            }
 
-            if (_leftCharacter == null || _rightCharacter == null) return;
+            if (_leftCharacter == null || _rightCharacter == null)
+            {
+                return;
+            }
 
             if (_leftCharacter.IsDead)
             {
                 _battleFinished = true;
-                _battleView.ShowWinner("Right won");
+                _battleView.ShowWinner(BattleResult.RightWon);
 
             }
             else if (_rightCharacter.IsDead)
             {
                 _battleFinished = true;
-                _battleView.ShowWinner("Left won");
+                _battleView.ShowWinner(BattleResult.LeftWon);
             }
         }
         public void StartBattle()
@@ -76,9 +81,25 @@ namespace FirstProject.Battle
             _rightCharacter = _characterFactory.SpawnRandomCharacter(_rightSpawnPoint, false);
             _rightCharacter.StartBattle();
             _leftCharacter.StartBattle();
+            _rightCharacter.Died += OnCharacterDied;
+            _leftCharacter.Died += OnCharacterDied;
         }
+
+        private void OnCharacterDied()
+        {
+            CheckForDeath();
+        }
+
         private void ClearBattle()
         {
+            if (_rightCharacter != null)
+            {
+                _rightCharacter.Died -= OnCharacterDied;
+            }
+            if (_leftCharacter != null)
+            {
+                _leftCharacter.Died -= OnCharacterDied;
+            }
             _battleCleanupService.DestroyCharacter(_leftCharacter);
             _battleCleanupService.DestroyCharacter(_rightCharacter);
             _battleCleanupService.ClearAllProjectiles();

@@ -1,5 +1,6 @@
 using UnityEngine;
 using FirstProject.Characters.Attack;
+
 namespace FirstProject.Characters
 {
     public class WarriorEvents : MonoBehaviour

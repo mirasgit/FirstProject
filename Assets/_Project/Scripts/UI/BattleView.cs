@@ -21,9 +21,17 @@ namespace FirstProject.UI
             _winPanel.SetActive(false);
         }
 
-        public void ShowWinner(string winnerText)
+        public void ShowWinner(BattleResult result)
         {
-            _winnerText.text = winnerText;
+            switch (result)
+            {
+                case BattleResult.LeftWon:
+                    _winnerText.text = "Left Won";
+                    break;
+                case BattleResult.RightWon:
+                    _winnerText.text = "Right Won";
+                    break;
+            }
             _winPanel.SetActive(true);
         }
     }

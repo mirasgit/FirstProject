@@ -11,9 +11,7 @@ namespace FirstProject.Characters
         [field: SerializeField] public float CurrentDamage { get; private set; }
 
         public event Action<float, float> HealthChanged;
-
         public event Action<float> DamageTaken;
-
         private void Awake()
         {
             CurrentHealth = MaxHealth;
@@ -24,7 +22,6 @@ namespace FirstProject.Characters
             CurrentHealth -= damage;
             HealthChanged?.Invoke(CurrentHealth, MaxHealth);
             DamageTaken?.Invoke(damage);
-
         }
         public void ChangeDamage(float damage)
         {

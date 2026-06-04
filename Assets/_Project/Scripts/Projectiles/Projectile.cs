@@ -33,10 +33,11 @@ namespace FirstProject.Projectiles
 
         protected virtual void OnDestroy()
         {
-            if (_projectileRegistry != null)
+            if (_projectileRegistry == null)
             {
-                _projectileRegistry.Unregister(this);
+                return;
             }
+            _projectileRegistry.Unregister(this);
         }
 
         public void SetFacingDirection(int facingDirection)

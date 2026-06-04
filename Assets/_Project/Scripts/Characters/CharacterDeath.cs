@@ -17,7 +17,9 @@ namespace FirstProject.Characters
         public void Die()
         {
             if (IsDead)
+            {
                 return;
+            }
 
             IsDead = true;
 

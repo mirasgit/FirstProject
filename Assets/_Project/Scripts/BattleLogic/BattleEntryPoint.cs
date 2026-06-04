@@ -21,10 +21,6 @@ namespace FirstProject.Battle
         {
             _battleFlow.ShowStartScreen();
         }
-        private void Update()
-        {
-            _battleFlow.Tick();
-        }
         private void OnStartButtonClicked()
         {
             _battleFlow.StartBattle();

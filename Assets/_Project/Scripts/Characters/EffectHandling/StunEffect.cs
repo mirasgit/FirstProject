@@ -6,7 +6,7 @@ namespace FirstProject.CharacterEffect
 {
     public class StunEffect : CharacterApplicableEffect
     {
-        private float _duration;
+        private readonly float _duration;
 
         public StunEffect(float duration)
             : base(EffectType.Stun, "Stunned")
@@ -16,11 +16,11 @@ namespace FirstProject.CharacterEffect
 
         public override IEnumerator Run(Character character)
         {
-            character.CharAnimator.PlayStun();
+            character.EnablePlayStun(true);
 
             yield return new WaitForSeconds(_duration);
 
-            character.CharAnimator.StopPlayStun();
+            character.EnablePlayStun(false);
         }
     }
 }

@@ -4,20 +4,21 @@ using FirstProject.Projectiles;
 using FirstProject.Characters;
 namespace FirstProject.Battle
 {
-    public class CharacterFactory : MonoBehaviour
+    public class CharacterFactory
     {
-        [SerializeField] private List<Character> _characterPrefabs;
-        private ProjectileRegistry _projectileRegistry;
+        private readonly List<Character> _characterPrefabs;
+        private readonly ProjectileRegistry _projectileRegistry;
 
-        public void Initialize(ProjectileRegistry projectileRegistry)
+        public CharacterFactory(ProjectileRegistry projectileRegistry, List<Character> prefabs)
         {
             _projectileRegistry = projectileRegistry;
+            _characterPrefabs = prefabs;
         }
         public Character SpawnRandomCharacter(Transform spawnPoint, bool facingRight)
         {
             int randomIndex = Random.Range(0, _characterPrefabs.Count);
             Character prefab = _characterPrefabs[randomIndex];
-            Character character = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
+            Character character = Object.Instantiate(prefab, spawnPoint.position, Quaternion.identity);
             character.Initialize(_projectileRegistry, facingRight);
             
 

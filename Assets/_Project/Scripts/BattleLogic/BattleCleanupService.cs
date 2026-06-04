@@ -5,7 +5,7 @@ namespace FirstProject.Battle
 {
     public class BattleCleanupService
     {
-        private ProjectileRegistry _projectileRegistry;
+        private readonly ProjectileRegistry _projectileRegistry;
 
         public BattleCleanupService(ProjectileRegistry projectileRegistry)
         {

@@ -10,8 +10,7 @@ namespace FirstProject.CharacterEffect
     {
         private Character _character;
 
-        private List<CharacterApplicableEffect> _effects = new List<CharacterApplicableEffect>();
-
+        private readonly List<CharacterApplicableEffect> _effects = new();
         public event Action<CharacterApplicableEffect> EffectApplied;
         public event Action EffectEnded;
         public void Initialize(Character character)
@@ -22,7 +21,9 @@ namespace FirstProject.CharacterEffect
         public void Apply(CharacterApplicableEffect effect)
         {
             if (HasEffect(effect.Type))
+            {
                 return;
+            }
 
             _effects.Add(effect);
             EffectApplied?.Invoke(effect);
@@ -40,8 +41,10 @@ namespace FirstProject.CharacterEffect
         {
             foreach (CharacterApplicableEffect effect in _effects)
             {
-                if (effect.Type == type) 
+                if (effect.Type == type)
+                {
                     return true;
+                }
             }
             return false;
         }

@@ -17,8 +17,8 @@ namespace FirstProject.UI
         private Character _character;
         private bool _isInitialized;
 
-        private const string DamageTextFormat = "0";
-        private const string EmptyEffectText = "";
+        private const string DAMAGE_TEXT_FORMAT = "0";
+        private const string EMPTY_EFFECT_TEXT = "";
         private void Awake()
         {
             _mainCamera = Camera.main;
@@ -34,7 +34,7 @@ namespace FirstProject.UI
             _isInitialized = true;
             Subscribe();
 
-            OnHealthChanged(_character.Stats.CurrentHealth, _character.Stats.MaxHealth);
+            OnHealthChanged(_character.GetCurrentHealth(), _character.GetMaxHealth());
         }
         private void Update()
         {
@@ -49,10 +49,10 @@ namespace FirstProject.UI
         }
         private void Subscribe()
         {
-            _character.Stats.HealthChanged += OnHealthChanged;
-            _character.Stats.DamageTaken += OnDamageTaken;
-            _character.Effects.EffectApplied += OnEffectApplied;
-            _character.Effects.EffectEnded += OnEffectEnd;
+            _character.HealthChanged += OnHealthChanged;
+            _character.DamageTaken += OnDamageTaken;
+            _character.EffectApplied += OnEffectApplied;
+            _character.EffectEnded += OnEffectEnd;
         }
 
         private void Unsubscribe()
@@ -60,10 +60,10 @@ namespace FirstProject.UI
             if (!_isInitialized || _character == null)
                 return;
 
-            _character.Stats.HealthChanged -= OnHealthChanged;
-            _character.Stats.DamageTaken -= OnDamageTaken;
-            _character.Effects.EffectApplied -= OnEffectApplied;
-            _character.Effects.EffectEnded -= OnEffectEnd;
+            _character.HealthChanged -= OnHealthChanged;
+            _character.DamageTaken -= OnDamageTaken;
+            _character.EffectApplied -= OnEffectApplied;
+            _character.EffectEnded -= OnEffectEnd;
         }
 
         private void OnHealthChanged(float currentHealth, float maxHealth)
@@ -99,7 +99,7 @@ namespace FirstProject.UI
             if (_floatingTextPrefab == null || _floatingTextSpawnPoint == null) return;
 
             FloatingText textInstance = Instantiate(_floatingTextPrefab, _floatingTextSpawnPoint.position, Quaternion.identity);
-            textInstance.SetText(damage.ToString(DamageTextFormat));
+            textInstance.SetText(damage.ToString(DAMAGE_TEXT_FORMAT));
         }
 
         public void ShowEffect(string effectName)
@@ -111,7 +111,7 @@ namespace FirstProject.UI
         public void HideEffect()
         {
             if (_effectText == null) return;
-            _effectText.text = EmptyEffectText;
+            _effectText.text = EMPTY_EFFECT_TEXT;
         }
     }
 }

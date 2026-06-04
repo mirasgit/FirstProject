@@ -11,10 +11,24 @@ namespace FirstProject.Characters.Attack
         [SerializeField] protected LayerMask _whatIsTarget;
 
         protected ProjectileRegistry _projectileRegistry { get; private set; }
-        protected Random _random = new Random();
+        protected Random _random = new();
         private void Awake()
         {
             _character = GetComponent<Character>();
+        }
+        protected virtual void Update()
+        {
+            HandleAttack();
+        }
+        protected virtual void HandleAttack()
+        {
+            if (_character.BattleStarted)
+            {
+                if (_character.CanAttack() && !_character.IsDead)
+                {
+                    _character.PlayAttack();
+                }
+            }
         }
         public void InitializeProjectileRegistry(ProjectileRegistry projectileRegistry)
         {
