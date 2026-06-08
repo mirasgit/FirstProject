@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using FirstProject.Characters;
 
 namespace FirstProject.CharacterEffect
 {
@@ -17,17 +16,17 @@ namespace FirstProject.CharacterEffect
             _coefficient = coefficient;
         }
 
-        public override IEnumerator Run(Character character)
+        public override IEnumerator Run(CharacterEffectContext context)
         {
-            _oldDamage = character.GetCurrentDamage();
+            _oldDamage = context.GetCurrentDamage();
 
             float newDamage = _oldDamage - _oldDamage * _coefficient;
 
-            character.ChangeDamageTo(newDamage);
+            context.ChangeDamageTo(newDamage);
 
             yield return new WaitForSeconds(_duration);
 
-            character.ChangeDamageTo(_oldDamage);
+            context.ChangeDamageTo(_oldDamage);
         }
     }
 }

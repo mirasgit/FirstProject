@@ -9,6 +9,9 @@ namespace FirstProject.UI
         [SerializeField] private GameObject _winPanel;
         [SerializeField] private TMP_Text _winnerText;
 
+        private const string LeftWonText = "Left Won";
+        private const string RightWonText = "Right Won";
+
         public void ShowStartScreen()
         {
             _startPanel.SetActive(true);
@@ -26,10 +29,10 @@ namespace FirstProject.UI
             switch (result)
             {
                 case BattleResult.LeftWon:
-                    _winnerText.text = "Left Won";
+                    _winnerText.text = LeftWonText;
                     break;
                 case BattleResult.RightWon:
-                    _winnerText.text = "Right Won";
+                    _winnerText.text = RightWonText;
                     break;
             }
             _winPanel.SetActive(true);

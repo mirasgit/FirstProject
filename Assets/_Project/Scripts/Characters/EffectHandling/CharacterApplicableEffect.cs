@@ -1,9 +1,8 @@
 using System.Collections;
-using FirstProject.Characters;
 
 namespace FirstProject.CharacterEffect
 {
-    public class CharacterApplicableEffect
+    public abstract class CharacterApplicableEffect
     {
         public EffectType Type { get; private set; }
         public string Name { get; private set; }
@@ -14,9 +13,6 @@ namespace FirstProject.CharacterEffect
             Name = name;
         }
 
-        public virtual IEnumerator Run(Character character)
-        {
-            yield break;
-        }
+        public abstract IEnumerator Run(CharacterEffectContext context);
     }
 }

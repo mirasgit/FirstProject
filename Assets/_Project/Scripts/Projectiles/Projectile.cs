@@ -6,23 +6,26 @@ namespace FirstProject.Projectiles
     [RequireComponent(typeof(Rigidbody2D))]
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] protected int _facingDirection = 1;
-        [SerializeField] protected float _moveSpeed = 5f;
-        [SerializeField] protected float _damage;
         [SerializeField] protected int _secondsToDestroy = 4;
+        [SerializeField] protected float _moveSpeed = 5f;
 
-        protected ProjectileRegistry _projectileRegistry;
-        protected Rigidbody2D _rb;
+        private ProjectileRegistry _projectileRegistry;
+        private Rigidbody2D _rb;
+
+        protected float _damage;
+        protected int _facingDirection = 1;
+
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
             _rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             HandleMovement();
         }
+
         public void Initialize(ProjectileRegistry projectileRegistry)
         {
             _projectileRegistry = projectileRegistry;
@@ -49,16 +52,18 @@ namespace FirstProject.Projectiles
         {
             _damage = damage;
         }
+
         private void HandleMovement()
         {
             _rb.linearVelocity = new Vector2(_facingDirection * _moveSpeed, _rb.linearVelocity.y);
         }
+
         protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.TryGetComponent(out Character target))
             {
                 target.TakeDamage(_damage);
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
         }
     }

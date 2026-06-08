@@ -21,6 +21,7 @@ namespace FirstProject.UI
             transform.position += Vector3.down * (_moveSpeed * Time.deltaTime);
 
             _timer += Time.deltaTime;
+
             if (_timer >= _lifeTime)
             {
                 Destroy(gameObject);

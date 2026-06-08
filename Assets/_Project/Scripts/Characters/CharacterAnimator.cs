@@ -2,14 +2,13 @@ using UnityEngine;
 
 namespace FirstProject.Characters
 {
-
     public class CharacterAnimator : MonoBehaviour
     {
         private Animator _anim;
-        private readonly int DieHash = Animator.StringToHash("Die");
-        private readonly int AttackHash = Animator.StringToHash("Attack");
-        private readonly int StunHash = Animator.StringToHash("Stun");
-        private readonly int VelocityHash = Animator.StringToHash("xVelocity");
+        private readonly int _dieHash = Animator.StringToHash("Die");
+        private readonly int _attackHash = Animator.StringToHash("Attack");
+        private readonly int _stunHash = Animator.StringToHash("Stun");
+        private readonly int _velocityHash = Animator.StringToHash("xVelocity");
 
         private void Awake()
         {
@@ -18,27 +17,32 @@ namespace FirstProject.Characters
 
         public void PlayDeath()
         {
-            _anim.SetTrigger(DieHash);
+            _anim.SetTrigger(_dieHash);
         }
+
         public void PlayAttack()
         {
-            _anim.SetTrigger(AttackHash);
+            _anim.SetTrigger(_attackHash);
         }
+
         public void ToggleAttack(bool enable)
         {
-            _anim.SetBool(AttackHash, enable);
+            _anim.SetBool(_attackHash, enable);
         }
+
         public void PlayStun()
         {
-            _anim.SetBool(StunHash, true);
+            _anim.SetBool(_stunHash, true);
         }
+
         public void StopPlayStun()
         {
-            _anim.SetBool(StunHash, false);
+            _anim.SetBool(_stunHash, false);
         }
+
         public void SetVelocity(float parameter)
         {
-            _anim.SetFloat(VelocityHash, parameter);
+            _anim.SetFloat(_velocityHash, parameter);
         }
     }
 }

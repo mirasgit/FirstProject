@@ -8,8 +8,7 @@ namespace FirstProject.Projectiles
         private readonly List<Projectile> _projectiles = new();
         public void Register(Projectile projectile)
         {
-
-            if (projectile == null) 
+            if (projectile == null)
             {
                 return; 
             }

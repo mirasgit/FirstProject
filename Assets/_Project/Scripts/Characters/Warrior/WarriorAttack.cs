@@ -5,31 +5,38 @@ namespace FirstProject.Characters.Attack
 {
     public class WarriorAttack : CharacterAttack
     {
-
         [Header("Warrior special info")]
-        [SerializeField] private bool _enemyDetected;
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _attackRadius;
-        [SerializeField] private bool _canMove = true;
         [SerializeField] private float _stunDuration = 1f;
         [SerializeField] private int _stunProbabilityInPercent;
 
         private Rigidbody2D _rb;
-        private StunEffect stun;
+        private StunEffect _stun;
+
+        private bool _canMove = true;
+        private bool _enemyDetected;
+        private bool _isAttacking;
+
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            stun = new StunEffect(_stunDuration);
+            _stun = new StunEffect(_stunDuration);
         }
+
         protected override void Update()
         {
-            base.Update();
-            HandleAnimations();
             HandleCollision();
+            HandleAttack();
+            HandleAnimations();
             HandleMovement();
         }
 
-        //Warrior special methods
+        public void EnableMovement(bool enable)
+        {
+            _canMove = enable;
+        }
+
         private void HandleCollision()
         {
             _enemyDetected = Physics2D.OverlapCircle(_attackPoint.position, _attackRadius, _whatIsTarget);
@@ -37,9 +44,8 @@ namespace FirstProject.Characters.Attack
 
         private void HandleAnimations()
         {
-            _character.SetVelocity(_rb.linearVelocity.x);
+            _charAnimator.SetVelocity(_rb.linearVelocity.x);
         }
-
 
         public void DamageTargets()
         {
@@ -47,44 +53,56 @@ namespace FirstProject.Characters.Attack
             foreach (Collider2D enemy in enemyColliders)
             {
                 Character entityTarget = enemy.GetComponent<Character>();
-                entityTarget.TakeDamage(_character.GetCurrentDamage());
-                if (_random.Next(1, 101) <= _stunProbabilityInPercent)
+                entityTarget.TakeDamage(_stats.CurrentDamage);
+                int chance = Random.Range(0, 100);
+                if (chance <= _stunProbabilityInPercent)
                 {
-                    entityTarget.ApplyEffect(stun);
+                    entityTarget.ApplyEffect(_stun);
                 }
             }
         }
 
-        protected void HandleMovement()
+        private void HandleMovement()
         {
             if (_canMove)
-                _rb.linearVelocity = new Vector2(_character.FacingDirection() * _moveSpeed, _rb.linearVelocity.y);
+            {
+                _rb.linearVelocity = new Vector2(_facing.FacingDirection * _moveSpeed, _rb.linearVelocity.y);
+            }
             else
             {
                 _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
             }
         }
 
+        private void SetAttacking(bool enable)
+        {
+            if (_isAttacking == enable)
+            {
+                return;
+            }
+            _isAttacking = enable;
+            _charAnimator.ToggleAttack(enable);
+        }
+
         protected override void HandleAttack()
         {
-            if (_character.IsDead) return;
+            if (_death.IsDead)
+            {
+                return;
+            }
 
-            if (_character.CanAttack() && _enemyDetected)
-            {
-                _character.ToggleAttack(true);
-            }
-            else
-            {
-                _character.ToggleAttack(false);
-            }
+            bool shouldAttack = CanAttack() && _enemyDetected;
+
+            SetAttacking(shouldAttack);
         }
 
-        public void EnableMovement(bool enable)
-        {
-            _canMove = enable;
-        }
         private void OnDrawGizmos()
         {
+            if (_attackPoint == null)
+            {
+                return;
+            }
+
             Gizmos.DrawWireSphere(_attackPoint.position, _attackRadius);
         }
     }

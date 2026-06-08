@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using FirstProject.Characters;
 
 namespace FirstProject.CharacterEffect
 {
@@ -16,13 +15,13 @@ namespace FirstProject.CharacterEffect
             _tickDamage = tickDamage;
         }
 
-        public override IEnumerator Run(Character character)
+        public override IEnumerator Run(CharacterEffectContext context)
         {
             float elapsed = 0f;
 
             while (elapsed < _duration)
             {
-                character.TakeDamage(_tickDamage);
+                context.TakeDamage(_tickDamage);
 
                 yield return new WaitForSeconds(_interval);
 

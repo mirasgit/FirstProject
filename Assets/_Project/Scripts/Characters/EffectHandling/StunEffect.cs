@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using FirstProject.Characters;
 
 namespace FirstProject.CharacterEffect
 {
@@ -14,13 +13,13 @@ namespace FirstProject.CharacterEffect
             _duration = duration;
         }
 
-        public override IEnumerator Run(Character character)
+        public override IEnumerator Run(CharacterEffectContext context)
         {
-            character.EnablePlayStun(true);
+            context.EnablePlayStun(true);
 
             yield return new WaitForSeconds(_duration);
 
-            character.EnablePlayStun(false);
+            context.EnablePlayStun(false);
         }
     }
 }

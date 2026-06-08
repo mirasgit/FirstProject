@@ -2,20 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FirstProject.Characters;
 
 namespace FirstProject.CharacterEffect
 {
     public class CharacterEffects : MonoBehaviour
     {
-        private Character _character;
-
+        private CharacterEffectContext _context;
         private readonly List<CharacterApplicableEffect> _effects = new();
+
         public event Action<CharacterApplicableEffect> EffectApplied;
         public event Action EffectEnded;
-        public void Initialize(Character character)
+
+        public void SetContext(CharacterEffectContext context)
         {
-            _character = character;
+            _context = context;
         }
 
         public void Apply(CharacterApplicableEffect effect)
@@ -32,7 +32,7 @@ namespace FirstProject.CharacterEffect
 
         private IEnumerator RunEffect(CharacterApplicableEffect effect)
         {
-            yield return effect.Run(_character);
+            yield return effect.Run(_context);
             EffectEnded?.Invoke();
             _effects.Remove(effect);
         }

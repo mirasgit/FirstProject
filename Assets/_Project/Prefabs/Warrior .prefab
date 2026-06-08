@@ -469,17 +469,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea6585b765bd92d478ea950767ca0de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WarriorAttack
-  _character: {fileID: 3637227649246280339}
   _attackPoint: {fileID: 7783847653096326672}
   _whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
-  _enemyDetected: 0
+  _attackCooldown: 1
   _moveSpeed: 3.5
   _attackRadius: 1
-  _canMove: 1
-  _stunDuration: 1
-  _stunProbabilityInPercent: 50
+  _stunDuration: 2
+  _stunProbabilityInPercent: 35
 --- !u!114 &3637227649246280339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,10 +514,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  <MaxHealth>k__BackingField: 100
-  <CurrentHealth>k__BackingField: 0
-  <MaxDamage>k__BackingField: 10
-  <CurrentDamage>k__BackingField: 0
+  _maxHealth: 200
+  _maxDamage: 15
 --- !u!114 &2320580648201096190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,8 +541,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterFacing
   _visualRoot: {fileID: 4106942442036054939}
-  FacingRight: 1
-  <FacingDirection>k__BackingField: 1
 --- !u!114 &2355975905890485860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,7 +553,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b28e1131f3592448cb469c0725cff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDeath
-  <IsDead>k__BackingField: 0
 --- !u!50 &6445705411544394733
 Rigidbody2D:
   serializedVersion: 5
@@ -669,7 +662,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 295b11ffb320f9a49a62cf11c70663ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterUI
-  _character: {fileID: 3637227649246280339}
   _healthFillImage: {fileID: 8847210815229561904}
   _effectText: {fileID: 2246694991538173136}
   _floatingTextSpawnPoint: {fileID: 9367165673793985}

@@ -78,7 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 295b11ffb320f9a49a62cf11c70663ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterUI
-  _character: {fileID: 4919403921253785362}
   _healthFillImage: {fileID: 9031272296865252757}
   _effectText: {fileID: 2560826028689933659}
   _floatingTextSpawnPoint: {fileID: 4984847759455334601}
@@ -368,16 +367,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d2089f2d79f5fb448a9be44e8ed2999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArcherAttack
-  _character: {fileID: 4919403921253785362}
   _attackPoint: {fileID: 1397880232827074860}
   _whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
+  _attackCooldown: 0.1
   _projectile: {fileID: 3678856024982396375, guid: 5d43bedc16e1052498f7c628316f5cb9, type: 3}
   _poisonDuration: 3
-  _poisonInterval: 0.5
-  _poisonTickDamage: 2
-  _poisonProbabilityInPercent: 50
+  _poisonInterval: 0.3
+  _poisonTickDamage: 3
+  _poisonProbabilityInPercent: 33
 --- !u!114 &4919403921253785362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,10 +413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  <MaxHealth>k__BackingField: 100
-  <CurrentHealth>k__BackingField: 0
-  <MaxDamage>k__BackingField: 10
-  <CurrentDamage>k__BackingField: 0
+  _maxHealth: 150
+  _maxDamage: 10
 --- !u!114 &4291898121581258513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,7 +439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b28e1131f3592448cb469c0725cff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDeath
-  <IsDead>k__BackingField: 0
 --- !u!114 &5653099707580177873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,8 +452,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterFacing
   _visualRoot: {fileID: 876811886570482319}
-  FacingRight: 1
-  <FacingDirection>k__BackingField: 1
 --- !u!70 &2368573923609754915
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -19,34 +19,41 @@ namespace FirstProject.UI
 
         private const string DAMAGE_TEXT_FORMAT = "0";
         private const string EMPTY_EFFECT_TEXT = "";
+
         private void Awake()
         {
             _mainCamera = Camera.main;
 
             if (_effectText != null)
+            {
                 _effectText.text = "";
-
+            }
         }
 
         public void Initialize(Character character)
         {
             _character = character;
             _isInitialized = true;
-            Subscribe();
 
-            OnHealthChanged(_character.GetCurrentHealth(), _character.GetMaxHealth());
+            Subscribe();
+            OnHealthChanged(_character.CurrentHealth, _character.MaxHealth);
         }
+
         private void Update()
         {
             if (!_isInitialized)
+            {
                 return;
+            }
 
             FaceCamera();
         }
+
         private void OnDestroy()
         {
             Unsubscribe();
         }
+
         private void Subscribe()
         {
             _character.HealthChanged += OnHealthChanged;
@@ -58,7 +65,9 @@ namespace FirstProject.UI
         private void Unsubscribe()
         {
             if (!_isInitialized || _character == null)
+            {
                 return;
+            }
 
             _character.HealthChanged -= OnHealthChanged;
             _character.DamageTaken -= OnDamageTaken;
@@ -70,18 +79,22 @@ namespace FirstProject.UI
         {
             UpdateHealthBar(currentHealth, maxHealth);
         }
+
         private void OnDamageTaken(float damage)
         {
             ShowDamage(damage);
         }
+
         private void OnEffectApplied(CharacterApplicableEffect effect)
         {
             ShowEffect(effect.Name);
         }
+
         private void OnEffectEnd()
         {
             HideEffect();
         }
+
         private void UpdateHealthBar(float currentHealth, float maxHealth)
         {
             float normalizedHealth = currentHealth / maxHealth;
@@ -90,27 +103,42 @@ namespace FirstProject.UI
 
         private void FaceCamera()
         {
-            if (_mainCamera == null) return;
+            if (_mainCamera == null)
+            {
+                return;
+            }
+
             transform.forward = _mainCamera.transform.forward;
         }
 
-        public void ShowDamage(float damage)
+        private void ShowDamage(float damage)
         {
-            if (_floatingTextPrefab == null || _floatingTextSpawnPoint == null) return;
+            if (_floatingTextPrefab == null || _floatingTextSpawnPoint == null)
+            {
+                return;
+            }
 
             FloatingText textInstance = Instantiate(_floatingTextPrefab, _floatingTextSpawnPoint.position, Quaternion.identity);
             textInstance.SetText(damage.ToString(DAMAGE_TEXT_FORMAT));
         }
 
-        public void ShowEffect(string effectName)
+        private void ShowEffect(string effectName)
         {
-            if (_effectText == null) return;
+            if (_effectText == null)
+            {
+                return;
+            }
+
             _effectText.text = effectName;
         }
 
-        public void HideEffect()
+        private void HideEffect()
         {
-            if (_effectText == null) return;
+            if (_effectText == null)
+            {
+                return;
+            }
+
             _effectText.text = EMPTY_EFFECT_TEXT;
         }
     }

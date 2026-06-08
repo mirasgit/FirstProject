@@ -13,8 +13,8 @@ namespace FirstProject.Battle
         private readonly Transform _rightSpawnPoint;
         private Character _leftCharacter;
         private Character _rightCharacter;
-        private bool _battleStarted;
-        private bool _battleFinished;
+        private BattleState _state;
+
         public BattleFlow(
            CharacterFactory characterFactory,
            BattleView battleView,
@@ -28,46 +28,19 @@ namespace FirstProject.Battle
             _leftSpawnPoint = leftSpawnPoint;
             _rightSpawnPoint = rightSpawnPoint;
         }
+
         public void ShowStartScreen()
         {
+            _state = BattleState.StartScreen;
             _battleView.ShowStartScreen();
         }
 
-        private void CheckForDeath()
-        {
-            if (!_battleStarted)
-            {
-                return;
-            }
-
-            if (_battleFinished) 
-            {
-                return;
-            }
-
-            if (_leftCharacter == null || _rightCharacter == null)
-            {
-                return;
-            }
-
-            if (_leftCharacter.IsDead)
-            {
-                _battleFinished = true;
-                _battleView.ShowWinner(BattleResult.RightWon);
-
-            }
-            else if (_rightCharacter.IsDead)
-            {
-                _battleFinished = true;
-                _battleView.ShowWinner(BattleResult.LeftWon);
-            }
-        }
         public void StartBattle()
         {
             ClearBattle();
+            _state = BattleState.Running;
             SpawnCharacters();
             _battleView.ShowBattleScreen();
-            _battleStarted = true;
         }
 
         public void RestartBattle()
@@ -79,15 +52,37 @@ namespace FirstProject.Battle
         {
             _leftCharacter = _characterFactory.SpawnRandomCharacter(_leftSpawnPoint, true);
             _rightCharacter = _characterFactory.SpawnRandomCharacter(_rightSpawnPoint, false);
-            _rightCharacter.StartBattle();
-            _leftCharacter.StartBattle();
             _rightCharacter.Died += OnCharacterDied;
             _leftCharacter.Died += OnCharacterDied;
+            _rightCharacter.AllowToFight();
+            _leftCharacter.AllowToFight();
         }
 
-        private void OnCharacterDied()
+        private void HandleCharacterDeath()
         {
-            CheckForDeath();
+            if (_state != BattleState.Running)
+            {
+                return;
+            }
+
+            if (_leftCharacter == null || _rightCharacter == null)
+            {
+                return;
+            }
+
+            _leftCharacter.DisallowToFight();
+            _rightCharacter.DisallowToFight();
+
+            if (_leftCharacter.IsDead)
+            {
+                _state = BattleState.Finished;
+                _battleView.ShowWinner(BattleResult.RightWon);
+            }
+            else if (_rightCharacter.IsDead)
+            {
+                _state = BattleState.Finished;
+                _battleView.ShowWinner(BattleResult.LeftWon);
+            }
         }
 
         private void ClearBattle()
@@ -96,18 +91,23 @@ namespace FirstProject.Battle
             {
                 _rightCharacter.Died -= OnCharacterDied;
             }
+
             if (_leftCharacter != null)
             {
                 _leftCharacter.Died -= OnCharacterDied;
             }
+
             _battleCleanupService.DestroyCharacter(_leftCharacter);
             _battleCleanupService.DestroyCharacter(_rightCharacter);
             _battleCleanupService.ClearAllProjectiles();
 
             _leftCharacter = null;
             _rightCharacter = null;
-            _battleStarted = false;
-            _battleFinished = false;
+        }
+
+        private void OnCharacterDied()
+        {
+            HandleCharacterDeath();
         }
     }
 }

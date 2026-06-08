@@ -14,11 +14,18 @@ namespace FirstProject.Characters.Attack
 
         public void SpawnProjectile()
         {
+            if (_projectile == null || _attackPoint == null)
+            {
+                return;
+            }
+
             Arrow newProjectile = Instantiate(_projectile, _attackPoint.position, _attackPoint.rotation);
-            newProjectile.SetFacingDirection(_character.FacingDirection());
-            newProjectile.SetDamage(_character.GetCurrentDamage());
+            newProjectile.SetFacingDirection(_facing.FacingDirection);
+            newProjectile.SetDamage(_stats.CurrentDamage);
             newProjectile.Initialize(_projectileRegistry);
-            if (_random.Next(1, 101) <= _poisonProbabilityInPercent)
+            int chance = Random.Range(0, 100);
+
+            if (chance <= _poisonProbabilityInPercent)
             {
                 newProjectile.SetEffect(_poisonDuration, _poisonInterval, _poisonTickDamage);
             }

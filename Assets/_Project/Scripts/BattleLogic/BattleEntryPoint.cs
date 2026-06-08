@@ -17,10 +17,12 @@ namespace FirstProject.Battle
             _startButton.onClick.AddListener(OnStartButtonClicked);
             _restartButton.onClick.AddListener(OnRestartButtonClicked);
         }
+
         private void Start()
         {
             _battleFlow.ShowStartScreen();
         }
+
         private void OnStartButtonClicked()
         {
             _battleFlow.StartBattle();
@@ -30,6 +32,7 @@ namespace FirstProject.Battle
         {
             _battleFlow.RestartBattle();
         }
+
         private void OnDestroy()
         {
             _startButton.onClick.RemoveListener(OnStartButtonClicked);
