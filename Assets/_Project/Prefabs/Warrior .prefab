@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 30533067936199138}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.75, y: 9.82, z: 0}
+  m_LocalPosition: {x: 1.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -431,7 +431,6 @@ GameObject:
   - component: {fileID: 1119284163918153281}
   - component: {fileID: 2355975905890485860}
   - component: {fileID: 6445705411544394733}
-  - component: {fileID: 5757287688980802880}
   m_Layer: 6
   m_Name: 'Warrior '
   m_TagString: Untagged
@@ -473,10 +472,11 @@ MonoBehaviour:
   _whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
-  _attackCooldown: 1
+  _attackCooldown: 0.5
+  _attackSpeed: 1.2
   _moveSpeed: 3.5
   _attackRadius: 1
-  _stunDuration: 2
+  _stunDuration: 0.5
   _stunProbabilityInPercent: 35
 --- !u!114 &3637227649246280339
 MonoBehaviour:
@@ -514,7 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  _maxHealth: 200
+  _maxHealth: 175
   _maxDamage: 15
 --- !u!114 &2320580648201096190
 MonoBehaviour:
@@ -580,43 +580,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &5757287688980802880
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5058306753275247096}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.14112449, y: -0.38950467}
-  m_Size: {x: 1.0306296, y: 2.6370487}
-  m_Direction: 0
 --- !u!1 &5751680680662128995
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +638,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4106942442036054939}
-  m_Layer: 0
+  - component: {fileID: 6861526050713571642}
+  - component: {fileID: 535404780413045112}
+  m_Layer: 6
   m_Name: VisualRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -691,7 +656,7 @@ Transform:
   m_GameObject: {fileID: 6385075173795899150}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -9.91, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -699,6 +664,55 @@ Transform:
   - {fileID: 7783847653096326672}
   m_Father: {fileID: 6192415860055638835}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &6861526050713571642
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385075173795899150}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.058335543, y: -0.39668155}
+  m_Size: {x: 1.2233603, y: 2.820068}
+  m_Direction: 0
+--- !u!114 &535404780413045112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385075173795899150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 874c998f73b498c46be73d5c38f8b0cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.Characters.CharacterHitBox
 --- !u!1 &6688850610245947656
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,7 +816,7 @@ Transform:
   m_GameObject: {fileID: 7456834405577644768}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 9.91, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 1
   m_Children: []

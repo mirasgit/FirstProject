@@ -7,6 +7,7 @@ namespace FirstProject.Characters
         private Animator _anim;
         private readonly int _dieHash = Animator.StringToHash("Die");
         private readonly int _attackHash = Animator.StringToHash("Attack");
+        private readonly int _attackSpeedHash = Animator.StringToHash("AttackSpeed");
         private readonly int _stunHash = Animator.StringToHash("Stun");
         private readonly int _velocityHash = Animator.StringToHash("xVelocity");
 
@@ -24,10 +25,9 @@ namespace FirstProject.Characters
         {
             _anim.SetTrigger(_attackHash);
         }
-
-        public void ToggleAttack(bool enable)
+        public void SetAttackSpeed(float speed)
         {
-            _anim.SetBool(_attackHash, enable);
+            _anim.SetFloat(_attackSpeedHash, speed);
         }
 
         public void PlayStun()

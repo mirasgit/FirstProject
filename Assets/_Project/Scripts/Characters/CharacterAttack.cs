@@ -10,6 +10,7 @@ namespace FirstProject.Characters.Attack
         [SerializeField] protected Transform _attackPoint;
         [SerializeField] protected LayerMask _whatIsTarget;
         [SerializeField] protected float _attackCooldown = 1f;
+        [SerializeField] protected float _attackSpeed = 1f;
 
         protected CharacterStats _stats;
         protected CharacterFacing _facing;
@@ -19,7 +20,7 @@ namespace FirstProject.Characters.Attack
         protected ProjectileRegistry _projectileRegistry;
 
         private bool _isAllowedToFight;
-        private float _lastAttackTime;
+        protected float _lastAttackTime;
 
         public void Initialize(
             CharacterStats stats,
@@ -61,6 +62,11 @@ namespace FirstProject.Characters.Attack
             _charAnimator.PlayAttack();
         }
 
+        protected void SetAttackSpeed(float speed)
+        {
+            _charAnimator.SetAttackSpeed(speed);
+        }
+
         protected virtual void HandleAttack()
         {
             if (!CanAttack())
@@ -74,6 +80,8 @@ namespace FirstProject.Characters.Attack
             }
 
             _lastAttackTime = Time.time;
+
+            SetAttackSpeed(_attackSpeed);
             PlayAttack();
         }
     }

@@ -5,95 +5,116 @@ namespace FirstProject.Characters.Attack
 {
     public class WarriorAttack : CharacterAttack
     {
+        private const int MAX_TARGETS = 1; // the project is duels, no need to target more that one entity
+
         [Header("Warrior special info")]
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _attackRadius;
-        [SerializeField] private float _stunDuration = 1f;
+        [SerializeField] private float _stunDuration;
         [SerializeField] private int _stunProbabilityInPercent;
 
+        private Collider2D[] _enemyColliders = new Collider2D[MAX_TARGETS];
         private Rigidbody2D _rb;
-        private StunEffect _stun;
+        private ContactFilter2D _targetFilter;
 
-        private bool _canMove = true;
         private bool _enemyDetected;
-        private bool _isAttacking;
+        private float _currentMoveSpeed;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _stun = new StunEffect(_stunDuration);
+
+            _targetFilter = new ContactFilter2D();
+            _targetFilter.SetLayerMask(_whatIsTarget);
+            _targetFilter.useTriggers = true;
+
         }
 
         protected override void Update()
         {
-            HandleCollision();
+            DetectEnemy();
             HandleAttack();
-            HandleAnimations();
+            SetVelocity();
+        }
+        private void FixedUpdate()
+        {
             HandleMovement();
         }
 
-        public void EnableMovement(bool enable)
-        {
-            _canMove = enable;
-        }
-
-        private void HandleCollision()
+        private void DetectEnemy()
         {
             _enemyDetected = Physics2D.OverlapCircle(_attackPoint.position, _attackRadius, _whatIsTarget);
         }
 
-        private void HandleAnimations()
+        private void SetVelocity()
         {
-            _charAnimator.SetVelocity(_rb.linearVelocity.x);
+            _charAnimator.SetVelocity(_currentMoveSpeed);
         }
 
         public void DamageTargets()
         {
-            Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRadius, _whatIsTarget);
-            foreach (Collider2D enemy in enemyColliders)
+            int hitCount = Physics2D.OverlapCircle(
+                _attackPoint.position,
+                _attackRadius,
+                _targetFilter,
+                _enemyColliders);
+
+            for (int i = 0; i < hitCount; i++)
             {
-                Character entityTarget = enemy.GetComponent<Character>();
-                entityTarget.TakeDamage(_stats.CurrentDamage);
+                Collider2D enemy = _enemyColliders[i];
+
+                if (!enemy.TryGetComponent(out CharacterHitBox hitBox))
+                {
+                    continue;
+                }
+
+                Character target = hitBox.Character;
+
+                target.TakeDamage(_stats.CurrentDamage);
+
                 int chance = Random.Range(0, 100);
+
                 if (chance <= _stunProbabilityInPercent)
                 {
-                    entityTarget.ApplyEffect(_stun);
+                    target.ApplyEffect(new StunEffect(_stunDuration));
                 }
             }
         }
 
         private void HandleMovement()
         {
-            if (_canMove)
+            if (_death.IsDead || _effects.HasEffect(EffectType.Stun) || _enemyDetected)
             {
-                _rb.linearVelocity = new Vector2(_facing.FacingDirection * _moveSpeed, _rb.linearVelocity.y);
-            }
-            else
-            {
+                _currentMoveSpeed = 0f;
                 _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
-            }
-        }
-
-        private void SetAttacking(bool enable)
-        {
-            if (_isAttacking == enable)
-            {
                 return;
             }
-            _isAttacking = enable;
-            _charAnimator.ToggleAttack(enable);
+            _currentMoveSpeed = _moveSpeed;
+            _rb.linearVelocity = new Vector2(_facing.FacingDirection * _moveSpeed, _rb.linearVelocity.y);
+
         }
 
         protected override void HandleAttack()
         {
-            if (_death.IsDead)
+            if (!_enemyDetected)
+            {
+                return;
+            }
+            if (!CanAttack())
             {
                 return;
             }
 
-            bool shouldAttack = CanAttack() && _enemyDetected;
+            if (Time.time < _lastAttackTime + _attackCooldown)
+            {
+                return;
+            }
 
-            SetAttacking(shouldAttack);
+            _lastAttackTime = Time.time;
+
+                SetAttackSpeed(_attackSpeed);
+                _charAnimator.PlayAttack();
+
         }
 
         private void OnDrawGizmos()

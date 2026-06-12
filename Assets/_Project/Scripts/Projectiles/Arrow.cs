@@ -13,12 +13,12 @@ namespace FirstProject.Projectiles
         }
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.TryGetComponent(out Character target))
+            if (collision.gameObject.TryGetComponent(out CharacterHitBox target))
             {
-                target.TakeDamage(_damage);
+                target.Character.TakeDamage(_damage);
                 if (_poison != null)
                 {
-                    target.ApplyEffect(_poison);
+                    target.Character.ApplyEffect(_poison);
                 }
                 Destroy(gameObject);
             }

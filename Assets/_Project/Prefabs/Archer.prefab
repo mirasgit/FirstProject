@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 876811886570482319}
-  m_Layer: 0
+  - component: {fileID: 8624860536006776224}
+  - component: {fileID: 6382873008046804387}
+  m_Layer: 6
   m_Name: VisualRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,6 +35,55 @@ Transform:
   - {fileID: 1397880232827074860}
   m_Father: {fileID: 3622445823953754381}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &8624860536006776224
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501212520798276816}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.018455148, y: -0.95351386}
+  m_Size: {x: 0.9552257, y: 2.9070277}
+  m_Direction: 0
+--- !u!114 &6382873008046804387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501212520798276816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 874c998f73b498c46be73d5c38f8b0cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.Characters.CharacterHitBox
 --- !u!1 &3542380473271867655
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +379,6 @@ GameObject:
   - component: {fileID: 4291898121581258513}
   - component: {fileID: 898170992770469707}
   - component: {fileID: 5653099707580177873}
-  - component: {fileID: 2368573923609754915}
   - component: {fileID: 752842750349444620}
   m_Layer: 6
   m_Name: Archer
@@ -371,7 +421,8 @@ MonoBehaviour:
   _whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
-  _attackCooldown: 0.1
+  _attackCooldown: 0.2
+  _attackSpeed: 1.5
   _projectile: {fileID: 3678856024982396375, guid: 5d43bedc16e1052498f7c628316f5cb9, type: 3}
   _poisonDuration: 3
   _poisonInterval: 0.3
@@ -413,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  _maxHealth: 150
+  _maxHealth: 130
   _maxDamage: 10
 --- !u!114 &4291898121581258513
 MonoBehaviour:
@@ -452,43 +503,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterFacing
   _visualRoot: {fileID: 876811886570482319}
---- !u!70 &2368573923609754915
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7266667683711529744}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.05420649, y: -1.0063066}
-  m_Size: {x: 0.6968677, y: 2.78477}
-  m_Direction: 0
 --- !u!50 &752842750349444620
 Rigidbody2D:
   serializedVersion: 5

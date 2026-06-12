@@ -169,6 +169,7 @@ MonoBehaviour:
   _characterPrefabs:
   - {fileID: 3637227649246280339, guid: 3c21737a99d3dda49b5613d4a3adc3fd, type: 3}
   - {fileID: 5455666780557975157, guid: ecf0633e8f05f2c4d80658ce10f8a589, type: 3}
+  - {fileID: 4919403921253785362, guid: 7caf13a1f355359478a1c27c87aa5904, type: 3}
 --- !u!1 &264244270
 GameObject:
   m_ObjectHideFlags: 0

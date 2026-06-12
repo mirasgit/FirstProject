@@ -16,15 +16,5 @@ namespace FirstProject.Characters
         {
             _entity.DamageTargets();
         } 
-
-        private void DisableMovement()
-        {
-            _entity.EnableMovement(false);
-        }
-        
-        private void EnableMovement()
-        {
-            _entity.EnableMovement(true);
-        }
     }
 }

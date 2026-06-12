@@ -7,7 +7,6 @@ using System;
 namespace FirstProject.Characters
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(CapsuleCollider2D))]
     [RequireComponent(typeof(CharacterStats))]
     [RequireComponent(typeof(CharacterEffects))]
     [RequireComponent(typeof(CharacterAnimator))]

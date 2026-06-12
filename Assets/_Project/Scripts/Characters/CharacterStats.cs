@@ -5,8 +5,8 @@ namespace FirstProject.Characters
 {
     public class CharacterStats : MonoBehaviour
     {
-        [field: SerializeField] private float _maxHealth = 100;
-        [field: SerializeField] private float _maxDamage = 10;
+        [SerializeField] private float _maxHealth = 100;
+        [SerializeField] private float _maxDamage = 10;
 
         public float MaxHealth => _maxHealth;
         public float CurrentHealth { get; private set; }
