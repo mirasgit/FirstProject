@@ -60,11 +60,24 @@ namespace FirstProject.Projectiles
 
         protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.TryGetComponent(out Character target))
+            if (!collision.gameObject.TryGetComponent(out CharacterHitBox hitbox))
             {
-                target.TakeDamage(_damage);
-                Destroy(gameObject);
+                return;
             }
+            Character target = hitbox.Character;
+
+            if (target == null || target.IsDead)
+            {
+                return;
+            }
+
+            target.TakeDamage(_damage);
+            ApplyEffect(target);
+            Destroy(gameObject);
+        }
+        protected virtual void ApplyEffect(Character target)
+        {
+
         }
     }
 }

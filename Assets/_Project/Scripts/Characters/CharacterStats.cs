@@ -5,10 +5,8 @@ namespace FirstProject.Characters
 {
     public class CharacterStats : MonoBehaviour
     {
-        [SerializeField] private float _maxHealth = 100;
-        [SerializeField] private float _maxDamage = 10;
-
-        public float MaxHealth => _maxHealth;
+        [field: SerializeField] public float MaxDamage { get; private set; } = 10;
+        [field: SerializeField] public float MaxHealth { get; private set; } = 100;
         public float CurrentHealth { get; private set; }
         public float CurrentDamage { get; private set; }
 
@@ -17,14 +15,14 @@ namespace FirstProject.Characters
 
         private void Awake()
         {
-            CurrentHealth = _maxHealth;
-            CurrentDamage = _maxDamage;
+            CurrentHealth = MaxHealth;
+            CurrentDamage = MaxDamage;
         }
 
         public void TakeDamage(float damage)
         {
             CurrentHealth = Mathf.Max(0f, CurrentHealth - damage);
-            HealthChanged?.Invoke(CurrentHealth, _maxHealth);
+            HealthChanged?.Invoke(CurrentHealth, MaxHealth);
             DamageTaken?.Invoke(damage);
         }
 

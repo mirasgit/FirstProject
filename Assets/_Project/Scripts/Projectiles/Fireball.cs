@@ -1,4 +1,3 @@
-using UnityEngine;
 using FirstProject.CharacterEffect;
 using FirstProject.Characters;
 
@@ -13,17 +12,15 @@ namespace FirstProject.Projectiles
             _weakness = new WeaknessEffect(duration, coefficient);
         }
 
-        protected override void OnTriggerEnter2D(Collider2D collision)
+        protected override void ApplyEffect(Character target)
         {
-            if (collision.gameObject.TryGetComponent(out CharacterHitBox target))
+            if (_weakness == null)
             {
-                target.Character.TakeDamage(_damage);
-                if (_weakness != null)
-                {
-                    target.Character.ApplyEffect(_weakness);
-                }
-                Destroy(gameObject);
+                return;
             }
+
+            target.ApplyEffect(_weakness);
         }
+
     }
 }

@@ -1,8 +1,6 @@
 using UnityEngine;
 using FirstProject.Projectiles;
 using FirstProject.CharacterEffect;
-using FirstProject.Battle;
-
 namespace FirstProject.Characters.Attack
 {
     public class CharacterAttack : MonoBehaviour

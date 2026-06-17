@@ -5,7 +5,7 @@ namespace FirstProject.Characters.Attack
 {
     public class WarriorAttack : CharacterAttack
     {
-        private const int MAX_TARGETS = 1; // the project is duels, no need to target more that one entity
+        private const int MAX_TARGETS = 1;
 
         [Header("Warrior special info")]
         [SerializeField] private float _moveSpeed;
@@ -15,7 +15,6 @@ namespace FirstProject.Characters.Attack
 
         private Collider2D[] _enemyColliders = new Collider2D[MAX_TARGETS];
         private Rigidbody2D _rb;
-        private ContactFilter2D _targetFilter;
 
         private bool _enemyDetected;
         private float _currentMoveSpeed;
@@ -23,11 +22,6 @@ namespace FirstProject.Characters.Attack
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-
-            _targetFilter = new ContactFilter2D();
-            _targetFilter.SetLayerMask(_whatIsTarget);
-            _targetFilter.useTriggers = true;
-
         }
 
         protected override void Update()
@@ -41,9 +35,14 @@ namespace FirstProject.Characters.Attack
             HandleMovement();
         }
 
+        private int GetTargets()
+        {
+            return Physics2D.OverlapCircleNonAlloc(_attackPoint.position, _attackRadius, _enemyColliders, _whatIsTarget);
+        }
+
         private void DetectEnemy()
         {
-            _enemyDetected = Physics2D.OverlapCircle(_attackPoint.position, _attackRadius, _whatIsTarget);
+            _enemyDetected = GetTargets() > 0;
         }
 
         private void SetVelocity()
@@ -53,12 +52,7 @@ namespace FirstProject.Characters.Attack
 
         public void DamageTargets()
         {
-            int hitCount = Physics2D.OverlapCircle(
-                _attackPoint.position,
-                _attackRadius,
-                _targetFilter,
-                _enemyColliders);
-
+            int hitCount = GetTargets();
             for (int i = 0; i < hitCount; i++)
             {
                 Collider2D enemy = _enemyColliders[i];
@@ -69,6 +63,11 @@ namespace FirstProject.Characters.Attack
                 }
 
                 Character target = hitBox.Character;
+
+                if (target == null || target.IsDead)
+                {
+                    continue;
+                }
 
                 target.TakeDamage(_stats.CurrentDamage);
 
@@ -100,6 +99,7 @@ namespace FirstProject.Characters.Attack
             {
                 return;
             }
+
             if (!CanAttack())
             {
                 return;
@@ -112,8 +112,9 @@ namespace FirstProject.Characters.Attack
 
             _lastAttackTime = Time.time;
 
-                SetAttackSpeed(_attackSpeed);
-                _charAnimator.PlayAttack();
+            SetAttackSpeed(_attackSpeed);
+
+            _charAnimator.PlayAttack();
 
         }
 

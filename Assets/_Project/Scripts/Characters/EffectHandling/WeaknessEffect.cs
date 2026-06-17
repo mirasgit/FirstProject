@@ -5,15 +5,14 @@ namespace FirstProject.CharacterEffect
 {
     public class WeaknessEffect : CharacterApplicableEffect
     {
-        private readonly float _duration;
         private readonly float _coefficient;
         private float _oldDamage;
-
+        private readonly WaitForSeconds _duration;
         public WeaknessEffect(float duration, float coefficient)
             : base(EffectType.Weakness, "Weakness")
         {
-            _duration = duration;
             _coefficient = coefficient;
+            _duration = new WaitForSeconds(duration);
         }
 
         public override IEnumerator Run(CharacterEffectContext context)
@@ -24,7 +23,7 @@ namespace FirstProject.CharacterEffect
 
             context.ChangeDamageTo(newDamage);
 
-            yield return new WaitForSeconds(_duration);
+            yield return _duration;
 
             context.ChangeDamageTo(_oldDamage);
         }

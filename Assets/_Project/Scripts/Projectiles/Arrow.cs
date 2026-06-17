@@ -1,4 +1,3 @@
-using UnityEngine;
 using FirstProject.Characters;
 using FirstProject.CharacterEffect;
 
@@ -11,17 +10,14 @@ namespace FirstProject.Projectiles
         {
             _poison = new PoisonEffect(duration, interval, tickDamage);
         }
-        protected override void OnTriggerEnter2D(Collider2D collision)
+        protected override void ApplyEffect(Character target)
         {
-            if (collision.gameObject.TryGetComponent(out CharacterHitBox target))
+            if (_poison == null)
             {
-                target.Character.TakeDamage(_damage);
-                if (_poison != null)
-                {
-                    target.Character.ApplyEffect(_poison);
-                }
-                Destroy(gameObject);
+                return;
             }
+
+            target.ApplyEffect(_poison);
         }
     }
 }
