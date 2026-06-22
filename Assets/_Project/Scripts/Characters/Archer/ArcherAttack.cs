@@ -23,9 +23,8 @@ namespace FirstProject.Characters.Attack
             newProjectile.SetFacingDirection(_facing.FacingDirection);
             newProjectile.SetDamage(_stats.CurrentDamage);
             newProjectile.Initialize(_projectileRegistry);
-            int chance = Random.Range(0, 100);
 
-            if (chance <= _poisonProbabilityInPercent)
+            if (Random.value <= _poisonProbabilityInPercent / 100f)
             {
                 newProjectile.SetEffect(_poisonDuration, _poisonInterval, _poisonTickDamage);
             }

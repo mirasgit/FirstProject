@@ -13,7 +13,7 @@ namespace FirstProject.Characters.Attack
         [SerializeField] private float _stunDuration;
         [SerializeField] private int _stunProbabilityInPercent;
 
-        private Collider2D[] _enemyColliders = new Collider2D[MAX_TARGETS];
+        private readonly Collider2D[] _enemyColliders = new Collider2D[MAX_TARGETS];
         private Rigidbody2D _rb;
 
         private bool _enemyDetected;
@@ -71,9 +71,8 @@ namespace FirstProject.Characters.Attack
 
                 target.TakeDamage(_stats.CurrentDamage);
 
-                int chance = Random.Range(0, 100);
 
-                if (chance <= _stunProbabilityInPercent)
+                if (Random.value <= _stunProbabilityInPercent / 100f)
                 {
                     target.ApplyEffect(new StunEffect(_stunDuration));
                 }

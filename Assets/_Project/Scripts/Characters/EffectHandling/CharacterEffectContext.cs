@@ -6,15 +6,15 @@ namespace FirstProject.CharacterEffect
 {
     public class CharacterEffectContext 
     {
-        public CharacterStats Stats { get; private set; }
-        public CharacterAnimator Animator{ get; private set; }
+        private readonly CharacterStats _stats;
+        private readonly CharacterAnimator _animator;
 
         private readonly Action<float> _takeDamage;
         
         public CharacterEffectContext(CharacterStats stats, CharacterAnimator animator, Action<float> takeDamage)
         {
-            Stats = stats;
-            Animator = animator;
+            _stats = stats;
+            _animator = animator;
             _takeDamage = takeDamage;
         }
 
@@ -25,23 +25,23 @@ namespace FirstProject.CharacterEffect
 
         public float GetCurrentDamage()
         {
-            return Stats.CurrentDamage;
+            return _stats.CurrentDamage;
         }
 
         public void ChangeDamageTo(float damage)
         {
-            Stats.ChangeDamage(damage);
+            _stats.ChangeDamage(damage);
         }
 
         public void EnablePlayStun(bool enable)
         {
             if (enable)
             {
-                Animator.PlayStun();
+                _animator.PlayStun();
             }
             else
             {
-                Animator.StopPlayStun();
+                _animator.StopPlayStun();
             }
         }
     }
