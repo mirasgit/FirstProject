@@ -1,6 +1,7 @@
 using UnityEngine;
 using FirstProject.CharacterEffect;
 
+
 namespace FirstProject.Characters.Attack
 {
     public class WarriorAttack : CharacterAttack
@@ -16,20 +17,32 @@ namespace FirstProject.Characters.Attack
         private readonly Collider2D[] _enemyColliders = new Collider2D[MAX_TARGETS];
         private Rigidbody2D _rb;
 
+        private int _hitCount;
         private bool _enemyDetected;
         private float _currentMoveSpeed;
-
+        private ContactFilter2D _targetFilter;
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
+            _targetFilter = new ContactFilter2D();
+            _targetFilter.SetLayerMask(_whatIsTarget);
+            _targetFilter.useLayerMask = true;
+            _targetFilter.useTriggers = true;
         }
 
         protected override void Update()
         {
-            DetectEnemy();
+            DetectEnemies();
             HandleAttack();
             SetVelocity();
         }
+
+        private void DetectEnemies()
+        {
+            _hitCount = GetTargets();
+            _enemyDetected = _hitCount > 0;
+        }
+
         private void FixedUpdate()
         {
             HandleMovement();
@@ -37,12 +50,7 @@ namespace FirstProject.Characters.Attack
 
         private int GetTargets()
         {
-            return Physics2D.OverlapCircleNonAlloc(_attackPoint.position, _attackRadius, _enemyColliders, _whatIsTarget);
-        }
-
-        private void DetectEnemy()
-        {
-            _enemyDetected = GetTargets() > 0;
+            return Physics2D.OverlapCircle(_attackPoint.position, _attackRadius, _targetFilter, _enemyColliders);
         }
 
         private void SetVelocity()
@@ -52,8 +60,11 @@ namespace FirstProject.Characters.Attack
 
         public void DamageTargets()
         {
-            int hitCount = GetTargets();
-            for (int i = 0; i < hitCount; i++)
+            if (_hitCount <= 0) 
+            {
+                return;
+            }
+            for (int i = 0; i < _hitCount; i++)
             {
                 Collider2D enemy = _enemyColliders[i];
 
@@ -72,7 +83,7 @@ namespace FirstProject.Characters.Attack
                 target.TakeDamage(_stats.CurrentDamage);
 
 
-                if (Random.value <= _stunProbabilityInPercent / 100f)
+                if (Random.value <= _stunProbabilityInPercent / TO_PERCENT_MULTIPLIER)
                 {
                     target.ApplyEffect(new StunEffect(_stunDuration));
                 }
@@ -99,22 +110,7 @@ namespace FirstProject.Characters.Attack
                 return;
             }
 
-            if (!CanAttack())
-            {
-                return;
-            }
-
-            if (Time.time < _lastAttackTime + _attackCooldown)
-            {
-                return;
-            }
-
-            _lastAttackTime = Time.time;
-
-            SetAttackSpeed(_attackSpeed);
-
-            _charAnimator.PlayAttack();
-
+            base.HandleAttack();
         }
 
         private void OnDrawGizmos()

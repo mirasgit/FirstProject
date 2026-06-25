@@ -13,7 +13,6 @@ namespace FirstProject.UI
         [SerializeField] private Transform _floatingTextSpawnPoint;
         [SerializeField] private FloatingText _floatingTextPrefab;
 
-        private Camera _mainCamera;
         private Character _character;
         private bool _isInitialized;
 
@@ -22,11 +21,10 @@ namespace FirstProject.UI
 
         private void Awake()
         {
-            _mainCamera = Camera.main;
 
             if (_effectText != null)
             {
-                _effectText.text = "";
+                _effectText.text = EMPTY_EFFECT_TEXT;
             }
         }
 
@@ -45,8 +43,6 @@ namespace FirstProject.UI
             {
                 return;
             }
-
-            FaceCamera();
         }
 
         private void OnDestroy()
@@ -99,16 +95,6 @@ namespace FirstProject.UI
         {
             float normalizedHealth = currentHealth / maxHealth;
             _healthFillImage.fillAmount = normalizedHealth;
-        }
-
-        private void FaceCamera()
-        {
-            if (_mainCamera == null)
-            {
-                return;
-            }
-
-            transform.forward = _mainCamera.transform.forward;
         }
 
         private void ShowDamage(float damage)

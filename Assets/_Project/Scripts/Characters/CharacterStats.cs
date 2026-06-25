@@ -28,6 +28,11 @@ namespace FirstProject.Characters
 
         public void ChangeDamage(float damage)
         {
+            if (damage <= 0f)
+            {
+                return;
+            }
+
             CurrentDamage = damage;
         }
     }

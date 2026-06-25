@@ -16,7 +16,7 @@ namespace FirstProject.Characters.Attack
         protected CharacterDeath _death;
         protected CharacterEffects _effects;
         protected ProjectileRegistry _projectileRegistry;
-
+        protected const float TO_PERCENT_MULTIPLIER = 100f;
         private bool _isAllowedToFight;
         protected float _lastAttackTime;
 

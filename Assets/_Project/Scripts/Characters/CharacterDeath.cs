@@ -4,10 +4,11 @@ namespace FirstProject.Characters
 {
     public class CharacterDeath : MonoBehaviour
     {
+        private const string DEAD_CHARACTER_LAYER = "DeadCharacter";
+
         private CharacterAnimator _charAnimator;
         public bool IsDead { get; private set; } = false;
 
-        private const string DEAD_CHARACTER_LAYER = "DeadCharacter";
 
         private void Awake()
         {

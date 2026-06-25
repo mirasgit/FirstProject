@@ -23,7 +23,7 @@ namespace FirstProject.Characters.Attack
             newProjectile.SetDamage(_stats.CurrentDamage);
             newProjectile.Initialize(_projectileRegistry);
 
-            if (Random.value <= _weaknessProbabilityInPercent / 100f)
+            if (Random.value <= _weaknessProbabilityInPercent / TO_PERCENT_MULTIPLIER)
             {
                 newProjectile.SetEffect(_weaknessDuration, _weaknessCoefficient);
             }
