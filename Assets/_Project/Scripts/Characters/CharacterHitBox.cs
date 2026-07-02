@@ -7,11 +7,11 @@ namespace FirstProject.Characters
     {
         private Character _character;
 
+        public Character Character =>_character;
+
         private void Awake()
         {
             _character = GetComponentInParent<Character>();
         }
-
-        public Character Character =>_character;
     }
 }

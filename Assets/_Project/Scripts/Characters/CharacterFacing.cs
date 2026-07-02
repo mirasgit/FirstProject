@@ -11,6 +11,7 @@ namespace FirstProject.Characters
         private const float RIGHT_ROTATION_Y = 0f;
         private const float LEFT_ROTATION_Y = 180f;
         private const float ZERO_ROTATION = 0f;
+
         public int FacingDirection { get; private set; }
 
         public void SetFacingRight(bool facingRight)

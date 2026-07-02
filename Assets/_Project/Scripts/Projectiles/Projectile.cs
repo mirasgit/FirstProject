@@ -64,6 +64,7 @@ namespace FirstProject.Projectiles
             {
                 return;
             }
+
             Character target = hitbox.Character;
 
             if (target == null || target.IsDead)

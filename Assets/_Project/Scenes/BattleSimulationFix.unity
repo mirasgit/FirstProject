@@ -163,6 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb2133a5a8a1cb42b7c6809ce04cab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleCompositionRoot
+  _startButton: {fileID: 1918710749}
+  _restartButton: {fileID: 1304432193}
   _battleView: {fileID: 802465548}
   _leftSpawnPoint: {fileID: 264244271}
   _rightSpawnPoint: {fileID: 1160689081}
@@ -201,53 +203,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2092046419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &279491051
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 279491052}
-  - component: {fileID: 279491053}
-  m_Layer: 0
-  m_Name: BattleEntryPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &279491052
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279491051}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1090334629}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &279491053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279491051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ca9b602fa744f844a63d020ed67d986, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BattleEntryPoint
-  _compositionRoot: {fileID: 117255517}
-  _startButton: {fileID: 1918710749}
-  _restartButton: {fileID: 1304432193}
 --- !u!1 &400669895
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,7 +931,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 279491052}
   - {fileID: 117255516}
   - {fileID: 802465547}
   m_Father: {fileID: 0}

@@ -464,8 +464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  _maxHealth: 130
-  _maxDamage: 10
+  <MaxDamage>k__BackingField: 10
+  <MaxHealth>k__BackingField: 100
 --- !u!114 &4291898121581258513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,6 +490,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b28e1131f3592448cb469c0725cff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDeath
+  _deadLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &5653099707580177873
 MonoBehaviour:
   m_ObjectHideFlags: 0

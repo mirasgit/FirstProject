@@ -20,6 +20,7 @@ namespace FirstProject.Projectiles
 
             _projectiles.Add(projectile);
         }
+
         public void Unregister(Projectile projectile)
         {
             if (projectile == null)

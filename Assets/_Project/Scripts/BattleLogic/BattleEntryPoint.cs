@@ -1,26 +1,28 @@
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace FirstProject.Battle
 {
-    public class BattleEntryPoint : MonoBehaviour
+    public class BattleEntryPoint
     {
-        [SerializeField] private BattleCompositionRoot _compositionRoot;
-        [SerializeField] private Button _startButton;
-        [SerializeField] private Button _restartButton;
+        private readonly Button _startButton;
+        private readonly Button _restartButton;
+        private readonly BattleFlow _battleFlow;
 
-        private BattleFlow _battleFlow;
-
-        private void Awake()
+        public BattleEntryPoint(Button startButton, Button restartButton, BattleFlow battleflow)
         {
-            _battleFlow = _compositionRoot.Compose();
-            _startButton.onClick.AddListener(OnStartButtonClicked);
-            _restartButton.onClick.AddListener(OnRestartButtonClicked);
+            _startButton = startButton;
+            _restartButton = restartButton;
+            _battleFlow = battleflow;
         }
 
-        private void Start()
+        public void Start()
         {
             _battleFlow.ShowStartScreen();
+        }
+        public void Subscribe()
+        {
+            _startButton.onClick.AddListener(OnStartButtonClicked);
+            _restartButton.onClick.AddListener(OnRestartButtonClicked);
         }
 
         private void OnStartButtonClicked()
@@ -33,7 +35,7 @@ namespace FirstProject.Battle
             _battleFlow.RestartBattle();
         }
 
-        private void OnDestroy()
+        public void Unsubscribe()
         {
             _startButton.onClick.RemoveListener(OnStartButtonClicked);
             _restartButton.onClick.RemoveListener(OnRestartButtonClicked);

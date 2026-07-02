@@ -58,7 +58,7 @@ namespace FirstProject.Battle
             _leftCharacter.AllowToFight();
         }
 
-        private void HandleCharacterDeath()
+        private void OnCharacterDied()
         {
             if (_state != BattleState.Running)
             {
@@ -103,11 +103,6 @@ namespace FirstProject.Battle
 
             _leftCharacter = null;
             _rightCharacter = null;
-        }
-
-        private void OnCharacterDied()
-        {
-            HandleCharacterDeath();
         }
     }
 }

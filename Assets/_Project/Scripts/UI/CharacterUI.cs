@@ -37,14 +37,6 @@ namespace FirstProject.UI
             OnHealthChanged(_character.CurrentHealth, _character.MaxHealth);
         }
 
-        private void Update()
-        {
-            if (!_isInitialized)
-            {
-                return;
-            }
-        }
-
         private void OnDestroy()
         {
             Unsubscribe();
