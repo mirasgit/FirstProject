@@ -12,7 +12,7 @@ namespace FirstProject.Characters.Attack
 
         protected CharacterStats _stats;
         protected CharacterFacing _facing;
-        protected CharacterAnimator _charAnimator;
+        protected CharacterAnimator _characterAnimator;
         protected CharacterDeath _death;
         protected CharacterEffects _effects;
         protected ProjectileRegistry _projectileRegistry;
@@ -29,7 +29,7 @@ namespace FirstProject.Characters.Attack
         {
             _stats = stats;
             _facing = facing;
-            _charAnimator = characterAnimator;
+            _characterAnimator = characterAnimator;
             _death = death;
             _effects = effects;
             _projectileRegistry = projectileRegistry;
@@ -57,12 +57,12 @@ namespace FirstProject.Characters.Attack
 
         private void PlayAttack()
         {
-            _charAnimator.PlayAttack();
+            _characterAnimator.PlayAttack();
         }
 
         protected void SetAttackSpeed(float speed)
         {
-            _charAnimator.SetAttackSpeed(speed);
+            _characterAnimator.SetAttackSpeed(speed);
         }
 
         protected virtual void HandleAttack()

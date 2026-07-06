@@ -472,7 +472,7 @@ MonoBehaviour:
   _attackSpeed: 1.5
   _projectile: {fileID: 6625403975366836989, guid: 12a94a3136db99e42a30a78b518d0c00, type: 3}
   _weaknessDuration: 4
-  _weaknessCoefficient: 0.8
+  _weaknessCoefficient: 0.5
   _weaknessProbabilityInPercent: 50
 --- !u!114 &5455666780557975157
 MonoBehaviour:
@@ -498,8 +498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  <MaxDamage>k__BackingField: 10
-  <MaxHealth>k__BackingField: 100
+  <MaxDamage>k__BackingField: 20
+  <MaxHealth>k__BackingField: 150
 --- !u!114 &5804883697193863740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,7 +588,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1419627270665686091}
-  - component: {fileID: 4192123863071037594}
+  - component: {fileID: 3544113007992001682}
   m_Layer: 6
   m_Name: UI Root
   m_TagString: Untagged
@@ -612,7 +612,7 @@ Transform:
   - {fileID: 4697477137028974437}
   m_Father: {fileID: 2385974025381496950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4192123863071037594
+--- !u!114 &3544113007992001682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -621,9 +621,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6370875970807714773}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 295b11ffb320f9a49a62cf11c70663ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 4221a41dbef3e814ebeb5e653eab5488, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterUI
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.UI.CharacterView
   _healthFillImage: {fileID: 1562939942407856079}
   _effectText: {fileID: 5731759458142719591}
   _floatingTextSpawnPoint: {fileID: 6337722486778711863}

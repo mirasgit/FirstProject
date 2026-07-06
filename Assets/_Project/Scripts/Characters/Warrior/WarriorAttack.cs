@@ -55,7 +55,7 @@ namespace FirstProject.Characters.Attack
 
         private void SetVelocity()
         {
-            _charAnimator.SetVelocity(_currentMoveSpeed);
+            _characterAnimator.SetVelocity(_currentMoveSpeed);
         }
 
         public void DamageTargets()

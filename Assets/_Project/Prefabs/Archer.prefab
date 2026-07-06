@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2342864475158548764}
-  - component: {fileID: 5181274513233646125}
+  - component: {fileID: 8288718810412368058}
   m_Layer: 6
   m_Name: UI Root
   m_TagString: Untagged
@@ -117,7 +117,7 @@ Transform:
   - {fileID: 900873791826289335}
   m_Father: {fileID: 3622445823953754381}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5181274513233646125
+--- !u!114 &8288718810412368058
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,9 +126,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3542380473271867655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 295b11ffb320f9a49a62cf11c70663ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 4221a41dbef3e814ebeb5e653eab5488, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterUI
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.UI.CharacterView
   _healthFillImage: {fileID: 9031272296865252757}
   _effectText: {fileID: 2560826028689933659}
   _floatingTextSpawnPoint: {fileID: 4984847759455334601}
@@ -464,8 +464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  <MaxDamage>k__BackingField: 10
-  <MaxHealth>k__BackingField: 100
+  <MaxDamage>k__BackingField: 15
+  <MaxHealth>k__BackingField: 200
 --- !u!114 &4291898121581258513
 MonoBehaviour:
   m_ObjectHideFlags: 0

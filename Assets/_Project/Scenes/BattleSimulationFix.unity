@@ -169,9 +169,9 @@ MonoBehaviour:
   _leftSpawnPoint: {fileID: 264244271}
   _rightSpawnPoint: {fileID: 1160689081}
   _characterPrefabs:
+  - {fileID: 4919403921253785362, guid: 7caf13a1f355359478a1c27c87aa5904, type: 3}
   - {fileID: 3637227649246280339, guid: 3c21737a99d3dda49b5613d4a3adc3fd, type: 3}
   - {fileID: 5455666780557975157, guid: ecf0633e8f05f2c4d80658ce10f8a589, type: 3}
-  - {fileID: 4919403921253785362, guid: 7caf13a1f355359478a1c27c87aa5904, type: 3}
 --- !u!1 &264244270
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,12 +803,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802465546}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1090334629}
+  m_Father: {fileID: 1797800484}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &802465548
 MonoBehaviour:
@@ -932,7 +932,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 117255516}
-  - {fileID: 802465547}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1160689080
@@ -1472,6 +1471,7 @@ RectTransform:
   m_Children:
   - {fileID: 1542109692}
   - {fileID: 1085442512}
+  - {fileID: 802465547}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

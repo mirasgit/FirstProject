@@ -4,7 +4,7 @@ namespace FirstProject.Characters
 {
     public class CharacterAnimator : MonoBehaviour
     {
-        private Animator _anim;
+        private Animator _animator;
         private readonly int _dieHash = Animator.StringToHash("Die");
         private readonly int _attackHash = Animator.StringToHash("Attack");
         private readonly int _attackSpeedHash = Animator.StringToHash("AttackSpeed");
@@ -13,36 +13,36 @@ namespace FirstProject.Characters
 
         private void Awake()
         {
-            _anim = GetComponentInChildren<Animator>();
+            _animator = GetComponentInChildren<Animator>();
         }
 
         public void PlayDeath()
         {
-            _anim.SetTrigger(_dieHash);
+            _animator.SetTrigger(_dieHash);
         }
 
         public void PlayAttack()
         {
-            _anim.SetTrigger(_attackHash);
+            _animator.SetTrigger(_attackHash);
         }
         public void SetAttackSpeed(float speed)
         {
-            _anim.SetFloat(_attackSpeedHash, speed);
+            _animator.SetFloat(_attackSpeedHash, speed);
         }
 
         public void PlayStun()
         {
-            _anim.SetBool(_stunHash, true);
+            _animator.SetBool(_stunHash, true);
         }
 
         public void StopPlayStun()
         {
-            _anim.SetBool(_stunHash, false);
+            _animator.SetBool(_stunHash, false);
         }
 
         public void SetVelocity(float parameter)
         {
-            _anim.SetFloat(_velocityHash, parameter);
+            _animator.SetFloat(_velocityHash, parameter);
         }
     }
 }

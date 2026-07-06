@@ -17,7 +17,7 @@ namespace FirstProject.Characters
     {
         private CharacterStats _stats;
         private CharacterEffects _effects;
-        private CharacterAnimator _charAnimator;
+        private CharacterAnimator _characterAnimator;
         private CharacterAttack _attack;
         private CharacterFacing _facing;
         private CharacterDeath _death;
@@ -29,6 +29,7 @@ namespace FirstProject.Characters
         public float MaxHealth => _stats.MaxHealth;
 
         public event Action Died;
+        public event Action Destroyed;
         
         public event Action<float, float> HealthChanged 
         {
@@ -58,17 +59,17 @@ namespace FirstProject.Characters
         {
             _stats = GetComponent<CharacterStats>();
             _effects = GetComponent<CharacterEffects>();
-            _charAnimator = GetComponent<CharacterAnimator>();
+            _characterAnimator = GetComponent<CharacterAnimator>();
             _attack = GetComponent<CharacterAttack>();
             _facing = GetComponent<CharacterFacing>();
             _death = GetComponent<CharacterDeath>();
-            _context = new CharacterEffectContext(_stats, _charAnimator, TakeDamage);
+            _context = new CharacterEffectContext(_stats, _characterAnimator, TakeDamage);
             _effects.SetContext(_context);
         }
 
         public void Initialize(ProjectileRegistry projectileRegistry, bool facingRight)
         {
-            _attack.Initialize(_stats, _facing, _charAnimator, _death, _effects, projectileRegistry);
+            _attack.Initialize(_stats, _facing, _characterAnimator, _death, _effects, projectileRegistry);
             _facing.SetFacingRight(facingRight);
         }
         
@@ -108,6 +109,11 @@ namespace FirstProject.Characters
             {
                 Died?.Invoke();
             }
+        }
+
+        private void OnDestroy()
+        {
+            Destroyed?.Invoke();
         }
     }
 }
