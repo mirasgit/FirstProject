@@ -33,7 +33,7 @@ namespace FirstProject.Characters.Attack
         protected override void Update()
         {
             DetectEnemies();
-            HandleAttack();
+            base.Update();
             SetVelocity();
         }
 

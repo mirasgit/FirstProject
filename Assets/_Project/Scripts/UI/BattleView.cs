@@ -8,9 +8,12 @@ namespace FirstProject.UI
         [SerializeField] private GameObject _startPanel;
         [SerializeField] private GameObject _winPanel;
         [SerializeField] private TMP_Text _winnerText;
+        private BattlePresenter _presenter;
 
-        private const string LeftWonText = "Left Won";
-        private const string RightWonText = "Right Won";
+        public void SetPresenter(BattlePresenter presenter)
+        {
+            _presenter = presenter;
+        }
 
         public void ShowStartScreen()
         {
@@ -24,18 +27,15 @@ namespace FirstProject.UI
             _winPanel.SetActive(false);
         }
 
-        public void ShowWinner(BattleResult result)
+        public void ShowWinner(string winnerText)
         {
-            switch (result)
-            {
-                case BattleResult.LeftWon:
-                    _winnerText.text = LeftWonText;
-                    break;
-                case BattleResult.RightWon:
-                    _winnerText.text = RightWonText;
-                    break;
-            }
+            _winnerText.text = winnerText;
             _winPanel.SetActive(true);
+        }
+
+        private void OnDestroy()
+        {
+            _presenter.Unsubscribe();
         }
     }
 }

@@ -24,8 +24,8 @@ namespace FirstProject.Battle
             Character model = Object.Instantiate(prefab, spawnPoint.position, Quaternion.identity);
             model.Initialize(_projectileRegistry, facingRight);
             CharacterView view = model.GetComponentInChildren<CharacterView>(true);
-            new CharacterPresenter(view, model);
-
+            CharacterPresenter presenter = new(view, model);
+            presenter.Subscribe();
             return model;
         }
     }

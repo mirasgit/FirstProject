@@ -12,17 +12,16 @@ namespace FirstProject.UI
         {
             _view = view;
             _model = model;
-            Subscribe();
-            OnHealthChanged(_model.CurrentHealth, _model.MaxHealth);
         }
 
-        private void Subscribe()
+        public void Subscribe()
         {
             _model.HealthChanged += OnHealthChanged;
             _model.DamageTaken += OnDamageTaken;
             _model.EffectApplied += OnEffectApplied;
             _model.EffectEnded += OnEffectEnd;
             _model.Destroyed += OnModelDestroyed;
+            OnHealthChanged(_model.CurrentHealth, _model.MaxHealth);
         }
 
         private void Unsubscribe()

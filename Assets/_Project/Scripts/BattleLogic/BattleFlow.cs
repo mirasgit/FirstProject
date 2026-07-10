@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using FirstProject.UI;
 using FirstProject.Characters;
@@ -7,7 +8,6 @@ namespace FirstProject.Battle
     public class BattleFlow
     {
         private readonly CharacterFactory _characterFactory;
-        private readonly BattleView _battleView;
         private readonly BattleCleanupService _battleCleanupService;
         private readonly Transform _leftSpawnPoint;
         private readonly Transform _rightSpawnPoint;
@@ -15,15 +15,17 @@ namespace FirstProject.Battle
         private Character _rightCharacter;
         private BattleState _state;
 
+        public event Action<BattleResult> WhoWon;
+        public event Action StartScreenShowed;
+        public event Action BattleStarted;
+
         public BattleFlow(
            CharacterFactory characterFactory,
-           BattleView battleView,
            BattleCleanupService cleanupService,
            Transform leftSpawnPoint,
            Transform rightSpawnPoint)
         {
             _characterFactory = characterFactory;
-            _battleView = battleView;
             _battleCleanupService = cleanupService;
             _leftSpawnPoint = leftSpawnPoint;
             _rightSpawnPoint = rightSpawnPoint;
@@ -32,7 +34,7 @@ namespace FirstProject.Battle
         public void ShowStartScreen()
         {
             _state = BattleState.StartScreen;
-            _battleView.ShowStartScreen();
+            StartScreenShowed?.Invoke();
         }
 
         public void StartBattle()
@@ -40,7 +42,7 @@ namespace FirstProject.Battle
             ClearBattle();
             _state = BattleState.Running;
             SpawnCharacters();
-            _battleView.ShowBattleScreen();
+            BattleStarted?.Invoke();
         }
 
         public void RestartBattle()
@@ -75,14 +77,15 @@ namespace FirstProject.Battle
 
             if (_leftCharacter.IsDead)
             {
+                WhoWon?.Invoke(BattleResult.RightWon);
                 _state = BattleState.Finished;
-                _battleView.ShowWinner(BattleResult.RightWon);
             }
             else if (_rightCharacter.IsDead)
             {
+                WhoWon?.Invoke(BattleResult.LeftWon);
                 _state = BattleState.Finished;
-                _battleView.ShowWinner(BattleResult.LeftWon);
             }
+
         }
 
         private void ClearBattle()
