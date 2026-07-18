@@ -9,18 +9,18 @@ namespace FirstProject.CharacterEffect
         private readonly CharacterStats _stats;
         private readonly CharacterAnimator _animator;
 
-        private readonly Action<float> _takeDamage;
+        private readonly IDamageable _damageable;
         
-        public CharacterEffectContext(CharacterStats stats, CharacterAnimator animator, Action<float> takeDamage)
+        public CharacterEffectContext(CharacterStats stats, CharacterAnimator animator)
         {
-            _stats = stats;
             _animator = animator;
-            _takeDamage = takeDamage;
+            _damageable = stats;
+            _stats = stats;
         }
 
         public void TakeDamage(float damage)
         {
-            _takeDamage?.Invoke(damage);
+            _damageable.TakeDamage(damage);
         }
 
         public float GetCurrentDamage()

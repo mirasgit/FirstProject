@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace FirstProject.CharacterEffect
 {
@@ -13,7 +14,8 @@ namespace FirstProject.CharacterEffect
         public event Action<CharacterApplicableEffect> EffectApplied;
         public event Action EffectEnded;
 
-        public void SetContext(CharacterEffectContext context)
+        [Inject]
+        public void Construct(CharacterEffectContext context)
         {
             _context = context;
         }

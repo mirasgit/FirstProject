@@ -5,14 +5,14 @@ namespace FirstProject.Characters
     public class CharacterDeath : MonoBehaviour
     {
         [SerializeField] private LayerMask _deadLayer;
-        private CharacterAnimator _charAnimator;
+        private CharacterAnimator _characterAnimator;
         private int _deadLayerIndex;
 
         public bool IsDead { get; private set; } = false;
         
         private void Awake()
         {
-            _charAnimator = GetComponent<CharacterAnimator>();
+            _characterAnimator = GetComponent<CharacterAnimator>();
             _deadLayerIndex = Mathf.RoundToInt(Mathf.Log(_deadLayer, 2));
         }
 
@@ -25,7 +25,7 @@ namespace FirstProject.Characters
 
             IsDead = true;
             gameObject.layer = _deadLayerIndex;
-            _charAnimator.PlayDeath();
+            _characterAnimator.PlayDeath();
 
             return true;
         }

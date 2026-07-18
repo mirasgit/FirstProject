@@ -5,13 +5,11 @@ namespace FirstProject.Characters
     [RequireComponent(typeof(CapsuleCollider2D))]
     public class CharacterHitBox : MonoBehaviour
     {
-        private Character _character;
-
-        public Character Character =>_character;
+        public Character Character { get; private set; }
 
         private void Awake()
         {
-            _character = GetComponentInParent<Character>();
+            Character = GetComponentInParent<Character>();
         }
     }
 }

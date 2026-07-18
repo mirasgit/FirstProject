@@ -1,7 +1,9 @@
 using UnityEngine;
+using Zenject;
 using FirstProject.Projectiles;
 using FirstProject.CharacterEffect;
-namespace FirstProject.Characters.Attack
+
+namespace FirstProject.Characters
 {
     public class CharacterAttack : MonoBehaviour
     {
@@ -15,24 +17,23 @@ namespace FirstProject.Characters.Attack
         protected CharacterAnimator _characterAnimator;
         protected CharacterDeath _death;
         protected CharacterEffects _effects;
-        protected ProjectileRegistry _projectileRegistry;
         protected const float TO_PERCENT_MULTIPLIER = 100f;
         private bool _isAllowedToFight;
         protected float _lastAttackTime;
 
-        public void Initialize(
+        [Inject]
+        public void Construct(
             CharacterStats stats,
             CharacterFacing facing,
             CharacterAnimator characterAnimator,
             CharacterDeath death,
-            CharacterEffects effects, ProjectileRegistry projectileRegistry)
+            CharacterEffects effects)
         {
             _stats = stats;
             _facing = facing;
             _characterAnimator = characterAnimator;
             _death = death;
             _effects = effects;
-            _projectileRegistry = projectileRegistry;
         }
 
         protected virtual void Update()

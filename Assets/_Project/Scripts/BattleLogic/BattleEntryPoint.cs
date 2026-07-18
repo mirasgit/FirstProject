@@ -1,8 +1,10 @@
+using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace FirstProject.Battle
 {
-    public class BattleEntryPoint
+    public class BattleEntryPoint : Zenject.IInitializable, IDisposable
     {
         private readonly Button _startButton;
         private readonly Button _restartButton;
@@ -15,9 +17,11 @@ namespace FirstProject.Battle
             _battleFlow = battleflow;
         }
 
-        public void Start()
+        public void Initialize()
         {
             _battleFlow.ShowStartScreen();
+            Debug.Log("<color=green>ZENJECT РАБОТАЕТ! BattleEntryPoint инициализирован.</color>");
+            Subscribe();
         }
         public void Subscribe()
         {
@@ -35,7 +39,7 @@ namespace FirstProject.Battle
             _battleFlow.RestartBattle();
         }
 
-        public void Unsubscribe()
+        public void Dispose()
         {
             _startButton.onClick.RemoveListener(OnStartButtonClicked);
             _restartButton.onClick.RemoveListener(OnRestartButtonClicked);

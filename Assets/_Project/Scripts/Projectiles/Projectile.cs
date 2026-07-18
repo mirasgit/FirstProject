@@ -1,5 +1,6 @@
 using UnityEngine;
 using FirstProject.Characters;
+using Zenject;
 
 namespace FirstProject.Projectiles
 {
@@ -26,9 +27,14 @@ namespace FirstProject.Projectiles
             HandleMovement();
         }
 
-        public void Initialize(ProjectileRegistry projectileRegistry)
+        [Inject]
+        public void Construct(ProjectileRegistry projectileRegistry)
         {
             _projectileRegistry = projectileRegistry;
+        }
+
+        public void Initialize()
+        {
             _projectileRegistry.Register(this);
 
             Destroy(gameObject, _secondsToDestroy);

@@ -1,8 +1,7 @@
 using UnityEngine;
 using FirstProject.CharacterEffect;
-using FirstProject.Characters.Attack;   
-using FirstProject.Projectiles;
 using System;
+using Zenject;
 
 namespace FirstProject.Characters
 {
@@ -17,11 +16,9 @@ namespace FirstProject.Characters
     {
         private CharacterStats _stats;
         private CharacterEffects _effects;
-        private CharacterAnimator _characterAnimator;
         private CharacterAttack _attack;
         private CharacterFacing _facing;
         private CharacterDeath _death;
-        private CharacterEffectContext _context;
 
         private const float ALIVE_HEALTH_THRESHOLD = 0f;
         public bool IsDead => _death.IsDead;
@@ -55,21 +52,18 @@ namespace FirstProject.Characters
             remove => _effects.EffectEnded -= value;
         }
 
-        private void Awake()
+        [Inject]
+        private void Construct(CharacterStats stats, CharacterEffects effects, CharacterAttack attack, CharacterFacing facing, CharacterDeath death)
         {
-            _stats = GetComponent<CharacterStats>();
-            _effects = GetComponent<CharacterEffects>();
-            _characterAnimator = GetComponent<CharacterAnimator>();
-            _attack = GetComponent<CharacterAttack>();
-            _facing = GetComponent<CharacterFacing>();
-            _death = GetComponent<CharacterDeath>();
-            _context = new CharacterEffectContext(_stats, _characterAnimator, TakeDamage);
-            _effects.SetContext(_context);
+            _stats = stats;
+            _effects = effects;
+            _attack = attack;
+            _facing = facing;
+            _death = death;
         }
 
-        public void Initialize(ProjectileRegistry projectileRegistry, bool facingRight)
+        public void SetFacingRight( bool facingRight)
         {
-            _attack.Initialize(_stats, _facing, _characterAnimator, _death, _effects, projectileRegistry);
             _facing.SetFacingRight(facingRight);
         }
         

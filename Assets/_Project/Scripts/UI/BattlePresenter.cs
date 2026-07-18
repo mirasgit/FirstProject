@@ -1,8 +1,9 @@
 using FirstProject.Battle;
+using System;
 
 namespace FirstProject.UI
 {
-    public class BattlePresenter
+    public class BattlePresenter : Zenject.IInitializable, IDisposable
     {
         private readonly BattleView _view;
         private readonly BattleFlow _model;
@@ -16,14 +17,14 @@ namespace FirstProject.UI
             _model = model;
         }
 
-        public void Subscribe()
+        public void Initialize()
         {
             _model.BattleStarted += OnBattleStarted;
             _model.StartScreenShowed += OnStartScreenShowed;
             _model.WhoWon += OnWinnerDecided;
         }
 
-        public void Unsubscribe()
+        public void Dispose()
         {
             _model.BattleStarted -= OnBattleStarted;
             _model.StartScreenShowed -= OnStartScreenShowed;

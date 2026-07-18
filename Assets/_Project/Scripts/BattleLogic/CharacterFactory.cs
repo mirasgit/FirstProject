@@ -3,17 +3,18 @@ using UnityEngine;
 using FirstProject.Projectiles;
 using FirstProject.Characters;
 using FirstProject.UI;
+using Zenject;
 
 namespace FirstProject.Battle
 {
     public class CharacterFactory
     {
         private readonly List<Character> _characterPrefabs;
-        private readonly ProjectileRegistry _projectileRegistry;
+        private readonly IInstantiator _instantiator;
 
-        public CharacterFactory(ProjectileRegistry projectileRegistry, List<Character> prefabs)
+        public CharacterFactory(IInstantiator instantiator, List<Character> prefabs)
         {
-            _projectileRegistry = projectileRegistry;
+            _instantiator = instantiator;
             _characterPrefabs = prefabs;
         }
 
@@ -21,8 +22,8 @@ namespace FirstProject.Battle
         {
             int randomIndex = Random.Range(0, _characterPrefabs.Count);
             Character prefab = _characterPrefabs[randomIndex];
-            Character model = Object.Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-            model.Initialize(_projectileRegistry, facingRight);
+            Character model = _instantiator.InstantiatePrefabForComponent<Character>(prefab, spawnPoint.position, Quaternion.identity, null);
+            model.SetFacingRight(facingRight);
             CharacterView view = model.GetComponentInChildren<CharacterView>(true);
             CharacterPresenter presenter = new(view, model);
             presenter.Subscribe();

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FirstProject.Characters
 {
-    public class CharacterStats : MonoBehaviour
+    public class CharacterStats : MonoBehaviour , IDamageable
     {
         [field: SerializeField] public float MaxDamage { get; private set; } = 10;
         [field: SerializeField] public float MaxHealth { get; private set; } = 100;
