@@ -85,7 +85,6 @@ namespace FirstProject.Battle
                 WhoWon?.Invoke(BattleResult.LeftWon);
                 _state = BattleState.Finished;
             }
-
         }
 
         private void ClearBattle()

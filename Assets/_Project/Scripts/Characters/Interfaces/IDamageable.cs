@@ -1,5 +1,11 @@
+using System;
 
-public interface IDamageable
+namespace FirstProject.Characters
 {
-    void TakeDamage(float damage);
+    public interface IDamageable
+    {
+        void TakeDamage(float damage);
+        event Action Died;
+    }
 }
+

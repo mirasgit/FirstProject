@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace FirstProject.Battle
@@ -20,10 +19,16 @@ namespace FirstProject.Battle
         public void Initialize()
         {
             _battleFlow.ShowStartScreen();
-            Debug.Log("<color=green>ZENJECT РАБОТАЕТ! BattleEntryPoint инициализирован.</color>");
             Subscribe();
         }
-        public void Subscribe()
+
+        public void Dispose()
+        {
+            _startButton.onClick.RemoveListener(OnStartButtonClicked);
+            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+        }
+
+        private void Subscribe()
         {
             _startButton.onClick.AddListener(OnStartButtonClicked);
             _restartButton.onClick.AddListener(OnRestartButtonClicked);
@@ -37,12 +42,6 @@ namespace FirstProject.Battle
         private void OnRestartButtonClicked()
         {
             _battleFlow.RestartBattle();
-        }
-
-        public void Dispose()
-        {
-            _startButton.onClick.RemoveListener(OnStartButtonClicked);
-            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
         }
     }
 }

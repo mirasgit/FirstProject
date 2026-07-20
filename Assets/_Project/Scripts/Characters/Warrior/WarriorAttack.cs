@@ -1,7 +1,6 @@
 using UnityEngine;
 using FirstProject.CharacterEffect;
 
-
 namespace FirstProject.Characters.Attack
 {
     public class WarriorAttack : CharacterAttack

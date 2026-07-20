@@ -1,6 +1,4 @@
 using FirstProject.Characters;
-using System;
-
 
 namespace FirstProject.CharacterEffect
 {
@@ -8,14 +6,12 @@ namespace FirstProject.CharacterEffect
     {
         private readonly CharacterStats _stats;
         private readonly CharacterAnimator _animator;
-
         private readonly IDamageable _damageable;
-        
-        public CharacterEffectContext(CharacterStats stats, CharacterAnimator animator)
+        public CharacterEffectContext(CharacterStats stats, CharacterAnimator animator, IDamageable model)
         {
-            _animator = animator;
-            _damageable = stats;
             _stats = stats;
+            _animator = animator;
+            _damageable = model;
         }
 
         public void TakeDamage(float damage)
@@ -28,9 +24,14 @@ namespace FirstProject.CharacterEffect
             return _stats.CurrentDamage;
         }
 
-        public void ChangeDamageTo(float damage)
+        public void AddDamageModifier(float modifier)
         {
-            _stats.ChangeDamage(damage);
+            _stats.AddDamageModifier(modifier);
+        }
+
+        public void RemoveDamageModifier(float modifier)
+        {
+            _stats.RemoveDamageModifier(modifier);
         }
 
         public void EnablePlayStun(bool enable)

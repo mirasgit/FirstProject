@@ -1,6 +1,5 @@
 using UnityEngine;
 using Zenject;
-using FirstProject.Projectiles;
 using FirstProject.CharacterEffect;
 
 namespace FirstProject.Characters

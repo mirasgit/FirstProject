@@ -7,6 +7,7 @@ namespace FirstProject.CharacterEffect
     {
         private readonly float _coefficient;
         private readonly WaitForSeconds _duration;
+
         public WeaknessEffect(float duration, float coefficient)
             : base(EffectType.Weakness, "Weakness")
         {
@@ -16,15 +17,11 @@ namespace FirstProject.CharacterEffect
 
         public override IEnumerator Run(CharacterEffectContext context)
         {
-            float oldDamage = context.GetCurrentDamage();
-
-            float newDamage = oldDamage - oldDamage * _coefficient;
-
-            context.ChangeDamageTo(newDamage);
+            context.AddDamageModifier(-_coefficient);
 
             yield return _duration;
 
-            context.ChangeDamageTo(oldDamage);
+            context.RemoveDamageModifier(-_coefficient);
         }
     }
 }

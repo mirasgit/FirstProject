@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using FirstProject.Projectiles;
 using FirstProject.Characters;
 using FirstProject.UI;
 using Zenject;

@@ -31,12 +31,11 @@ namespace FirstProject.Projectiles
         public void Construct(ProjectileRegistry projectileRegistry)
         {
             _projectileRegistry = projectileRegistry;
+            _projectileRegistry.Register(this);
         }
 
-        public void Initialize()
+        private void Start()
         {
-            _projectileRegistry.Register(this);
-
             Destroy(gameObject, _secondsToDestroy);
         }
 
@@ -82,6 +81,7 @@ namespace FirstProject.Projectiles
             ApplyEffect(target);
             Destroy(gameObject);
         }
+
         protected virtual void ApplyEffect(Character target)
         {
 

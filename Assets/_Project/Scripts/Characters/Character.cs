@@ -12,7 +12,7 @@ namespace FirstProject.Characters
     [RequireComponent(typeof(CharacterDeath))]
     [RequireComponent(typeof(CharacterFacing))]
     [RequireComponent(typeof(CharacterAttack))]
-    public class Character : MonoBehaviour
+    public class Character : MonoBehaviour, IDamageable, IKillable
     {
         private CharacterStats _stats;
         private CharacterEffects _effects;
@@ -23,7 +23,7 @@ namespace FirstProject.Characters
         private const float ALIVE_HEALTH_THRESHOLD = 0f;
         public bool IsDead => _death.IsDead;
         public float CurrentHealth => _stats.CurrentHealth;
-        public float MaxHealth => _stats.MaxHealth;
+        public float MaxHealth => _stats.BaseHealth;
 
         public event Action Died;
         public event Action Destroyed;

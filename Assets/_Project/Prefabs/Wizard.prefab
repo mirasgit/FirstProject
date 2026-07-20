@@ -500,8 +500,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  <MaxDamage>k__BackingField: 20
-  <MaxHealth>k__BackingField: 150
+  <BaseDamage>k__BackingField: 10
+  <BaseHealth>k__BackingField: 100
 --- !u!114 &5804883697193863740
 MonoBehaviour:
   m_ObjectHideFlags: 0
