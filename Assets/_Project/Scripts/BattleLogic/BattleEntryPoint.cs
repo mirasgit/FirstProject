@@ -1,9 +1,10 @@
 using System;
 using UnityEngine.UI;
+using Zenject;
 
 namespace FirstProject.Battle
 {
-    public class BattleEntryPoint : Zenject.IInitializable, IDisposable
+    public class BattleEntryPoint : IInitializable, IDisposable
     {
         private readonly Button _startButton;
         private readonly Button _restartButton;

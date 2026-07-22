@@ -1,4 +1,4 @@
-﻿namespace FirstProject.UI
+﻿namespace FirstProject.Battle
 {
     public enum BattleResult
     {

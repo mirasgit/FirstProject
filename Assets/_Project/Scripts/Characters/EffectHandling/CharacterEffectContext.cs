@@ -19,11 +19,6 @@ namespace FirstProject.CharacterEffect
             _damageable.TakeDamage(damage);
         }
 
-        public float GetCurrentDamage()
-        {
-            return _stats.CurrentDamage;
-        }
-
         public void AddDamageModifier(float modifier)
         {
             _stats.AddDamageModifier(modifier);

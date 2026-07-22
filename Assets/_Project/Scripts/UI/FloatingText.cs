@@ -1,5 +1,7 @@
+using FirstProject.Projectiles;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace FirstProject.UI
 {
@@ -9,23 +11,37 @@ namespace FirstProject.UI
         [SerializeField] private float _lifeTime = 1f;
         [SerializeField] private float _moveSpeed = 1f;
 
-        private float _timer;
+        private FloatingTextRegistry _floatingTextRegistry;
 
         public void SetText(string textValue)
         {
             _text.text = textValue;
         }
 
+        [Inject]
+        public void Construct(FloatingTextRegistry floatingTextRegistry)
+        {
+            _floatingTextRegistry = floatingTextRegistry;
+            _floatingTextRegistry.Register(this);
+        }
+
+        private void Start()
+        {
+            Destroy(gameObject, _lifeTime);
+        }
+
         private void Update()
         {
             transform.position += Vector3.down * (_moveSpeed * Time.deltaTime);
+        }
 
-            _timer += Time.deltaTime;
-
-            if (_timer >= _lifeTime)
+        private void OnDestroy()
+        {
+            if (_floatingTextRegistry == null)
             {
-                Destroy(gameObject);
+                return;
             }
+            _floatingTextRegistry.Unregister(this);
         }
     }
 }

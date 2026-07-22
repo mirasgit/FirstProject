@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using FirstProject.UI;
 using FirstProject.Characters;
 
 namespace FirstProject.Battle

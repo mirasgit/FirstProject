@@ -40,14 +40,7 @@ namespace FirstProject.CharacterEffect
 
         public bool HasEffect(EffectType type)
         {
-            foreach (CharacterApplicableEffect effect in _effects)
-            {
-                if (effect.Type == type)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _effects.Exists(effect => effect.Type == type);
         }
 
         private IEnumerator RunEffect(CharacterApplicableEffect effect)

@@ -2,13 +2,14 @@ using UnityEngine;
 
 namespace FirstProject.Characters
 {
+    [RequireComponent(typeof(CharacterAnimator))]
     public class CharacterDeath : MonoBehaviour
     {
         [SerializeField] private LayerMask _deadLayer;
         private CharacterAnimator _characterAnimator;
         private int _deadLayerIndex;
 
-        public bool IsDead { get; private set; } = false;
+        public bool IsDead { get; private set; }
         
         private void Awake()
         {

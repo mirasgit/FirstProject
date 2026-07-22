@@ -1,15 +1,16 @@
 using FirstProject.Battle;
 using System;
+using Zenject;
 
 namespace FirstProject.UI
 {
-    public class BattlePresenter : Zenject.IInitializable, IDisposable
+    public class BattlePresenter : IInitializable, IDisposable
     {
         private readonly BattleView _view;
         private readonly BattleFlow _model;
 
-        private const string LeftWonText = "Left Won";
-        private const string RightWonText = "Right Won";
+        private const string LEFT_WON_TEXT = "Left Won";
+        private const string RIGHT_WON_TEXT  = "Right Won";
 
         public BattlePresenter(BattleView view, BattleFlow model)
         {   
@@ -46,10 +47,10 @@ namespace FirstProject.UI
             switch (result)
             {
                 case BattleResult.LeftWon:
-                    _view.ShowWinner(LeftWonText);
+                    _view.ShowWinner(LEFT_WON_TEXT);
                     break;
                 case BattleResult.RightWon:
-                    _view.ShowWinner(RightWonText);
+                    _view.ShowWinner(RIGHT_WON_TEXT);
                     break;
             }
         }

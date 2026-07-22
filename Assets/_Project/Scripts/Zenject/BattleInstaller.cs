@@ -25,6 +25,7 @@ namespace FirstProject.Battle
             Container.Bind<BattleFlow>().AsSingle().WithArguments(_leftSpawnPoint, _rightSpawnPoint);
             Container.BindInterfacesAndSelfTo<BattlePresenter>().AsSingle().WithArguments(_battleView).NonLazy();
             Container.BindInterfacesAndSelfTo<BattleEntryPoint>().AsSingle().WithArguments(_startButton, _restartButton).NonLazy();
+            Container.Bind<FloatingTextRegistry>().AsSingle();
         }
     }
 }

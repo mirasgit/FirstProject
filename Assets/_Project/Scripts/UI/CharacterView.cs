@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace FirstProject.UI
 {
@@ -13,13 +14,19 @@ namespace FirstProject.UI
 
         private const string DAMAGE_TEXT_FORMAT = "0";
         private const string EMPTY_EFFECT_TEXT = "";
-
+        private IInstantiator _instantiator;
         private void Awake()
         {
             if (_effectText != null)
             {
                 _effectText.text = EMPTY_EFFECT_TEXT;
             }
+        }
+
+        [Inject]
+        public void Construct(IInstantiator instantiator)
+        {
+            _instantiator = instantiator;
         }
 
         public void UpdateHealthBar(float fillAmount)
@@ -34,8 +41,9 @@ namespace FirstProject.UI
                 return;
             }
 
-            FloatingText textInstance = Instantiate(_floatingTextPrefab, _floatingTextSpawnPoint.position, Quaternion.identity);
+            FloatingText textInstance = _instantiator.InstantiatePrefabForComponent<FloatingText>(_floatingTextPrefab, _floatingTextSpawnPoint.position, Quaternion.identity, null);
             textInstance.SetText(damage.ToString(DAMAGE_TEXT_FORMAT));
+
         }
 
         public void ShowEffect(string effectName)

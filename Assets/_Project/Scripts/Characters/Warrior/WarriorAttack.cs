@@ -3,6 +3,7 @@ using FirstProject.CharacterEffect;
 
 namespace FirstProject.Characters.Attack
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class WarriorAttack : CharacterAttack
     {
         private const int MAX_TARGETS = 1;
