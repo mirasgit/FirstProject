@@ -1,1 +1,0 @@
-Get-ChildItem -Filter *.cs -Recurse | ForEach-Object { "`n`n--- $($_.Name) ---`n"; Get-Content $_.FullName } > ProjectDump.txt
