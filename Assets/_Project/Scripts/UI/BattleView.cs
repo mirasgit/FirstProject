@@ -1,6 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
-using Zenject;
+using UnityEngine.UI;
 
 namespace FirstProject.UI
 {
@@ -9,6 +10,17 @@ namespace FirstProject.UI
         [SerializeField] private GameObject _startPanel;
         [SerializeField] private GameObject _winPanel;
         [SerializeField] private TMP_Text _winnerText;
+        [SerializeField] private Button _startButton;
+        [SerializeField] private Button _restartButton;
+
+        public event Action StartButtonPressed;
+        public event Action RestartButtonPressed;
+
+        public void Subscribe()
+        {
+            _startButton.onClick.AddListener(OnStartButtonClicked);
+            _restartButton.onClick.AddListener(OnRestartButtonClicked);
+        }
 
         public void ShowStartScreen()
         {
@@ -26,6 +38,22 @@ namespace FirstProject.UI
         {
             _winnerText.text = winnerText;
             _winPanel.SetActive(true);
+        }
+
+        private void OnStartButtonClicked()
+        {
+            StartButtonPressed?.Invoke();
+        }
+
+        private void OnRestartButtonClicked()
+        {
+            RestartButtonPressed?.Invoke();
+        }
+
+        public void Unsubscribe()
+        {
+            _startButton.onClick.RemoveListener(OnStartButtonClicked);
+            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
         }
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 929471247601482222}
   - component: {fileID: 5418145535396259534}
   - component: {fileID: 6330691027891258414}
-  - component: {fileID: 1094805022904536992}
+  - component: {fileID: 7182938301573701979}
   m_Layer: 6
   m_Name: Animator
   m_TagString: Untagged
@@ -115,7 +115,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1094805022904536992
+--- !u!114 &7182938301573701979
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,9 +124,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2202366500708894728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d277dd181ea208544b9de8a18f0ebcc3, type: 3}
+  m_Script: {fileID: 11500000, guid: b335b2d308fb10f4d854b509749120aa, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WizardEvents
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.Characters.RangerAnimationEvents
 --- !u!1 &2295481883230285219
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,7 +419,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2385974025381496950}
-  - component: {fileID: 5657507541371862829}
+  - component: {fileID: 3501029494064030208}
   - component: {fileID: 5455666780557975157}
   - component: {fileID: 5063231017309306132}
   - component: {fileID: 5804883697193863740}
@@ -454,7 +454,7 @@ Transform:
   - {fileID: 6337722486778711863}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5657507541371862829
+--- !u!114 &3501029494064030208
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -463,19 +463,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5724761400001412960}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b335b2d308fb10f4d854b509749120aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 1cb289a2a51024d4f93b6db1b785f57e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Wizard
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.Characters.RangedAttack
   _attackPoint: {fileID: 6462875526743891797}
   _whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
   _attackCooldown: 0.5
   _attackSpeed: 1.5
-  _projectile: {fileID: 6625403975366836989, guid: 12a94a3136db99e42a30a78b518d0c00, type: 3}
-  _weaknessDuration: 4
-  _weaknessCoefficient: 0.5
-  _weaknessProbabilityInPercent: 50
+  _projectilePrefab: {fileID: 7758558058821724251, guid: 12a94a3136db99e42a30a78b518d0c00, type: 3}
+  _effectConfig: {fileID: 11400000, guid: 2dc4424756e5b2747adda8a21f35d5eb, type: 2}
+  _applyProbabilityPercent: 30
 --- !u!114 &5455666780557975157
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ namespace FirstProject.UI
         private const string DAMAGE_TEXT_FORMAT = "0";
         private const string EMPTY_EFFECT_TEXT = "";
         private IInstantiator _instantiator;
+
         private void Awake()
         {
             if (_effectText != null)

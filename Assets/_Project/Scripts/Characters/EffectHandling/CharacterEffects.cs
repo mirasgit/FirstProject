@@ -29,6 +29,11 @@ namespace FirstProject.CharacterEffect
 
         public void Apply(CharacterApplicableEffect effect)
         {
+            if (effect == null)
+            {
+                return;
+            }
+
             if (HasEffect(effect.Type))
             {
                 return;
@@ -40,7 +45,11 @@ namespace FirstProject.CharacterEffect
 
         public bool HasEffect(EffectType type)
         {
-            return _effects.Exists(effect => effect.Type == type);
+            for (int i = 0; i < _effects.Count; i++)
+            {
+                if (_effects[i].Type == type) return true;
+            }
+            return false;
         }
 
         private IEnumerator RunEffect(CharacterApplicableEffect effect)
@@ -54,6 +63,10 @@ namespace FirstProject.CharacterEffect
         {
             StopAllCoroutines();
             EffectEnded?.Invoke();
+            foreach (var effect in _effects)
+            {
+                effect.CancelEffect(_context);
+            }
             _effects.Clear();
         }
 

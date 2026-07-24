@@ -23,6 +23,9 @@ namespace FirstProject.UI
             _model.BattleStarted += OnBattleStarted;
             _model.StartScreenShowed += OnStartScreenShowed;
             _model.WhoWon += OnWinnerDecided;
+            _view.StartButtonPressed += OnStartButtonPressed;
+            _view.RestartButtonPressed += OnRestartButtonPressed;
+            _view.Subscribe();
         }
 
         public void Dispose()
@@ -30,6 +33,18 @@ namespace FirstProject.UI
             _model.BattleStarted -= OnBattleStarted;
             _model.StartScreenShowed -= OnStartScreenShowed;
             _model.WhoWon -= OnWinnerDecided;
+            _view.StartButtonPressed -= OnStartButtonPressed;
+            _view.RestartButtonPressed -= OnRestartButtonPressed;
+            _view.Unsubscribe();
+        }
+
+        private void OnStartButtonPressed()
+        {
+            _model.StartBattle();
+        }
+        private void OnRestartButtonPressed()
+        {
+            _model.RestartBattle();
         }
 
         private void OnBattleStarted()

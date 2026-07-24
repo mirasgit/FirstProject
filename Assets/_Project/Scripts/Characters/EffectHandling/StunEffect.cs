@@ -19,6 +19,11 @@ namespace FirstProject.CharacterEffect
 
             yield return _duration;
 
+            CancelEffect(context);
+        }
+
+        public override void CancelEffect(CharacterEffectContext context)
+        {
             context.EnablePlayStun(false);
         }
     }

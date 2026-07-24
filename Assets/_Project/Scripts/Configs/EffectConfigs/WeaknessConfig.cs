@@ -1,0 +1,18 @@
+using UnityEngine;
+
+namespace FirstProject.CharacterEffect
+{
+    [CreateAssetMenu(fileName = "NewWeaknessCfg", menuName = "Effects/Weakness Effect")]
+    public class WeaknessConfig : EffectConfig
+    {
+        [Header("Poison Settings")]
+        [SerializeField] private float _coefficient;
+        [SerializeField] private float _duration;
+
+        public override CharacterApplicableEffect CreateEffect()
+        {
+            return new WeaknessEffect(_duration, _coefficient);
+        }
+    }
+}
+

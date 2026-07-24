@@ -1,20 +1,22 @@
 using UnityEngine;
 using FirstProject.Characters;
 using Zenject;
+using FirstProject.CharacterEffect;
 
 namespace FirstProject.Projectiles
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] protected int _secondsToDestroy = 4;
-        [SerializeField] protected float _moveSpeed = 5f;
+        [SerializeField] private int _secondsToDestroy = 4;
+        [SerializeField] private float _moveSpeed = 5f;
 
         private ProjectileRegistry _projectileRegistry;
         private Rigidbody2D _rb;
+        private CharacterApplicableEffect _effect;
 
-        protected float _damage;
-        protected int _facingDirection = 1;
+        private float _damage;
+        private int _facingDirection = 1;
 
         private void Awake()
         {
@@ -39,7 +41,7 @@ namespace FirstProject.Projectiles
             Destroy(gameObject, _secondsToDestroy);
         }
 
-        protected virtual void OnDestroy()
+        private void OnDestroy()
         {
             if (_projectileRegistry == null)
             {
@@ -58,12 +60,17 @@ namespace FirstProject.Projectiles
             _damage = damage;
         }
 
+        public void SetEffect(CharacterApplicableEffect effect)
+        {
+            _effect = effect;
+        }
+
         private void HandleMovement()
         {
             _rb.linearVelocity = new Vector2(_facingDirection * _moveSpeed, _rb.linearVelocity.y);
         }
 
-        protected virtual void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
             if (!collision.gameObject.TryGetComponent(out CharacterHitBox hitbox))
             {
@@ -82,9 +89,9 @@ namespace FirstProject.Projectiles
             Destroy(gameObject);
         }
 
-        protected virtual void ApplyEffect(Character target)
+        private void ApplyEffect(Character target)
         {
-
+            target.ApplyEffect(_effect);
         }
     }
 }

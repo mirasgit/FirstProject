@@ -478,8 +478,8 @@ MonoBehaviour:
   _attackSpeed: 1.2
   _moveSpeed: 3.5
   _attackRadius: 1
-  _stunDuration: 0.5
-  _stunProbabilityInPercent: 35
+  _effectConfig: {fileID: 11400000, guid: ca938f53379f9c445a36a385b0196dc4, type: 2}
+  _applyProbabilityPercent: 40
 --- !u!114 &3637227649246280339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,8 +516,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  <MaxDamage>k__BackingField: 15
-  <MaxHealth>k__BackingField: 250
+  <BaseDamage>k__BackingField: 10
+  <BaseHealth>k__BackingField: 100
 --- !u!114 &2320580648201096190
 MonoBehaviour:
   m_ObjectHideFlags: 0

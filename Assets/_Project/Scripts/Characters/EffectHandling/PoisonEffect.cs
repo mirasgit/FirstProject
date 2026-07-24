@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-
 namespace FirstProject.CharacterEffect
 {
     public class PoisonEffect : CharacterApplicableEffect
@@ -9,6 +8,7 @@ namespace FirstProject.CharacterEffect
         private readonly float _tickDamage;
         private readonly float _interval;
         private readonly WaitForSeconds _tickDelay;
+
         public PoisonEffect(float duration, float interval, float tickDamage) : base(EffectType.Poison, "Poisoned")
         {
             _duration = duration;
@@ -30,6 +30,5 @@ namespace FirstProject.CharacterEffect
                 elapsed += _interval;
             }
         }
-
     }
 }

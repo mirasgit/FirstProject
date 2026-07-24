@@ -1,0 +1,17 @@
+using UnityEngine;
+
+namespace FirstProject.CharacterEffect
+{
+    [CreateAssetMenu(fileName = "NewStunCfg", menuName = "Effects/Stun Effect")]
+    public class StunConfig : EffectConfig
+    {
+        [Header("Poison Settings")]
+        [SerializeField] private float _duration;
+
+        public override CharacterApplicableEffect CreateEffect()
+        {
+            return new StunEffect(_duration);
+        }
+    }
+}
+

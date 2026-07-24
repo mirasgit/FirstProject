@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace FirstProject.CharacterEffect
 {
-    public abstract class CharacterApplicableEffect
+    public abstract class CharacterApplicableEffect 
     {
         public EffectType Type { get; private set; }
         public string Name { get; private set; }
@@ -14,5 +14,10 @@ namespace FirstProject.CharacterEffect
         }
 
         public abstract IEnumerator Run(CharacterEffectContext context);
+
+        public virtual void CancelEffect(CharacterEffectContext context)
+        {
+
+        }
     }
 }

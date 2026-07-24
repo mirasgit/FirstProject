@@ -9,15 +9,13 @@ namespace FirstProject.Characters
         {
             Container.Bind<CharacterEffectContext>().AsSingle();
 
-            Container.Bind<Character>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<Character>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CharacterStats>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CharacterEffects>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CharacterAttack>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CharacterDeath>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CharacterFacing>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CharacterAnimator>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<IDamageable>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<IKillable>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

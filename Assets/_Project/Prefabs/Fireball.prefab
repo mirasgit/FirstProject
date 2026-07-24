@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2691408089746341668}
-  - component: {fileID: 6625403975366836989}
   - component: {fileID: 8372598377803821945}
   - component: {fileID: 3989045199581396713}
+  - component: {fileID: 7758558058821724251}
   m_Layer: 8
   m_Name: Fireball
   m_TagString: Untagged
@@ -35,21 +35,6 @@ Transform:
   - {fileID: 5058783116006490413}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6625403975366836989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798333233311051749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 786165b334c797f41a7fa45d1df4b11b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Fireball
-  _facingDirection: 1
-  _moveSpeed: 5
-  _damage: 0
 --- !u!58 &8372598377803821945
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -113,6 +98,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7758558058821724251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798333233311051749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 636cdced02703b2428a1d4647570180c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.Projectiles.Projectile
+  _secondsToDestroy: 4
+  _moveSpeed: 5
 --- !u!1 &4096860090948970639
 GameObject:
   m_ObjectHideFlags: 0

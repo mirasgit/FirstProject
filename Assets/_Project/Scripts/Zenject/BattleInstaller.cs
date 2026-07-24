@@ -22,10 +22,12 @@ namespace FirstProject.Battle
             Container.Bind<ProjectileRegistry>().AsSingle();
             Container.Bind<BattleCleanupService>().AsSingle();
             Container.Bind<CharacterFactory>().AsSingle().WithArguments(_characterPrefabs);
+            Container.Bind<BattleView>().AsSingle().WithArguments(_startButton, _restartButton);
             Container.Bind<BattleFlow>().AsSingle().WithArguments(_leftSpawnPoint, _rightSpawnPoint);
             Container.BindInterfacesAndSelfTo<BattlePresenter>().AsSingle().WithArguments(_battleView).NonLazy();
-            Container.BindInterfacesAndSelfTo<BattleEntryPoint>().AsSingle().WithArguments(_startButton, _restartButton).NonLazy();
+            Container.BindInterfacesAndSelfTo<BattleEntryPoint>().AsSingle().NonLazy();
             Container.Bind<FloatingTextRegistry>().AsSingle();
+
         }
     }
 }

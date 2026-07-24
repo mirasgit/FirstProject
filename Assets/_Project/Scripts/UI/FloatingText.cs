@@ -1,4 +1,3 @@
-using FirstProject.Projectiles;
 using TMPro;
 using UnityEngine;
 using Zenject;
