@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f90b69f82a3b3f4a8cf06da47d24dd9, type: 3}
   m_Name: MeleeStun
   m_EditorClassIdentifier: Assembly-CSharp::FirstProject.CharacterEffect.StunConfig
-  _duration: 0
+  _duration: 1

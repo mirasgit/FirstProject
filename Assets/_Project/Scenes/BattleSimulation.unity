@@ -541,8 +541,6 @@ MonoBehaviour:
   _rightSpawnPoint: {fileID: 1160689081}
   _characterPrefabs:
   - {fileID: 3637227649246280339, guid: 3c21737a99d3dda49b5613d4a3adc3fd, type: 3}
-  - {fileID: 4919403921253785362, guid: 7caf13a1f355359478a1c27c87aa5904, type: 3}
-  - {fileID: 5455666780557975157, guid: ecf0633e8f05f2c4d80658ce10f8a589, type: 3}
 --- !u!114 &537967947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,6 +856,8 @@ MonoBehaviour:
   _startPanel: {fileID: 1542109691}
   _winPanel: {fileID: 1085442511}
   _winnerText: {fileID: 1876270933}
+  _startButton: {fileID: 1918710749}
+  _restartButton: {fileID: 1304432193}
 --- !u!1 &1085442511
 GameObject:
   m_ObjectHideFlags: 0

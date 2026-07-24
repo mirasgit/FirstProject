@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db96b6b331e4cdf45b411726cb28fd4f, type: 3}
   m_Name: SlightWeakness
   m_EditorClassIdentifier: Assembly-CSharp::FirstProject.CharacterEffect.WeaknessConfig
+  _coefficient: 0.5
+  _duration: 3

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43aa23f4c7ad7d6418bb662d0fd45c33, type: 3}
   m_Name: StrongPoison
   m_EditorClassIdentifier: Assembly-CSharp::FirstProject.CharacterEffect.PoisonConfig
-  _duration: 0
-  _interval: 0
-  _tickDamage: 0
+  _duration: 2
+  _interval: 0.4
+  _tickDamage: 5
