@@ -103,7 +103,7 @@ namespace FirstProject.Characters.Attack
 
         private void HandleMovement()
         {
-            if (_death.IsDead || _effects.HasEffect(EffectType.Stun) || _enemyDetected)
+            if (!CanAttack() || _enemyDetected)
             {
                 _currentMoveSpeed = 0f;
                 _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
