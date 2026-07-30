@@ -1,23 +1,25 @@
 using FirstProject.Projectiles;
 using FirstProject.Characters;
 using FirstProject.UI;
+using System.Collections.Generic;
 
 namespace FirstProject.Battle
 {
     public class BattleCleanupService
     {
-        private readonly ProjectileRegistry _projectileRegistry;
-        private readonly FloatingTextRegistry _floatingTextRegistry;
-        public BattleCleanupService(ProjectileRegistry projectileRegistry, FloatingTextRegistry floatingTextRegistry)
+        private IEnumerable<IClearableRegistry> _registries;
+
+        public BattleCleanupService(IEnumerable<IClearableRegistry> registries)
         {
-            _projectileRegistry = projectileRegistry;
-            _floatingTextRegistry = floatingTextRegistry;
+            _registries = registries; 
         }
 
-        public void ClearAllProjectiles()
+        public void ClearAllTemporaryObjects()
         {
-            _projectileRegistry.DestroyAll();
-            _floatingTextRegistry.DestroyAll();
+            foreach (var registry in _registries)
+            {
+                registry.ClearAll();
+            }
         }
 
         public void DestroyCharacter(Character character)

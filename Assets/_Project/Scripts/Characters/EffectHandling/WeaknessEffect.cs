@@ -21,6 +21,11 @@ namespace FirstProject.CharacterEffect
 
             yield return _weaknessTime;
 
+            CancelEffect(context);
+        }
+
+        public override void CancelEffect(CharacterEffectContext context)
+        {
             context.RemoveDamageModifier(-_coefficient);
         }
     }

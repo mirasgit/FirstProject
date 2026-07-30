@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using FirstProject.Battle;
 
 namespace FirstProject.Projectiles
 {
-    public class ProjectileRegistry
+    public class ProjectileRegistry : IClearableRegistry
     {
         private readonly List<Projectile> _projectiles = new();
         public void Register(Projectile projectile)
@@ -31,7 +32,7 @@ namespace FirstProject.Projectiles
             _projectiles.Remove(projectile);
         }
 
-        public void DestroyAll()
+        public void ClearAll()
         {
             for (int index = _projectiles.Count - 1; index >= 0; index--)
             {

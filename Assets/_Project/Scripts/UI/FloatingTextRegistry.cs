@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using FirstProject.Battle;
 
 namespace FirstProject.UI
 {
-    public class FloatingTextRegistry
+    public class FloatingTextRegistry : IClearableRegistry
     {
         private readonly List<FloatingText> _textList = new();
         public void Register(FloatingText text)
@@ -31,7 +32,7 @@ namespace FirstProject.UI
             _textList.Remove(text);
         }
 
-        public void DestroyAll()
+        public void ClearAll()
         {
             for (int index = _textList.Count - 1; index >= 0; index--)
             {

@@ -11,8 +11,8 @@ namespace FirstProject.Battle
         private readonly Transform _leftSpawnPoint;
         private readonly Transform _rightSpawnPoint;
         private Character _leftCharacter;
-        private Character _rightCharacter;
-        private BattleState _state;
+        private Character _rightCharacter;  
+        public BattleState State { get; private set; }
 
         public event Action<BattleResult> WhoWon;
         public event Action StartScreenShowed;
@@ -32,14 +32,14 @@ namespace FirstProject.Battle
 
         public void ShowStartScreen()
         {
-            _state = BattleState.StartScreen;
+            State = BattleState.StartScreen;
             StartScreenShowed?.Invoke();
         }
 
         public void StartBattle()
         {
             ClearBattle();
-            _state = BattleState.Running;
+            State = BattleState.Running;
             SpawnCharacters();
             BattleStarted?.Invoke();
         }
@@ -61,7 +61,7 @@ namespace FirstProject.Battle
 
         private void OnCharacterDied()
         {
-            if (_state != BattleState.Running)
+            if (State != BattleState.Running)
             {
                 return;
             }
@@ -77,12 +77,12 @@ namespace FirstProject.Battle
             if (_leftCharacter.IsDead)
             {
                 WhoWon?.Invoke(BattleResult.RightWon);
-                _state = BattleState.Finished;
+                State = BattleState.Finished;
             }
             else if (_rightCharacter.IsDead)
             {
                 WhoWon?.Invoke(BattleResult.LeftWon);
-                _state = BattleState.Finished;
+                State = BattleState.Finished;
             }
         }
 
@@ -100,7 +100,7 @@ namespace FirstProject.Battle
 
             _battleCleanupService.DestroyCharacter(_leftCharacter);
             _battleCleanupService.DestroyCharacter(_rightCharacter);
-            _battleCleanupService.ClearAllProjectiles();
+            _battleCleanupService.ClearAllTemporaryObjects();
 
             _leftCharacter = null;
             _rightCharacter = null;

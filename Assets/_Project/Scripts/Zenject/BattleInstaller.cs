@@ -15,17 +15,19 @@ namespace FirstProject.Battle
         [SerializeField] private Transform _uiCanvas;
         [SerializeField] private List<Character> _characterPrefabs;
 
-        public override void InstallBindings()
+            public override void InstallBindings()
         {
-            Container.Bind<ProjectileRegistry>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ProjectileRegistry>().AsSingle();
+            Container.BindInterfacesAndSelfTo<FloatingTextRegistry>().AsSingle();
+
             Container.Bind<BattleCleanupService>().AsSingle();
             Container.Bind<CharacterFactory>().AsSingle().WithArguments(_characterPrefabs);
             Container.Bind<BattleView>().FromComponentInNewPrefab(_battleView).UnderTransform(_uiCanvas).AsSingle();
             Container.Bind<BattleFlow>().AsSingle().WithArguments(_leftSpawnPoint, _rightSpawnPoint);
-            Container.BindInterfacesAndSelfTo<BattlePresenter>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BattleEntryPoint>().AsSingle().NonLazy();
-            Container.Bind<FloatingTextRegistry>().AsSingle();
-
+            Container.BindInterfacesAndSelfTo<BattlePresenter>().AsSingle().NonLazy();
+            Container.Bind<ProjectileFactory>().AsSingle();
+            Container.Bind<FloatingTextFactory>().AsSingle();
         }
     }
 }

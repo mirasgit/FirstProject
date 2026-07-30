@@ -14,7 +14,7 @@ namespace FirstProject.UI
 
         private const string DAMAGE_TEXT_FORMAT = "0";
         private const string EMPTY_EFFECT_TEXT = "";
-        private IInstantiator _instantiator;
+        private FloatingTextFactory _factory;
 
         private void Awake()
         {
@@ -25,9 +25,9 @@ namespace FirstProject.UI
         }
 
         [Inject]
-        public void Construct(IInstantiator instantiator)
+        public void Construct(FloatingTextFactory factory)
         {
-            _instantiator = instantiator;
+            _factory = factory;
         }
 
         public void UpdateHealthBar(float fillAmount)
@@ -42,7 +42,7 @@ namespace FirstProject.UI
                 return;
             }
 
-            FloatingText textInstance = _instantiator.InstantiatePrefabForComponent<FloatingText>(_floatingTextPrefab, _floatingTextSpawnPoint.position, Quaternion.identity, null);
+            FloatingText textInstance = _factory.Create(_floatingTextPrefab, _floatingTextSpawnPoint.position, Quaternion.identity);
             textInstance.SetText(damage.ToString(DAMAGE_TEXT_FORMAT));
 
         }

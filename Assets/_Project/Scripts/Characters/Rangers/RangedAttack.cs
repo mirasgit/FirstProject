@@ -12,12 +12,12 @@ namespace FirstProject.Characters
 
         [SerializeField, Range(0, 100)] protected int _applyProbabilityPercent;
 
-        protected IInstantiator _instantiator;
+        protected ProjectileFactory _factory;
 
         [Inject]
-        public void Construct(IInstantiator instantiator)
+        public void Construct(ProjectileFactory factory)
         {
-            _instantiator = instantiator;
+            _factory = factory;
         }
 
         public virtual void SpawnProjectile()
@@ -27,7 +27,7 @@ namespace FirstProject.Characters
                 return;
             }
 
-            Projectile newProjectile = _instantiator.InstantiatePrefabForComponent<Projectile>(_projectilePrefab, _attackPoint.position, _attackPoint.rotation, null);
+            Projectile newProjectile = _factory.Create(_projectilePrefab, _attackPoint.position, _attackPoint.rotation);
             newProjectile.SetFacingDirection(_facing.FacingDirection);
             newProjectile.SetDamage(_stats.CurrentDamage);
             CharacterApplicableEffect effectToApply = null;

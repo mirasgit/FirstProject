@@ -26,6 +26,15 @@ namespace FirstProject.UI
             _view.StartButtonPressed += OnStartButtonPressed;
             _view.RestartButtonPressed += OnRestartButtonPressed;
             _view.Subscribe();
+
+            if (_model.State == BattleState.StartScreen)
+            {
+                OnStartScreenShowed();
+            }
+            else if (_model.State == BattleState.Running)
+            {
+                OnBattleStarted();
+            }
         }
 
         public void Dispose()
