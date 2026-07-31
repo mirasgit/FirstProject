@@ -46,7 +46,7 @@ namespace FirstProject.Characters
             remove => _effects.EffectApplied -= value;
         }
 
-        public event Action EffectEnded
+        public event Action<CharacterApplicableEffect> EffectEnded
         {
             add => _effects.EffectEnded += value; 
             remove => _effects.EffectEnded -= value;

@@ -1,3 +1,4 @@
+using FirstProject.CharacterEffect;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -57,9 +58,14 @@ namespace FirstProject.UI
             _effectText.text = effectName;
         }
 
-        public void HideEffect()
+        public void HideEffect(CharacterApplicableEffect effect)
         {
             if (_effectText == null)
+            {
+                return;
+            }
+
+            if (_effectText.text != effect.Name)
             {
                 return;
             }

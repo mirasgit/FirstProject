@@ -1,6 +1,4 @@
-using FirstProject.Projectiles;
 using FirstProject.Characters;
-using FirstProject.UI;
 using System.Collections.Generic;
 
 namespace FirstProject.Battle

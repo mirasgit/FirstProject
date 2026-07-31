@@ -1,5 +1,4 @@
 using UnityEngine;
-using FirstProject.CharacterEffect;
 
 namespace FirstProject.Characters.Attack
 {
@@ -11,10 +10,6 @@ namespace FirstProject.Characters.Attack
         [Header("Warrior special info")]
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _attackRadius;
-
-        [SerializeField] protected EffectConfig _effectConfig;
-
-        [SerializeField, Range(0, 100)] protected int _applyProbabilityPercent;
 
         private readonly Collider2D[] _enemyColliders = new Collider2D[MAX_TARGETS];
         private Rigidbody2D _rb;
@@ -91,13 +86,8 @@ namespace FirstProject.Characters.Attack
 
                 target.TakeDamage(_stats.CurrentDamage);
 
-                CharacterApplicableEffect effectToApply = null;
-                if (_effectConfig != null && Random.value <= _applyProbabilityPercent / TO_PERCENT_MULTIPLIER)
-                {
-                    effectToApply = _effectConfig.CreateEffect();
-                }
+                target.ApplyEffect(TryGetEffect());
 
-                target.ApplyEffect(effectToApply);
             }
         }
 

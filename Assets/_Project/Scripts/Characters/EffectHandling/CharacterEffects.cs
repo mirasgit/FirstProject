@@ -13,7 +13,7 @@ namespace FirstProject.CharacterEffect
         private IKillable _killable;
         private readonly List<CharacterApplicableEffect> _effects = new();
         public event Action<CharacterApplicableEffect> EffectApplied;
-        public event Action EffectEnded;
+        public event Action<CharacterApplicableEffect> EffectEnded;
         
         [Inject]
         public void Construct(CharacterEffectContext context, IKillable killable)
@@ -55,17 +55,17 @@ namespace FirstProject.CharacterEffect
         private IEnumerator RunEffect(CharacterApplicableEffect effect)
         {
             yield return effect.Run(_context);
-            EffectEnded?.Invoke();
+            EffectEnded?.Invoke(effect);
             _effects.Remove(effect);
         }
 
         private void OnCharacterDied()
         {
             StopAllCoroutines();
-            EffectEnded?.Invoke();
             foreach (var effect in _effects)
             {
                 effect.CancelEffect(_context);
+                EffectEnded?.Invoke(effect);
             }
             _effects.Clear();
         }

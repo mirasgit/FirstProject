@@ -49,9 +49,9 @@ namespace FirstProject.UI
             _view.ShowEffect(effect.Name);
         }
 
-        private void OnEffectEnd()
+        private void OnEffectEnd(CharacterApplicableEffect effect)
         {
-            _view.HideEffect();
+            _view.HideEffect(effect);
         }
 
         private void OnModelDestroyed()
