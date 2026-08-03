@@ -472,9 +472,9 @@ MonoBehaviour:
     m_Bits: 64
   _attackCooldown: 0.5
   _attackSpeed: 1.5
-  _projectilePrefab: {fileID: 7758558058821724251, guid: 12a94a3136db99e42a30a78b518d0c00, type: 3}
   _effectConfig: {fileID: 11400000, guid: 2dc4424756e5b2747adda8a21f35d5eb, type: 2}
   _applyProbabilityPercent: 30
+  _projectilePrefab: {fileID: 7758558058821724251, guid: 12a94a3136db99e42a30a78b518d0c00, type: 3}
 --- !u!114 &5455666780557975157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,6 +501,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
   <BaseDamage>k__BackingField: 10
   <BaseHealth>k__BackingField: 100
+  <MyClass>k__BackingField: 3
 --- !u!114 &5804883697193863740
 MonoBehaviour:
   m_ObjectHideFlags: 0

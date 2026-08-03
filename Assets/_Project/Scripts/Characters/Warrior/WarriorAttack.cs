@@ -84,7 +84,7 @@ namespace FirstProject.Characters.Attack
                     continue;
                 }
 
-                target.TakeDamage(_stats.CurrentDamage);
+                target.TakeDamage(_stats.CurrentDamage, _stats.MyClass);
 
                 target.ApplyEffect(TryGetEffect());
 

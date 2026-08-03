@@ -12,14 +12,27 @@ namespace FirstProject.UI
         [SerializeField] private TMP_Text _winnerText;
         [SerializeField] private Button _startButton;
         [SerializeField] private Button _restartButton;
+        [SerializeField] private Button _exitButton;
+        [SerializeField] private TextMeshProUGUI _coinCounter;
 
         public event Action StartButtonPressed;
         public event Action RestartButtonPressed;
+        public event Action ExitButtonPressed;
 
         public void Subscribe()
         {
             _startButton.onClick.AddListener(OnStartButtonClicked);
             _restartButton.onClick.AddListener(OnRestartButtonClicked);
+            _exitButton.onClick.AddListener(OnExitButtonClicked);
+        }
+
+        public void ExitGame()
+        {
+#if UNITY_EDITOR
+            Debug.Log("Exit Button has been pressed.");
+#else
+            Application.Quit();
+#endif
         }
 
         public void ShowStartScreen()
@@ -40,6 +53,17 @@ namespace FirstProject.UI
             _winPanel.SetActive(true);
         }
 
+        public void Unsubscribe()
+        {
+            _startButton.onClick.RemoveListener(OnStartButtonClicked);
+            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+        }
+
+        public void UpdateCoinCounter(int count)
+        {
+            _coinCounter.text = count.ToString();
+        }
+
         private void OnStartButtonClicked()
         {
             StartButtonPressed?.Invoke();
@@ -50,10 +74,9 @@ namespace FirstProject.UI
             RestartButtonPressed?.Invoke();
         }
 
-        public void Unsubscribe()
+        private void OnExitButtonClicked()
         {
-            _startButton.onClick.RemoveListener(OnStartButtonClicked);
-            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+            ExitButtonPressed?.Invoke();
         }
     }
 }

@@ -1,5 +1,7 @@
 using FirstProject.Characters;
 using FirstProject.CharacterEffect;
+using System.Collections.Generic;
+using System.Text;
 
 namespace FirstProject.UI
 {
@@ -7,7 +9,7 @@ namespace FirstProject.UI
     {
         private readonly CharacterView _view;
         private readonly Character _model;
-
+        private readonly List<string> _effects = new();
         public CharacterPresenter (CharacterView view, Character model)
         {
             _view = view;
@@ -46,16 +48,26 @@ namespace FirstProject.UI
 
         private void OnEffectApplied(CharacterApplicableEffect effect)
         {
-            _view.ShowEffect(effect.Name);
+            _effects.Add(effect.Name);
+            RefreshEffectView();
         }
 
         private void OnEffectEnd(CharacterApplicableEffect effect)
         {
-            _view.HideEffect(effect);
+            _effects.Remove(effect.Name);
+            RefreshEffectView();
+        }
+
+        private void RefreshEffectView()
+        {
+            string combinedText = string.Join(", ", _effects);
+
+            _view.UpdateEffectText(combinedText);
         }
 
         private void OnModelDestroyed()
         {
+            _effects.Clear();
             Unsubscribe();
         }
     }

@@ -1,20 +1,15 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
+using FirstProject.Battle;
 
 namespace FirstProject.Projectiles
 {
-    public class ProjectileFactory
+    public class ProjectileFactory : BaseFactory<Projectile>
     {
-        private IInstantiator _instantiator;
 
-        public ProjectileFactory(IInstantiator instantiator)
+        public ProjectileFactory(IInstantiator instantiator) : base(instantiator)
         {
-            _instantiator = instantiator;
+            
         }
 
-        public Projectile Create(Projectile prefab, Vector3 position, Quaternion rotation)
-        {
-            return _instantiator.InstantiatePrefabForComponent<Projectile>(prefab, position, rotation, null);
-        }
     }
 }

@@ -26,6 +26,7 @@ namespace FirstProject.Characters
             newProjectile.SetFacingDirection(_facing.FacingDirection);
             newProjectile.SetDamage(_stats.CurrentDamage);
             newProjectile.SetEffect(TryGetEffect());
+            newProjectile.SetHost(_stats.MyClass);
         }
     }
 }

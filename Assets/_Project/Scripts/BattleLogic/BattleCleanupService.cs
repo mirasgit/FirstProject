@@ -5,7 +5,7 @@ namespace FirstProject.Battle
 {
     public class BattleCleanupService
     {
-        private IEnumerable<IClearableRegistry> _registries;
+        private readonly IEnumerable<IClearableRegistry> _registries;
 
         public BattleCleanupService(IEnumerable<IClearableRegistry> registries)
         {

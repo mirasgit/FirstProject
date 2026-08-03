@@ -11,6 +11,7 @@ namespace FirstProject.Projectiles
         [SerializeField] private int _secondsToDestroy = 4;
         [SerializeField] private float _moveSpeed = 5f;
 
+        private CharacterClass _attackerClass;
         private ProjectileRegistry _projectileRegistry;
         private Rigidbody2D _rb;
         private CharacterApplicableEffect _effect;
@@ -50,6 +51,11 @@ namespace FirstProject.Projectiles
             _projectileRegistry.Unregister(this);
         }
 
+        public void SetHost(CharacterClass attacker)
+        {
+            _attackerClass = attacker;
+        }
+
         public void SetFacingDirection(int facingDirection)
         {
             _facingDirection = facingDirection;
@@ -84,7 +90,7 @@ namespace FirstProject.Projectiles
                 return;
             }
 
-            target.TakeDamage(_damage);
+            target.TakeDamage(_damage, _attackerClass);
             ApplyEffect(target);
             Destroy(gameObject);
         }

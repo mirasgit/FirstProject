@@ -476,10 +476,10 @@ MonoBehaviour:
     m_Bits: 64
   _attackCooldown: 0.5
   _attackSpeed: 1.2
-  _moveSpeed: 3.5
-  _attackRadius: 1
   _effectConfig: {fileID: 11400000, guid: ca938f53379f9c445a36a385b0196dc4, type: 2}
   _applyProbabilityPercent: 40
+  _moveSpeed: 3.5
+  _attackRadius: 1
 --- !u!114 &3637227649246280339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,6 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
   <BaseDamage>k__BackingField: 10
   <BaseHealth>k__BackingField: 100
+  <MyClass>k__BackingField: 1
 --- !u!114 &2320580648201096190
 MonoBehaviour:
   m_ObjectHideFlags: 0

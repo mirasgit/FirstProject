@@ -1,21 +1,15 @@
 ﻿using Zenject;
-using UnityEngine;
+using FirstProject.Battle;
 
 namespace FirstProject.UI
 {
-    public class FloatingTextFactory
+    public class FloatingTextFactory : BaseFactory<FloatingText>
     {
-        private IInstantiator _instantiator;
-
-        public FloatingTextFactory(IInstantiator instantiator)
+        public FloatingTextFactory(IInstantiator instantiator) : base(instantiator)
         {
-            _instantiator = instantiator;
+
         }
 
-        public FloatingText Create(FloatingText prefab, Vector3 position, Quaternion rotation)
-        {
-            return _instantiator.InstantiatePrefabForComponent<FloatingText>(prefab, position, rotation, null);
-        }
     }
 
 }

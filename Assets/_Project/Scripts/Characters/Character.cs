@@ -67,9 +67,9 @@ namespace FirstProject.Characters
             _facing.SetFacingRight(facingRight);
         }
         
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, CharacterClass attackerClass)
         {
-            _stats.TakeDamage(damage);
+            _stats.TakeDamage(damage, attackerClass);
 
             if (_stats.CurrentHealth <= ALIVE_HEALTH_THRESHOLD)
             {

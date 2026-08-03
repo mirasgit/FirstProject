@@ -16,7 +16,7 @@ namespace FirstProject.CharacterEffect
 
         public void TakeDamage(float damage)
         {
-            _damageable.TakeDamage(damage);
+            _damageable.TakeDamage(damage, CharacterClass.None);
         }
 
         public void AddDamageModifier(float modifier)

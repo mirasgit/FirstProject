@@ -9,6 +9,8 @@ namespace FirstProject.UI
         private readonly BattleView _view;
         private readonly BattleFlow _model;
 
+        private int _coins;
+
         private const string LEFT_WON_TEXT = "Left Won";
         private const string RIGHT_WON_TEXT  = "Right Won";
 
@@ -18,13 +20,16 @@ namespace FirstProject.UI
             _model = model;
         }
 
+
         public void Initialize()
         {
             _model.BattleStarted += OnBattleStarted;
             _model.StartScreenShowed += OnStartScreenShowed;
             _model.WhoWon += OnWinnerDecided;
+            _model.MyCharacterWon += OnPlayerCharacterWon;
             _view.StartButtonPressed += OnStartButtonPressed;
             _view.RestartButtonPressed += OnRestartButtonPressed;
+            _view.ExitButtonPressed += OnExitButtonPressed;
             _view.Subscribe();
 
             if (_model.State == BattleState.StartScreen)
@@ -42,9 +47,17 @@ namespace FirstProject.UI
             _model.BattleStarted -= OnBattleStarted;
             _model.StartScreenShowed -= OnStartScreenShowed;
             _model.WhoWon -= OnWinnerDecided;
+            _model.MyCharacterWon -= OnPlayerCharacterWon;
             _view.StartButtonPressed -= OnStartButtonPressed;
             _view.RestartButtonPressed -= OnRestartButtonPressed;
+            _view.ExitButtonPressed -= OnExitButtonPressed;
             _view.Unsubscribe();
+        }
+
+        private void OnPlayerCharacterWon()
+        {
+            _coins += 100;
+            _view.UpdateCoinCounter(_coins);
         }
 
         private void OnStartButtonPressed()
@@ -54,6 +67,11 @@ namespace FirstProject.UI
         private void OnRestartButtonPressed()
         {
             _model.RestartBattle();
+        }
+
+        private void OnExitButtonPressed()
+        {
+            _view.ExitGame();
         }
 
         private void OnBattleStarted()

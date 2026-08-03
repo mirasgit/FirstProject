@@ -14,6 +14,7 @@ namespace FirstProject.Battle
         [SerializeField] private Transform _rightSpawnPoint;
         [SerializeField] private Transform _uiCanvas;
         [SerializeField] private List<Character> _characterPrefabs;
+        [SerializeField] private MatchupMatrixConfig _matchupMatrix;
 
             public override void InstallBindings()
         {
@@ -28,6 +29,7 @@ namespace FirstProject.Battle
             Container.BindInterfacesAndSelfTo<BattlePresenter>().AsSingle().NonLazy();
             Container.Bind<ProjectileFactory>().AsSingle();
             Container.Bind<FloatingTextFactory>().AsSingle();
+            Container.BindInstance(_matchupMatrix).AsSingle();
         }
     }
 }

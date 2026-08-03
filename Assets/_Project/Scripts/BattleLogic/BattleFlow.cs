@@ -17,6 +17,7 @@ namespace FirstProject.Battle
         public event Action<BattleResult> WhoWon;
         public event Action StartScreenShowed;
         public event Action BattleStarted;
+        public event Action MyCharacterWon;
 
         public BattleFlow(
            CharacterFactory characterFactory,
@@ -83,6 +84,7 @@ namespace FirstProject.Battle
             {
                 WhoWon?.Invoke(BattleResult.LeftWon);
                 State = BattleState.Finished;
+                MyCharacterWon?.Invoke();
             }
         }
 

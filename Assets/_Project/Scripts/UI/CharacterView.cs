@@ -48,29 +48,13 @@ namespace FirstProject.UI
 
         }
 
-        public void ShowEffect(string effectName)
+        public void UpdateEffectText(string textValue)
         {
             if (_effectText == null)
             {
                 return;
             }
-
-            _effectText.text = effectName;
-        }
-
-        public void HideEffect(CharacterApplicableEffect effect)
-        {
-            if (_effectText == null)
-            {
-                return;
-            }
-
-            if (_effectText.text != effect.Name)
-            {
-                return;
-            }
-
-            _effectText.text = EMPTY_EFFECT_TEXT;
+            _effectText.text = textValue;
         }
     }
 }
