@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using FirstProject.Battle;
+﻿using FirstProject.Battle;
 
 namespace FirstProject.UI
 {

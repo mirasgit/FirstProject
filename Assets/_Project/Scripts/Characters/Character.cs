@@ -23,7 +23,7 @@ namespace FirstProject.Characters
         private const float ALIVE_HEALTH_THRESHOLD = 0f;
         public bool IsDead => _death.IsDead;
         public float CurrentHealth => _stats.CurrentHealth;
-        public float MaxHealth => _stats.BaseHealth;
+        public float MaxHealth => _stats.MaxHealth;
 
         public event Action Died;
         public event Action Destroyed;
@@ -60,6 +60,13 @@ namespace FirstProject.Characters
             _attack = attack;
             _facing = facing;
             _death = death;
+        }
+
+        public void ApplyUpgrades(float HealthMP, float DamageMP, float AttackSpeedMP)
+        {
+            _stats.AddHealthModifier(HealthMP);
+            _stats.AddDamageModifier(DamageMP);
+            _attack.ApplyMultiplier(AttackSpeedMP);
         }
 
         public void SetFacingRight( bool facingRight)

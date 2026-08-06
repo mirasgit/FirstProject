@@ -424,7 +424,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _attackCooldown: 0.2
-  _attackSpeed: 1.5
+  _attackSpeed: 1
   _effectConfig: {fileID: 11400000, guid: ef270e7e78d262949a833956fb967e2c, type: 2}
   _applyProbabilityPercent: 33
   _projectilePrefab: {fileID: 3168346399634697453, guid: 5d43bedc16e1052498f7c628316f5cb9, type: 3}

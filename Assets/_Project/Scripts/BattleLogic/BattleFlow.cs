@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using FirstProject.Characters;
+using FirstProject.Shop;
 
 namespace FirstProject.Battle
 {
@@ -11,24 +12,33 @@ namespace FirstProject.Battle
         private readonly Transform _leftSpawnPoint;
         private readonly Transform _rightSpawnPoint;
         private Character _leftCharacter;
-        private Character _rightCharacter;  
+        private Character _rightCharacter;
+        private SaveService _saveService;
         public BattleState State { get; private set; }
 
         public event Action<BattleResult> WhoWon;
         public event Action StartScreenShowed;
         public event Action BattleStarted;
-        public event Action MyCharacterWon;
+        public event Action RoundFinished;
+
+        public int Coins {get; private set;}
 
         public BattleFlow(
            CharacterFactory characterFactory,
            BattleCleanupService cleanupService,
            Transform leftSpawnPoint,
-           Transform rightSpawnPoint)
+           Transform rightSpawnPoint, SaveService saveService)
         {
             _characterFactory = characterFactory;
             _battleCleanupService = cleanupService;
             _leftSpawnPoint = leftSpawnPoint;
             _rightSpawnPoint = rightSpawnPoint;
+            _saveService = saveService;
+        }
+
+        public void AddCoins(int coins)
+        {
+            _saveService.AddCoins(coins);
         }
 
         public void ShowStartScreen()
@@ -84,8 +94,10 @@ namespace FirstProject.Battle
             {
                 WhoWon?.Invoke(BattleResult.LeftWon);
                 State = BattleState.Finished;
-                MyCharacterWon?.Invoke();
+                AddCoins(100);
             }
+
+            RoundFinished?.Invoke();
         }
 
         private void ClearBattle()
