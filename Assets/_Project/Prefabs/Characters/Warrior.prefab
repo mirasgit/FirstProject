@@ -433,7 +433,6 @@ GameObject:
   - component: {fileID: 6445705411544394733}
   - component: {fileID: 3991515491505838625}
   - component: {fileID: 8445825900621782476}
-  - component: {fileID: 1817614094664156792}
   m_Layer: 6
   m_Name: Warrior
   m_TagString: Untagged
@@ -479,6 +478,7 @@ MonoBehaviour:
   _attackSpeed: 1.2
   _effectConfig: {fileID: 11400000, guid: ca938f53379f9c445a36a385b0196dc4, type: 2}
   _applyProbabilityPercent: 40
+  _moveSpeed: 3.5
   _attackRadius: 1
 --- !u!114 &3637227649246280339
 MonoBehaviour:
@@ -616,19 +616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e7759ab7f614c74c952f2634a338213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FirstProject.Characters.CharactersInstaller
---- !u!114 &1817614094664156792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5058306753275247096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8187206e065fddd4cafd687705e0c9ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.Characters.CharacterMovement
-  _moveSpeed: 3
 --- !u!1 &5751680680662128995
 GameObject:
   m_ObjectHideFlags: 0

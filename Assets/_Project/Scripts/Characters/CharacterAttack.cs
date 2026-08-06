@@ -44,12 +44,6 @@ namespace FirstProject.Characters
             HandleAttack();
         }
 
-        public void ApplyMultiplier(float multiplier)
-        {
-            _attackSpeed = _attackSpeed + (_attackSpeed * multiplier);
-            SetAttackSpeed(_attackSpeed);
-        }
-
         public void AllowToFight()
         {
             _isAllowedToFight = true;

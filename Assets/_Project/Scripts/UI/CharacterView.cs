@@ -1,3 +1,4 @@
+using FirstProject.CharacterEffect;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

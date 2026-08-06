@@ -4,7 +4,6 @@ using Zenject;
 using FirstProject.UI;
 using FirstProject.Characters;
 using FirstProject.Projectiles;
-using FirstProject.Shop;
 
 namespace FirstProject.Battle
 {
@@ -14,10 +13,9 @@ namespace FirstProject.Battle
         [SerializeField] private Transform _leftSpawnPoint;
         [SerializeField] private Transform _rightSpawnPoint;
         [SerializeField] private Transform _uiCanvas;
-        [SerializeField] private ShopView _shopView;
         [SerializeField] private List<Character> _characterPrefabs;
         [SerializeField] private MatchupMatrixConfig _matchupMatrix;
-        [SerializeField] private UpgradeConfig _upgradeConfig;
+
             public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<ProjectileRegistry>().AsSingle();
@@ -31,11 +29,7 @@ namespace FirstProject.Battle
             Container.BindInterfacesAndSelfTo<BattlePresenter>().AsSingle().NonLazy();
             Container.Bind<ProjectileFactory>().AsSingle();
             Container.Bind<FloatingTextFactory>().AsSingle();
-            Container.Bind<ShopView>().FromComponentInNewPrefab(_shopView).UnderTransform(_uiCanvas).AsSingle();
-            Container.BindInterfacesAndSelfTo<ShopPresenter>().AsSingle().NonLazy();
-            Container.Bind<SaveService>().AsSingle().NonLazy();
             Container.BindInstance(_matchupMatrix).AsSingle();
-            Container.BindInstance(_upgradeConfig).AsSingle();
         }
     }
 }

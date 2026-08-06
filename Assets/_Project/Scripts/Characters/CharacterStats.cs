@@ -11,8 +11,6 @@ namespace FirstProject.Characters
         [field: SerializeField] public float BaseHealth { get; private set; } = 100;
 
         [field: SerializeField] public CharacterClass MyClass { get; private set; }
-
-        public float MaxHealth => BaseHealth + (BaseHealth * _healthModifiersSum);
         public float CurrentHealth { get; private set; }
         public float CurrentDamage => BaseDamage + (BaseDamage*_damageModifiersSum);
 
@@ -20,11 +18,10 @@ namespace FirstProject.Characters
         public event Action<float> DamageTaken;
         private MatchupMatrixConfig _matchupMatrix;
         private float _damageModifiersSum;
-        private float _healthModifiersSum;
 
         private void Awake()
         {
-            CurrentHealth = MaxHealth;
+            CurrentHealth = BaseHealth;
         }
 
         [Inject]
@@ -33,26 +30,12 @@ namespace FirstProject.Characters
             _matchupMatrix = matrixConfig;
         }
 
-        public void AddHealthModifier(float modifier)
-        {
-            _healthModifiersSum += modifier;
-
-            CurrentHealth = MaxHealth;
-
-            HealthChanged?.Invoke(CurrentHealth, MaxHealth);
-        }
-
-        public void RemoveHealthModifier(float modifier)
-        {
-            _healthModifiersSum -= modifier;
-        }
-
         public void TakeDamage(float damage, CharacterClass attackerClass)
         {
             float multiplier = _matchupMatrix.GetMultiplier(attackerClass, MyClass);
             float finalDamage = multiplier * damage;
             CurrentHealth = Mathf.Max(0f, CurrentHealth - finalDamage);
-            HealthChanged?.Invoke(CurrentHealth, MaxHealth);
+            HealthChanged?.Invoke(CurrentHealth, BaseHealth);
             DamageTaken?.Invoke(finalDamage);
         }
 
