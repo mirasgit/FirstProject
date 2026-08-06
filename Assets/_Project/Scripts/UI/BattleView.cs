@@ -13,7 +13,6 @@ namespace FirstProject.UI
         [SerializeField] private Button _startButton;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _exitButton;
-        [SerializeField] private TextMeshProUGUI _coinCounter;
 
         public event Action StartButtonPressed;
         public event Action RestartButtonPressed;
@@ -57,11 +56,7 @@ namespace FirstProject.UI
         {
             _startButton.onClick.RemoveListener(OnStartButtonClicked);
             _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
-        }
-
-        public void UpdateCoinCounter(int count)
-        {
-            _coinCounter.text = count.ToString();
+            _exitButton.onClick.RemoveListener(OnExitButtonClicked);
         }
 
         private void OnStartButtonClicked()
