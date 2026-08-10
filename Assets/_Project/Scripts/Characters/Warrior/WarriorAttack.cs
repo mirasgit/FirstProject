@@ -1,6 +1,7 @@
 using UnityEngine;
+using Zenject;
 
-namespace FirstProject.Characters.Attack
+namespace FirstProject.Characters
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class WarriorAttack : CharacterAttack
@@ -23,17 +24,17 @@ namespace FirstProject.Characters.Attack
             _targetFilter.SetLayerMask(_whatIsTarget);
             _targetFilter.useLayerMask = true;
             _targetFilter.useTriggers = true;
-            _movement = GetComponent<CharacterMovement>();
         }
 
-        protected override void Update()
+        [Inject]
+        public void ConstructWarrior(CharacterMovement movement)
         {
-            base.Update();
+            _movement = movement;
         }
 
         private void DetectEnemies()
         {
-            if (_death.IsDead || !CanAttack())  
+            if (!CanAttack())  
             {
                 _enemyDetected = false;
                 return;

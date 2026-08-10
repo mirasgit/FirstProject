@@ -1,5 +1,4 @@
 using Zenject;
-using FirstProject.UI;
 using System;
 using FirstProject.Battle;
 
@@ -7,10 +6,10 @@ namespace FirstProject.Shop
 {
     public class ShopPresenter : IInitializable, IDisposable
     {
-        private ShopView _view;
-        private SaveService _model;
-        private BattleFlow _battleFlow;
-        public ShopPresenter(SaveService model, ShopView view, BattleFlow battleFlow)
+        private readonly ShopView _view;
+        private readonly ProgressModel _model;
+        private readonly BattleFlow _battleFlow;
+        public ShopPresenter(ProgressModel model, ShopView view, BattleFlow battleFlow)
         {
             _model = model;
             _view = view;
@@ -57,7 +56,7 @@ namespace FirstProject.Shop
         }
         private void OnDataChanged()
         {
-            _view.UpdateData(_model.GetCoins(), _model.GetHealthLVL(), _model.GetDamageLVL(), _model.GetAttackSpeedLVL());
+            _view.UpdateData(_model.Coins, _model.HealthLevel, _model.DamageLevel, _model.AttackSpeedLevel);
             _view.UpdateCosts(_model.GetUpgradeCost(UpgradeType.Health), _model.GetUpgradeCost(UpgradeType.Damage), _model.GetUpgradeCost(UpgradeType.AttackSpeed));
         }
 
@@ -78,11 +77,13 @@ namespace FirstProject.Shop
 
         private void OnShopButtonClicked()
         {
+            _battleFlow.ShowShopScreen();
             _view.ShowShopPanel();
         }
 
         private void OnBackButtonClicked()
         {
+            _battleFlow.HideShopScreen();
             _view.ShowShopEntryPanel();
         }
     }

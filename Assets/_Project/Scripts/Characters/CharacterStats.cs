@@ -42,11 +42,6 @@ namespace FirstProject.Characters
             HealthChanged?.Invoke(CurrentHealth, MaxHealth);
         }
 
-        public void RemoveHealthModifier(float modifier)
-        {
-            _healthModifiersSum -= modifier;
-        }
-
         public void TakeDamage(float damage, CharacterClass attackerClass)
         {
             float multiplier = _matchupMatrix.GetMultiplier(attackerClass, MyClass);

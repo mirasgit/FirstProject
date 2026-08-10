@@ -40,7 +40,7 @@ namespace FirstProject.UI
             _winPanel.SetActive(false);
         }
 
-        public void ShowBattleScreen()
+        public void HideScreens()
         {
             _startPanel.SetActive(false);
             _winPanel.SetActive(false);

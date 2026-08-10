@@ -62,11 +62,11 @@ namespace FirstProject.Characters
             _death = death;
         }
 
-        public void ApplyUpgrades(float HealthMP, float DamageMP, float AttackSpeedMP)
+        public void ApplyUpgrades(float healthMultiplier, float damageMultiplier, float attackSpeedMultiplier)
         {
-            _stats.AddHealthModifier(HealthMP);
-            _stats.AddDamageModifier(DamageMP);
-            _attack.ApplyMultiplier(AttackSpeedMP);
+            _stats.AddHealthModifier(healthMultiplier);
+            _stats.AddDamageModifier(damageMultiplier);
+            _attack.ApplyMultiplier(attackSpeedMultiplier);
         }
 
         public void SetFacingRight( bool facingRight)

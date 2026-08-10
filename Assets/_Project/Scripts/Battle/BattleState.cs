@@ -5,6 +5,7 @@
         None = 0,
         StartScreen,
         Running,
-        Finished
+        Finished,
+        Shop
     }
 }

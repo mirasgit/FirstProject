@@ -11,38 +11,63 @@ namespace FirstProject.Battle
         private readonly BattleCleanupService _battleCleanupService;
         private readonly Transform _leftSpawnPoint;
         private readonly Transform _rightSpawnPoint;
+        private readonly int _winReward;
+        private readonly ProgressModel _model;
         private Character _leftCharacter;
         private Character _rightCharacter;
-        private SaveService _saveService;
+        private BattleResult _lastWinner;
+        private BattleState _previousState;
         public BattleState State { get; private set; }
 
         public event Action<BattleResult> WhoWon;
         public event Action StartScreenShowed;
         public event Action BattleStarted;
         public event Action RoundFinished;
-
-        public int Coins {get; private set;}
+        public event Action ShopScreenShowed;
 
         public BattleFlow(
            CharacterFactory characterFactory,
            BattleCleanupService cleanupService,
            Transform leftSpawnPoint,
-           Transform rightSpawnPoint, SaveService saveService)
+           Transform rightSpawnPoint, ProgressModel model, int winReward)
         {
             _characterFactory = characterFactory;
             _battleCleanupService = cleanupService;
             _leftSpawnPoint = leftSpawnPoint;
             _rightSpawnPoint = rightSpawnPoint;
-            _saveService = saveService;
+            _model = model;
+            _winReward = winReward;
         }
 
         public void AddCoins(int coins)
         {
-            _saveService.AddCoins(coins);
+            _model.AddCoins(coins);
+        }
+
+        public void HideShopScreen()
+        {
+           if (_previousState == BattleState.StartScreen)
+            {
+                ShowStartScreen();
+            }
+           else if (_previousState == BattleState.Finished)
+            {
+                State = BattleState.Finished;
+                WhoWon?.Invoke(_lastWinner);
+                RoundFinished?.Invoke();
+            }
+        }
+
+        public void ShowShopScreen()
+        {
+            _previousState = State;
+            State = BattleState.Shop;
+            ShopScreenShowed?.Invoke();
         }
 
         public void ShowStartScreen()
         {
+            _previousState = State;
             State = BattleState.StartScreen;
             StartScreenShowed?.Invoke();
         }
@@ -50,6 +75,7 @@ namespace FirstProject.Battle
         public void StartBattle()
         {
             ClearBattle();
+            _previousState = State;
             State = BattleState.Running;
             SpawnCharacters();
             BattleStarted?.Invoke();
@@ -85,16 +111,20 @@ namespace FirstProject.Battle
             _leftCharacter.DisallowToFight();
             _rightCharacter.DisallowToFight();
 
+            _previousState = State;
+
             if (_leftCharacter.IsDead)
             {
-                WhoWon?.Invoke(BattleResult.RightWon);
+                _lastWinner = BattleResult.RightWon;
+                WhoWon?.Invoke(_lastWinner);
                 State = BattleState.Finished;
             }
             else if (_rightCharacter.IsDead)
             {
-                WhoWon?.Invoke(BattleResult.LeftWon);
+                _lastWinner = BattleResult.LeftWon;
+                WhoWon?.Invoke(_lastWinner);
                 State = BattleState.Finished;
-                AddCoins(100);
+                AddCoins(_winReward);
             }
 
             RoundFinished?.Invoke();

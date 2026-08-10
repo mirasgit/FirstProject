@@ -1,7 +1,6 @@
 using FirstProject.Characters;
 using FirstProject.CharacterEffect;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FirstProject.UI
 {

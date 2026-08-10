@@ -24,6 +24,7 @@ namespace FirstProject.UI
             _model.BattleStarted += OnBattleStarted;
             _model.StartScreenShowed += OnStartScreenShowed;
             _model.WhoWon += OnWinnerDecided;
+            _model.ShopScreenShowed += OnShopScreenShowed;
             _view.StartButtonPressed += OnStartButtonPressed;
             _view.RestartButtonPressed += OnRestartButtonPressed;
             _view.ExitButtonPressed += OnExitButtonPressed;
@@ -44,10 +45,16 @@ namespace FirstProject.UI
             _model.BattleStarted -= OnBattleStarted;
             _model.StartScreenShowed -= OnStartScreenShowed;
             _model.WhoWon -= OnWinnerDecided;
+            _model.ShopScreenShowed -= OnShopScreenShowed;
             _view.StartButtonPressed -= OnStartButtonPressed;
             _view.RestartButtonPressed -= OnRestartButtonPressed;
             _view.ExitButtonPressed -= OnExitButtonPressed;
             _view.Unsubscribe();
+        }
+
+        private void OnShopScreenShowed()
+        {
+            _view.HideScreens();
         }
 
         private void OnStartButtonPressed()
@@ -66,7 +73,7 @@ namespace FirstProject.UI
 
         private void OnBattleStarted()
         {
-            _view.ShowBattleScreen();
+            _view.HideScreens();
         }
 
         private void OnStartScreenShowed()

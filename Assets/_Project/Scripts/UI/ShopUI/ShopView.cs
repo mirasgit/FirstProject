@@ -1,10 +1,9 @@
-using FirstProject.Shop;
 using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FirstProject.UI
+namespace FirstProject.Shop
 {
     public class ShopView : MonoBehaviour
     {
@@ -25,8 +24,8 @@ namespace FirstProject.UI
         [SerializeField] private TextMeshProUGUI _attackSpeedLevelCost;
 
         [Header("Panels")]
-        [SerializeField] GameObject _shopEntryPanel;
-        [SerializeField] GameObject _shopPanel;
+        [SerializeField] private GameObject _shopEntryPanel;
+        [SerializeField] private GameObject _shopPanel;
 
         public event Action ShopButtonClicked;
         public event Action BackButtonClicked;

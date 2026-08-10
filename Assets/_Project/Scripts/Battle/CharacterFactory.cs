@@ -11,13 +11,13 @@ namespace FirstProject.Battle
     {
         private readonly List<Character> _characterPrefabs;
         private readonly IInstantiator _instantiator;
-        private readonly SaveService _saveService;
+        private readonly ProgressModel _model;
 
-        public CharacterFactory(IInstantiator instantiator, List<Character> prefabs, SaveService saveService)
+        public CharacterFactory(IInstantiator instantiator, List<Character> prefabs, ProgressModel model)
         {
             _instantiator = instantiator;
             _characterPrefabs = prefabs;
-            _saveService = saveService;
+            _model = model;
         }
 
         public Character SpawnRandomCharacter(Transform spawnPoint, bool facingRight)
@@ -28,7 +28,7 @@ namespace FirstProject.Battle
             model.SetFacingRight(facingRight);
             if (facingRight)
             {
-                model.ApplyUpgrades(_saveService.GetHealthMP(), _saveService.GetDamageMP(), _saveService.GetAttackSpeedMP());
+                model.ApplyUpgrades(_model.HealthMultiplier, _model.DamageMultiplier, _model.AttackSpeedMultiplier);
             }
             CharacterView view = model.GetComponentInChildren<CharacterView>(true);
             CharacterPresenter presenter = new(view, model);
