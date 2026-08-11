@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "480718478549",
+    "project_id": "battlesim-50ea3",
+    "storage_bucket": "battlesim-50ea3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480718478549:android:8a105632ae2057e1b4965c",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.FirstProjectmk2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsBy6KqejTaDzOn-VeGw42rH7CoOOH4Cs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

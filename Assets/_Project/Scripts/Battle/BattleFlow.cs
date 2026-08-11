@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using FirstProject.Characters;
 using FirstProject.Shop;
+using FirstProject.Analytics;
 
 namespace FirstProject.Battle
 {
@@ -13,13 +14,15 @@ namespace FirstProject.Battle
         private readonly Transform _rightSpawnPoint;
         private readonly int _winReward;
         private readonly ProgressModel _model;
+        private readonly IAnalyticsService _analytics;
         private Character _leftCharacter;
         private Character _rightCharacter;
-        private BattleResult _lastWinner;
         private BattleState _previousState;
+        public BattleResult LastWinner { get; private set; }
         public BattleState State { get; private set; }
 
-        public event Action<BattleResult> WhoWon;
+        public event Action WinScreenShowed;
+        public event Action<BattleResult> WinnerDecided;
         public event Action StartScreenShowed;
         public event Action BattleStarted;
         public event Action RoundFinished;
@@ -29,7 +32,7 @@ namespace FirstProject.Battle
            CharacterFactory characterFactory,
            BattleCleanupService cleanupService,
            Transform leftSpawnPoint,
-           Transform rightSpawnPoint, ProgressModel model, int winReward)
+           Transform rightSpawnPoint, ProgressModel model, int winReward, IAnalyticsService analytics)
         {
             _characterFactory = characterFactory;
             _battleCleanupService = cleanupService;
@@ -37,6 +40,7 @@ namespace FirstProject.Battle
             _rightSpawnPoint = rightSpawnPoint;
             _model = model;
             _winReward = winReward;
+            _analytics = analytics;
         }
 
         public void AddCoins(int coins)
@@ -53,8 +57,7 @@ namespace FirstProject.Battle
            else if (_previousState == BattleState.Finished)
             {
                 State = BattleState.Finished;
-                WhoWon?.Invoke(_lastWinner);
-                RoundFinished?.Invoke();
+                WinScreenShowed?.Invoke();
             }
         }
 
@@ -115,16 +118,20 @@ namespace FirstProject.Battle
 
             if (_leftCharacter.IsDead)
             {
-                _lastWinner = BattleResult.RightWon;
-                WhoWon?.Invoke(_lastWinner);
+                LastWinner = BattleResult.RightWon;
+                WinnerDecided?.Invoke(LastWinner);
                 State = BattleState.Finished;
+                WinScreenShowed?.Invoke();
+                _analytics.LogEvent("battle_lost");
             }
             else if (_rightCharacter.IsDead)
             {
-                _lastWinner = BattleResult.LeftWon;
-                WhoWon?.Invoke(_lastWinner);
+                LastWinner = BattleResult.LeftWon;
+                WinnerDecided?.Invoke(LastWinner);
                 State = BattleState.Finished;
                 AddCoins(_winReward);
+                WinScreenShowed?.Invoke();
+                _analytics.LogEvent("battle_won");
             }
 
             RoundFinished?.Invoke();

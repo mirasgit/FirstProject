@@ -4,6 +4,7 @@ using FirstProject.CharacterEffect;
 
 namespace FirstProject.Characters
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class CharacterMovement : MonoBehaviour
     {
         [SerializeField] private float _moveSpeed;
