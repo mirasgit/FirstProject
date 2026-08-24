@@ -1,3 +1,5 @@
+using FirstProject.MatchupConfigs;
+
 namespace FirstProject.Characters
 {
     public interface IDamageable

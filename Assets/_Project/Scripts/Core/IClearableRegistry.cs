@@ -1,4 +1,4 @@
-﻿namespace FirstProject.Battle
+﻿namespace FirstProject.Core
 {
     public interface IClearableRegistry
     {

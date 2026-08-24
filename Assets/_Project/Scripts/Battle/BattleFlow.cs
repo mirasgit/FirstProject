@@ -3,6 +3,7 @@ using UnityEngine;
 using FirstProject.Characters;
 using FirstProject.Shop;
 using FirstProject.Analytics;
+using Cysharp.Threading.Tasks;
 
 namespace FirstProject.Battle
 {
@@ -14,7 +15,6 @@ namespace FirstProject.Battle
         private readonly Transform _rightSpawnPoint;
         private readonly int _winReward;
         private readonly ProgressModel _model;
-        private readonly IAnalyticsService _analytics;
         private Character _leftCharacter;
         private Character _rightCharacter;
         private BattleState _previousState;
@@ -26,13 +26,14 @@ namespace FirstProject.Battle
         public event Action StartScreenShowed;
         public event Action BattleStarted;
         public event Action RoundFinished;
-        public event Action ShopScreenShowed;
+        public event Action ShopOpened;
+        public event Action ShopClosed;
 
         public BattleFlow(
            CharacterFactory characterFactory,
            BattleCleanupService cleanupService,
            Transform leftSpawnPoint,
-           Transform rightSpawnPoint, ProgressModel model, int winReward, IAnalyticsService analytics)
+           Transform rightSpawnPoint, ProgressModel model, int winReward)
         {
             _characterFactory = characterFactory;
             _battleCleanupService = cleanupService;
@@ -40,9 +41,12 @@ namespace FirstProject.Battle
             _rightSpawnPoint = rightSpawnPoint;
             _model = model;
             _winReward = winReward;
-            _analytics = analytics;
         }
 
+        public void ClaimReward()
+        {
+            AddCoins(_winReward);
+        }
         public void AddCoins(int coins)
         {
             _model.AddCoins(coins);
@@ -50,22 +54,12 @@ namespace FirstProject.Battle
 
         public void HideShopScreen()
         {
-           if (_previousState == BattleState.StartScreen)
-            {
-                ShowStartScreen();
-            }
-           else if (_previousState == BattleState.Finished)
-            {
-                State = BattleState.Finished;
-                WinScreenShowed?.Invoke();
-            }
+            ShopClosed?.Invoke();
         }
 
         public void ShowShopScreen()
         {
-            _previousState = State;
-            State = BattleState.Shop;
-            ShopScreenShowed?.Invoke();
+            ShopOpened?.Invoke();
         }
 
         public void ShowStartScreen()
@@ -75,18 +69,21 @@ namespace FirstProject.Battle
             StartScreenShowed?.Invoke();
         }
 
-        public void StartBattle()
+        public async UniTask StartBattleAsync()
         {
             ClearBattle();
             _previousState = State;
             State = BattleState.Running;
+
+            await _characterFactory.LoadCharactersAsync();
+
             SpawnCharacters();
             BattleStarted?.Invoke();
         }
 
         public void RestartBattle()
         {
-            StartBattle();
+            StartBattleAsync().Forget();
         }
 
         private void SpawnCharacters()
@@ -122,7 +119,6 @@ namespace FirstProject.Battle
                 WinnerDecided?.Invoke(LastWinner);
                 State = BattleState.Finished;
                 WinScreenShowed?.Invoke();
-                _analytics.LogEvent("battle_lost");
             }
             else if (_rightCharacter.IsDead)
             {
@@ -131,7 +127,6 @@ namespace FirstProject.Battle
                 State = BattleState.Finished;
                 AddCoins(_winReward);
                 WinScreenShowed?.Invoke();
-                _analytics.LogEvent("battle_won");
             }
 
             RoundFinished?.Invoke();

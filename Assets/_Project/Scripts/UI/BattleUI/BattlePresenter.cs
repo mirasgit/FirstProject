@@ -1,21 +1,24 @@
-using FirstProject.Battle;
+using Cysharp.Threading.Tasks;
+using FirstProject.Ads;
 using System;
 using Zenject;
 
-namespace FirstProject.UI
+namespace FirstProject.Battle.UI
 {
     public class BattlePresenter : IInitializable, IDisposable
     {
         private readonly BattleView _view;
         private readonly BattleFlow _model;
+        private readonly IAdsService _adsService;
 
         private const string LEFT_WON_TEXT = "Left Won";
-        private const string RIGHT_WON_TEXT  = "Right Won";
+        private const string RIGHT_WON_TEXT = "Right Won";
 
-        public BattlePresenter(BattleView view, BattleFlow model)
+        public BattlePresenter(BattleView view, BattleFlow model, IAdsService adsService)
         {   
             _view = view;
             _model = model;
+            _adsService = adsService;
         }
 
 
@@ -24,11 +27,13 @@ namespace FirstProject.UI
             _model.BattleStarted += OnBattleStarted;
             _model.StartScreenShowed += OnStartScreenShowed;
             _model.WinnerDecided += OnWinnerDecided;
-            _model.ShopScreenShowed += OnShopScreenShowed;
+            _model.ShopOpened += OnShopOpened;
+            _model.ShopClosed += OnShopClosed;
             _model.WinScreenShowed += OnWinScreenShowed;
             _view.StartButtonPressed += OnStartButtonPressed;
             _view.RestartButtonPressed += OnRestartButtonPressed;
             _view.ExitButtonPressed += OnExitButtonPressed;
+            _view.RewardButtonPressed += OnRewardButtonPressed;
             _view.Subscribe();
 
             if (_model.State == BattleState.StartScreen)
@@ -46,12 +51,23 @@ namespace FirstProject.UI
             _model.BattleStarted -= OnBattleStarted;
             _model.StartScreenShowed -= OnStartScreenShowed;
             _model.WinnerDecided -= OnWinnerDecided;
-            _model.ShopScreenShowed -= OnShopScreenShowed;
+            _model.ShopOpened -= OnShopOpened;
+            _model.ShopClosed -= OnShopClosed;
             _model.WinScreenShowed -= OnWinScreenShowed;
             _view.StartButtonPressed -= OnStartButtonPressed;
             _view.RestartButtonPressed -= OnRestartButtonPressed;
             _view.ExitButtonPressed -= OnExitButtonPressed;
+            _view.RewardButtonPressed -= OnRewardButtonPressed;
             _view.Unsubscribe();
+        }
+
+        private void OnRewardButtonPressed()
+        {
+            _adsService.ShowRewardedAd(() =>
+            {
+                _model.ClaimReward();
+                OnShopClosed();
+            });
         }
 
         private void OnWinScreenShowed()
@@ -59,14 +75,27 @@ namespace FirstProject.UI
             OnWinnerDecided(_model.LastWinner);
         }
 
-        private void OnShopScreenShowed()
+        private void OnShopOpened()
         {
             _view.HideScreens();
         }
 
+        private void OnShopClosed()
+        {
+            if (_model.State == BattleState.StartScreen)
+            {
+                _view.ShowStartScreen();
+            }
+            else if (_model.State == BattleState.Finished)
+            {
+                string winnerText = _model.LastWinner == BattleResult.LeftWon ? LEFT_WON_TEXT : RIGHT_WON_TEXT;
+                _view.ShowWinner(winnerText);
+            }
+        }
+
         private void OnStartButtonPressed()
         {
-            _model.StartBattle();
+            _model.StartBattleAsync().Forget();
         }
         private void OnRestartButtonPressed()
         {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace FirstProject.Characters
+namespace FirstProject.Characters   
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class WarriorAttack : CharacterAttack

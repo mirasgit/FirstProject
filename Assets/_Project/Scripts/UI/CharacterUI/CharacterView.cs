@@ -1,9 +1,10 @@
+using FirstProject.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace FirstProject.UI
+namespace FirstProject.Characters.UI
 {
     public class CharacterView : MonoBehaviour
     {

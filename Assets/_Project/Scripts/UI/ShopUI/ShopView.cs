@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FirstProject.Shop
+namespace FirstProject.Shop.UI
 {
     public class ShopView : MonoBehaviour
     {

@@ -1,4 +1,5 @@
 using FirstProject.Characters;
+using FirstProject.Core;
 using System.Collections.Generic;
 
 namespace FirstProject.Battle

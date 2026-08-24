@@ -2,7 +2,7 @@ using Zenject;
 using System;
 using FirstProject.Battle;
 
-namespace FirstProject.Shop
+namespace FirstProject.Shop.UI
 {
     public class ShopPresenter : IInitializable, IDisposable
     {

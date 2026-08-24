@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FirstProject.CharacterEffect
+namespace FirstProject.CharacterEffect.Configs
 {
     [CreateAssetMenu(fileName = "NewPoisonCfg", menuName = "Effects/Poison Effect")]
     public class PoisonConfig : EffectConfig

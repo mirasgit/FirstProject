@@ -1,4 +1,4 @@
-namespace FirstProject.Characters
+namespace FirstProject.MatchupConfigs
 {
     public enum CharacterClass
     {

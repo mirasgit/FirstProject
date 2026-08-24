@@ -2,6 +2,7 @@ using UnityEngine;
 using FirstProject.CharacterEffect;
 using System;
 using Zenject;
+using FirstProject.MatchupConfigs;
 
 namespace FirstProject.Characters
 {
@@ -69,7 +70,7 @@ namespace FirstProject.Characters
             _attack.ApplyMultiplier(attackSpeedMultiplier);
         }
 
-        public void SetFacingRight( bool facingRight)
+        public void SetFacingRight(bool facingRight)
         {
             _facing.SetFacingRight(facingRight);
         }

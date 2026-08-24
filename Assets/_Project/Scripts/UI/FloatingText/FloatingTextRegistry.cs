@@ -1,8 +1,8 @@
-﻿using FirstProject.Battle;
+﻿using FirstProject.Core;
 
 namespace FirstProject.UI
 {
-    public class FloatingTextRegistry :BaseRegistry<FloatingText>
+    public class FloatingTextRegistry : BaseRegistry<FloatingText>
     {
         
     }

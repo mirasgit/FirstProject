@@ -1,4 +1,4 @@
-using FirstProject.Battle;
+using FirstProject.MatchupConfigs;
 using System;
 using UnityEngine;
 using Zenject;

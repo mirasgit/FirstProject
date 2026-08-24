@@ -2,6 +2,7 @@ using UnityEngine;
 using FirstProject.Characters;
 using Zenject;
 using FirstProject.CharacterEffect;
+using FirstProject.MatchupConfigs;
 
 namespace FirstProject.Projectiles
 {

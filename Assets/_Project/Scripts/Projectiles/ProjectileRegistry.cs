@@ -1,4 +1,4 @@
-using FirstProject.Battle;
+using FirstProject.Core;
 
 namespace FirstProject.Projectiles
 {

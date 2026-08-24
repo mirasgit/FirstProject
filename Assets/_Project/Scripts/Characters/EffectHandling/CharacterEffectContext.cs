@@ -1,4 +1,5 @@
 using FirstProject.Characters;
+using FirstProject.MatchupConfigs;
 
 namespace FirstProject.CharacterEffect
 {

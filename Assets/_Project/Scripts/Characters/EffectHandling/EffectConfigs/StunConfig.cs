@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FirstProject.CharacterEffect
+namespace FirstProject.CharacterEffect.Configs
 {
     [CreateAssetMenu(fileName = "NewStunCfg", menuName = "Effects/Stun Effect")]
     public class StunConfig : EffectConfig

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FirstProject.CharacterEffect
+namespace FirstProject.CharacterEffect.Configs
 {
     [CreateAssetMenu(fileName = "NewWeaknessCfg", menuName = "Effects/Weakness Effect")]
     public class WeaknessConfig : EffectConfig

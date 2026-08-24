@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FirstProject.CharacterEffect
+namespace FirstProject.CharacterEffect.Configs
 {
     public abstract class EffectConfig : ScriptableObject
     {

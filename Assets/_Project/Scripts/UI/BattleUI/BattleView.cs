@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FirstProject.UI
+namespace FirstProject.Battle.UI
 {
     public class BattleView : MonoBehaviour
     {
@@ -13,16 +13,19 @@ namespace FirstProject.UI
         [SerializeField] private Button _startButton;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _exitButton;
+        [SerializeField] private Button _rewardButton;
 
         public event Action StartButtonPressed;
         public event Action RestartButtonPressed;
         public event Action ExitButtonPressed;
+        public event Action RewardButtonPressed;
 
         public void Subscribe()
         {
             _startButton.onClick.AddListener(OnStartButtonClicked);
             _restartButton.onClick.AddListener(OnRestartButtonClicked);
             _exitButton.onClick.AddListener(OnExitButtonClicked);
+            _rewardButton.onClick.AddListener(OnRewardButtonClicked);
         }
 
         public void ExitGame()
@@ -32,6 +35,11 @@ namespace FirstProject.UI
 #else
             Application.Quit();
 #endif
+        }
+
+        public void OnRewardButtonClicked()
+        {
+            RewardButtonPressed?.Invoke();
         }
 
         public void ShowStartScreen()

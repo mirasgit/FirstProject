@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace FirstProject.Battle
+namespace FirstProject.Core
 {
     public class BaseRegistry<T> : IClearableRegistry where T : MonoBehaviour
     {

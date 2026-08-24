@@ -1,6 +1,7 @@
 using UnityEngine;
 using Zenject;
 using FirstProject.CharacterEffect;
+using FirstProject.CharacterEffect.Configs;
 
 namespace FirstProject.Characters
 {
@@ -21,8 +22,6 @@ namespace FirstProject.Characters
         protected const float TO_PERCENT_MULTIPLIER = 100f;
         private bool _isAllowedToFight;
         protected float _lastAttackTime;
-
-
 
         [Inject]
         public void Construct(

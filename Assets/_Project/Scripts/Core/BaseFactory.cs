@@ -1,7 +1,7 @@
 ﻿using Zenject;
 using UnityEngine;
 
-namespace FirstProject.Battle
+namespace FirstProject.Core
 {
     public class BaseFactory<T> where T : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using FirstProject.Characters;
 
-namespace FirstProject.Battle
+namespace FirstProject.MatchupConfigs
 {
     [System.Serializable]
     public struct ClassMatchup
