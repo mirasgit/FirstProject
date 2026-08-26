@@ -1,5 +1,8 @@
+using System;
+
 namespace FirstProject.Shop
 {
+    [Serializable]
     public class SaveData
     {
         public int Coins;

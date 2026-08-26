@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using FirstProject.Characters;
 using FirstProject.Shop;
-using FirstProject.Analytics;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 
 namespace FirstProject.Battle
@@ -17,7 +17,6 @@ namespace FirstProject.Battle
         private readonly ProgressModel _model;
         private Character _leftCharacter;
         private Character _rightCharacter;
-        private BattleState _previousState;
         public BattleResult LastWinner { get; private set; }
         public BattleState State { get; private set; }
 
@@ -64,20 +63,29 @@ namespace FirstProject.Battle
 
         public void ShowStartScreen()
         {
-            _previousState = State;
             State = BattleState.StartScreen;
             StartScreenShowed?.Invoke();
         }
 
-        public async UniTask StartBattleAsync()
+        public async UniTask StartBattleAsync(CancellationToken token = default)
         {
-            ClearBattle();
-            _previousState = State;
-            State = BattleState.Running;
+            if (State == BattleState.Loading || State == BattleState.Running)
+            {
+                return;
+            }
 
-            await _characterFactory.LoadCharactersAsync();
+            State = BattleState.Loading;
+
+            ClearBattle();
+
+            await _characterFactory.LoadCharactersAsync(token);
+
+            token.ThrowIfCancellationRequested();
 
             SpawnCharacters();
+
+            State = BattleState.Running;
+
             BattleStarted?.Invoke();
         }
 
@@ -110,8 +118,6 @@ namespace FirstProject.Battle
 
             _leftCharacter.DisallowToFight();
             _rightCharacter.DisallowToFight();
-
-            _previousState = State;
 
             if (_leftCharacter.IsDead)
             {

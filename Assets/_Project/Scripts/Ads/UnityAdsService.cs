@@ -36,6 +36,7 @@ namespace FirstProject.Ads
 
         public void OnUnityAdsFailedToLoad(string adUnitID, UnityAdsLoadError error, string message)
         {
+            _onRewardCallback = null;
             Debug.Log($"Ad load failed: {message}");
         }
 

@@ -24,7 +24,7 @@ namespace FirstProject.Ads
 
         public void Dispose()
         {
-            _battleFlow.RoundFinished += OnRoundFinished;
+            _battleFlow.RoundFinished -= OnRoundFinished;
         }
 
         private void OnRoundFinished()

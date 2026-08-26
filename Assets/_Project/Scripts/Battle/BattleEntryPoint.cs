@@ -4,7 +4,6 @@ namespace FirstProject.Battle
 {
     public class BattleEntryPoint : IInitializable
     {
-
         private readonly BattleFlow _battleFlow;
 
         public BattleEntryPoint(BattleFlow battleflow)

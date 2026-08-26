@@ -13,6 +13,12 @@ namespace FirstProject.Analytics
         {
             FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
             {
+                if (task.IsFaulted || task.IsCanceled)
+                {
+                    Debug.LogError("Firebase initiation failed");
+                    return;
+                }
+
                 var dependencyStatus = task.Result;
                 if (dependencyStatus == DependencyStatus.Available)
                 {
@@ -23,7 +29,7 @@ namespace FirstProject.Analytics
                 }
                 else
                 {
-                    Debug.LogError($"Could not resolve all Firbase dependencies: {dependencyStatus}");
+                    Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
                 }
             });
         }

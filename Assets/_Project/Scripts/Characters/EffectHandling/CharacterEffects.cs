@@ -47,7 +47,10 @@ namespace FirstProject.CharacterEffect
         {
             for (int i = 0; i < _effects.Count; i++)
             {
-                if (_effects[i].Type == type) return true;
+                if (_effects[i].Type == type)
+                {
+                    return true;
+                }
             }
             return false;
         }

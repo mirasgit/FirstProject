@@ -21,7 +21,6 @@ namespace FirstProject.Battle.UI
             _adsService = adsService;
         }
 
-
         public void Initialize()
         {
             _model.BattleStarted += OnBattleStarted;
@@ -63,6 +62,7 @@ namespace FirstProject.Battle.UI
 
         private void OnRewardButtonPressed()
         {
+            _view.HideRewardButton();
             _adsService.ShowRewardedAd(() =>
             {
                 _model.ClaimReward();

@@ -14,7 +14,7 @@ namespace FirstProject.Characters
 
         public float MaxHealth => BaseHealth + (BaseHealth * _healthModifiersSum);
         public float CurrentHealth { get; private set; }
-        public float CurrentDamage => BaseDamage + (BaseDamage*_damageModifiersSum);
+        public float CurrentDamage => BaseDamage + (BaseDamage * _damageModifiersSum);
 
         public event Action<float, float> HealthChanged;
         public event Action<float> DamageTaken;

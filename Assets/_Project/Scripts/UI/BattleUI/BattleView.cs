@@ -37,6 +37,11 @@ namespace FirstProject.Battle.UI
 #endif
         }
 
+        public void HideRewardButton()
+        {
+            _rewardButton.gameObject.SetActive(false);
+        }
+
         public void OnRewardButtonClicked()
         {
             RewardButtonPressed?.Invoke();
@@ -65,7 +70,9 @@ namespace FirstProject.Battle.UI
             _startButton.onClick.RemoveListener(OnStartButtonClicked);
             _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
             _exitButton.onClick.RemoveListener(OnExitButtonClicked);
+            _rewardButton.onClick.RemoveListener(OnRewardButtonClicked);
         }
+
 
         private void OnStartButtonClicked()
         {

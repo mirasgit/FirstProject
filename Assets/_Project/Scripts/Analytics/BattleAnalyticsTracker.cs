@@ -1,7 +1,6 @@
-using UnityEngine;
 using Zenject;
-using FirstProject.Battle;
 using System;
+using FirstProject.Battle;
 
 namespace FirstProject.Analytics
 {

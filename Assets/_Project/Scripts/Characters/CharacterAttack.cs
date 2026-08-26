@@ -81,7 +81,9 @@ namespace FirstProject.Characters
                 return;
             }
 
-            if (Time.time < _lastAttackTime + _attackCooldown)
+            float effectiveCoolDown = _attackCooldown / _attackSpeed;
+
+            if (Time.time < _lastAttackTime + effectiveCoolDown)
             {
                 return;
             }

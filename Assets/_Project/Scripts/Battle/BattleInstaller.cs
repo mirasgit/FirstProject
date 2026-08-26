@@ -29,7 +29,7 @@ namespace FirstProject.Battle
             Container.BindInterfacesAndSelfTo<FloatingTextRegistry>().AsSingle();
 
             Container.Bind<BattleCleanupService>().AsSingle();
-            Container.Bind<CharacterFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CharacterFactory>().AsSingle();
             Container.Bind<BattleView>().FromComponentInNewPrefab(_battleView).UnderTransform(_uiCanvas).AsSingle();
             Container.Bind<BattleFlow>().AsSingle().WithArguments(_leftSpawnPoint, _rightSpawnPoint, _winReward);
             Container.BindInterfacesAndSelfTo<BattleEntryPoint>().AsSingle().NonLazy();

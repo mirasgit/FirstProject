@@ -12,9 +12,9 @@ namespace FirstProject.Shop.UI
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _upgradeHealthButton;
         [SerializeField] private Button _upgradeDamageButton;
+        [SerializeField] private Button _upgradeAttackSpeedButton;
 
         [Header("Counters")]
-        [SerializeField] private Button _upgradeAttackSpeedButton;
         [SerializeField] private TextMeshProUGUI _coinCounter;
         [SerializeField] private TextMeshProUGUI _healthLevelCounter;
         [SerializeField] private TextMeshProUGUI _damageLevelCounter;

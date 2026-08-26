@@ -6,10 +6,12 @@ using FirstProject.Shop;
 using FirstProject.Characters.UI;
 using FirstProject.Core;
 using Cysharp.Threading.Tasks;
+using System;
+using System.Threading;
 
 namespace FirstProject.Battle
 {
-    public class CharacterFactory
+    public class CharacterFactory : IDisposable
     {
         private readonly IResourceProvider _resourceProvider;   
         private readonly IInstantiator _instantiator;
@@ -19,6 +21,8 @@ namespace FirstProject.Battle
 
         private readonly List<Character> _loadedPrefabs = new();
 
+        private readonly List<GameObject> _cachedAssets = new();
+
         public CharacterFactory(IInstantiator instantiator, IResourceProvider resourceProvider, ProgressModel model)
         {
             _instantiator = instantiator;
@@ -26,7 +30,7 @@ namespace FirstProject.Battle
             _model = model;
         }
 
-        public async UniTask LoadCharactersAsync()
+        public async UniTask LoadCharactersAsync(CancellationToken token = default)
         {
             if (_loadedPrefabs.Count > 0)
             {
@@ -34,9 +38,10 @@ namespace FirstProject.Battle
             }
 
             var loadTasks = new List<UniTask<GameObject>>();
+
             foreach (var key in _characterAddressKeys)
             {
-                loadTasks.Add(_resourceProvider.LoadAssetAsync<GameObject>(key));
+                loadTasks.Add(_resourceProvider.LoadAssetAsync<GameObject>(key, token));
             }
 
             GameObject[] loadedObjects = await UniTask.WhenAll(loadTasks);
@@ -44,24 +49,38 @@ namespace FirstProject.Battle
             foreach (var obj in loadedObjects)
             {
                 _loadedPrefabs.Add(obj.GetComponent<Character>());
+                _cachedAssets.Add(obj);
             }
 
         }
 
         public Character SpawnRandomCharacter(Transform spawnPoint, bool facingRight)
         {
-            int randomIndex = Random.Range(0, _loadedPrefabs.Count);
+            int randomIndex = UnityEngine.Random.Range(0, _loadedPrefabs.Count);
             Character prefab = _loadedPrefabs[randomIndex];
-            Character model = _instantiator.InstantiatePrefabForComponent<Character>(prefab, spawnPoint.position, Quaternion.identity, null);
-            model.SetFacingRight(facingRight);
+            Character characterInstance = _instantiator.InstantiatePrefabForComponent<Character>(prefab, spawnPoint.position, Quaternion.identity, null);
+            characterInstance.SetFacingRight(facingRight);
             if (facingRight)
             {
-                model.ApplyUpgrades(_model.HealthMultiplier, _model.DamageMultiplier, _model.AttackSpeedMultiplier);
+                characterInstance.ApplyUpgrades(_model.HealthMultiplier, _model.DamageMultiplier, _model.AttackSpeedMultiplier);
             }
-            CharacterView view = model.GetComponentInChildren<CharacterView>(true);
-            CharacterPresenter presenter = new(view, model);
+            CharacterView view = characterInstance.GetComponentInChildren<CharacterView>(true);
+            CharacterPresenter presenter = new(view, characterInstance);
             presenter.Subscribe();
-            return model;
+            return characterInstance;
+        }
+
+        public void Dispose()
+        {
+            foreach (var prefab  in _cachedAssets)
+            {
+                if (prefab != null)
+                {
+                    _resourceProvider.ReleaseAsset(prefab);
+                }
+            }
+            _loadedPrefabs.Clear();
+            _cachedAssets.Clear();
         }
     }
 }

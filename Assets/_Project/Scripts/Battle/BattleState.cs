@@ -4,8 +4,8 @@
     {
         None = 0,
         StartScreen,
+        Loading,
         Running,
-        Finished,
-        Shop
+        Finished
     }
 }

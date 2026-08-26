@@ -1,4 +1,3 @@
-using FirstProject.Characters;
 using FirstProject.CharacterEffect;
 using System.Collections.Generic;
 
@@ -9,7 +8,7 @@ namespace FirstProject.Characters.UI
         private readonly CharacterView _view;
         private readonly Character _model;
         private readonly List<string> _effects = new();
-        public CharacterPresenter (CharacterView view, Character model)
+        public CharacterPresenter(CharacterView view, Character model)
         {
             _view = view;
             _model = model;

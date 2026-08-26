@@ -16,7 +16,7 @@ namespace FirstProject.Characters
 
         private Rigidbody2D _rb;
         private float _currentMoveSpeed;
-        bool _isAllowedToMove;
+        private bool _isAllowedToMove;
 
         [Inject]
         public void Construct(CharacterFacing facing, CharacterAnimator animator, CharacterDeath death, CharacterEffects effects)
