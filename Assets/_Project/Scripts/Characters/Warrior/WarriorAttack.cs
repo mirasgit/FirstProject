@@ -9,7 +9,7 @@ namespace FirstProject.Characters
         private const int MAX_TARGETS = 1;
 
         [Header("Warrior special info")]
-        [SerializeField] private float _attackRadius;
+        private float _attackRadius;
 
         private readonly Collider2D[] _enemyColliders = new Collider2D[MAX_TARGETS];
 
@@ -30,6 +30,13 @@ namespace FirstProject.Characters
         public void ConstructWarrior(CharacterMovement movement)
         {
             _movement = movement;
+            foreach (var charConfig in _configService.Data.Characters)
+            {
+                if (charConfig.ClassType == _identity.MyClass)
+                {
+                    _attackRadius = charConfig.MeleeAttackRadius;
+                }
+            }
         }
 
         private void DetectEnemies()
@@ -85,7 +92,7 @@ namespace FirstProject.Characters
                     continue;
                 }
 
-                target.TakeDamage(_stats.CurrentDamage, _stats.MyClass);
+                target.TakeDamage(_stats.CurrentDamage, _identity.MyClass);
 
                 target.ApplyEffect(TryGetEffect());
 

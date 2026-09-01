@@ -17,6 +17,7 @@ namespace FirstProject.Characters
             Container.Bind<CharacterFacing>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CharacterAnimator>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CharacterMovement>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<CharacterIdentity>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

@@ -423,6 +423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6192415860055638835}
+  - component: {fileID: 115507958906038287}
   - component: {fileID: 5151742448753200029}
   - component: {fileID: 3637227649246280339}
   - component: {fileID: 3821051896798324541}
@@ -459,6 +460,19 @@ Transform:
   - {fileID: 9367165673793985}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &115507958906038287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5058306753275247096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7a2bf3899c74c240a4c283893589a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.Characters.CharacterIdentity
+  <MyClass>k__BackingField: 1
 --- !u!114 &5151742448753200029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,11 +489,7 @@ MonoBehaviour:
   _whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
-  _attackCooldown: 0.5
-  _attackSpeed: 1.2
-  _effectConfig: {fileID: 11400000, guid: ca938f53379f9c445a36a385b0196dc4, type: 2}
-  _applyProbabilityPercent: 40
-  _attackRadius: 1
+  _effectType: 3
 --- !u!114 &3637227649246280339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,9 +526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  <BaseDamage>k__BackingField: 10
-  <BaseHealth>k__BackingField: 100
-  <MyClass>k__BackingField: 1
 --- !u!114 &2320580648201096190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,7 +635,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8187206e065fddd4cafd687705e0c9ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FirstProject.Characters.CharacterMovement
-  _moveSpeed: 3
 --- !u!1 &5751680680662128995
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,11 @@ namespace FirstProject.Battle.UI
         public event Action ExitButtonPressed;
         public event Action RewardButtonPressed;
 
+        private void Awake()
+        {
+            HideScreens();
+        }
+
         public void Subscribe()
         {
             _startButton.onClick.AddListener(OnStartButtonClicked);
@@ -59,12 +64,13 @@ namespace FirstProject.Battle.UI
             _winPanel.SetActive(false);
         }
 
-        public void ShowWinner(string winnerText)
+        public void ShowWinner(string winnerText, bool showRewardButton)
         {
             _winnerText.text = winnerText;
             _winPanel.SetActive(true);
+            _rewardButton.gameObject.SetActive(showRewardButton);
         }
-
+            
         public void Unsubscribe()
         {
             _startButton.onClick.RemoveListener(OnStartButtonClicked);
@@ -72,7 +78,6 @@ namespace FirstProject.Battle.UI
             _exitButton.onClick.RemoveListener(OnExitButtonClicked);
             _rewardButton.onClick.RemoveListener(OnRewardButtonClicked);
         }
-
 
         private void OnStartButtonClicked()
         {

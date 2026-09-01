@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using FirstProject.Ads;
 using System;
+using System.Threading;
 using Zenject;
 
 namespace FirstProject.Battle.UI
@@ -10,6 +11,7 @@ namespace FirstProject.Battle.UI
         private readonly BattleView _view;
         private readonly BattleFlow _model;
         private readonly IAdsService _adsService;
+        private CancellationTokenSource _battleCts = new CancellationTokenSource();
 
         private const string LEFT_WON_TEXT = "Left Won";
         private const string RIGHT_WON_TEXT = "Right Won";
@@ -28,7 +30,6 @@ namespace FirstProject.Battle.UI
             _model.WinnerDecided += OnWinnerDecided;
             _model.ShopOpened += OnShopOpened;
             _model.ShopClosed += OnShopClosed;
-            _model.WinScreenShowed += OnWinScreenShowed;
             _view.StartButtonPressed += OnStartButtonPressed;
             _view.RestartButtonPressed += OnRestartButtonPressed;
             _view.ExitButtonPressed += OnExitButtonPressed;
@@ -47,12 +48,14 @@ namespace FirstProject.Battle.UI
 
         public void Dispose()
         {
+            _battleCts.Cancel();
+            _battleCts.Dispose();
+
             _model.BattleStarted -= OnBattleStarted;
             _model.StartScreenShowed -= OnStartScreenShowed;
             _model.WinnerDecided -= OnWinnerDecided;
             _model.ShopOpened -= OnShopOpened;
             _model.ShopClosed -= OnShopClosed;
-            _model.WinScreenShowed -= OnWinScreenShowed;
             _view.StartButtonPressed -= OnStartButtonPressed;
             _view.RestartButtonPressed -= OnRestartButtonPressed;
             _view.ExitButtonPressed -= OnExitButtonPressed;
@@ -66,13 +69,7 @@ namespace FirstProject.Battle.UI
             _adsService.ShowRewardedAd(() =>
             {
                 _model.ClaimReward();
-                OnShopClosed();
             });
-        }
-
-        private void OnWinScreenShowed()
-        {
-            OnWinnerDecided(_model.LastWinner);
         }
 
         private void OnShopOpened()
@@ -89,17 +86,17 @@ namespace FirstProject.Battle.UI
             else if (_model.State == BattleState.Finished)
             {
                 string winnerText = _model.LastWinner == BattleResult.LeftWon ? LEFT_WON_TEXT : RIGHT_WON_TEXT;
-                _view.ShowWinner(winnerText);
+                _view.ShowWinner(winnerText, false);
             }
         }
 
         private void OnStartButtonPressed()
         {
-            _model.StartBattleAsync().Forget();
+            _model.StartBattleAsync(_battleCts.Token).Forget();
         }
         private void OnRestartButtonPressed()
         {
-            _model.RestartBattle();
+            _model.RestartBattle(_battleCts.Token);
         }
 
         private void OnExitButtonPressed()
@@ -122,10 +119,10 @@ namespace FirstProject.Battle.UI
             switch (result)
             {
                 case BattleResult.LeftWon:
-                    _view.ShowWinner(LEFT_WON_TEXT);
+                    _view.ShowWinner(LEFT_WON_TEXT, true);
                     break;
                 case BattleResult.RightWon:
-                    _view.ShowWinner(RIGHT_WON_TEXT);
+                    _view.ShowWinner(RIGHT_WON_TEXT, true);
                     break;
             }
         }

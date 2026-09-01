@@ -13,6 +13,7 @@ namespace FirstProject.Characters
     [RequireComponent(typeof(CharacterDeath))]
     [RequireComponent(typeof(CharacterFacing))]
     [RequireComponent(typeof(CharacterAttack))]
+    [RequireComponent(typeof(CharacterIdentity))]
     public class Character : MonoBehaviour, IDamageable, IKillable
     {
         private CharacterStats _stats;

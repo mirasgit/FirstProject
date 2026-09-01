@@ -1,4 +1,5 @@
 using FirstProject.Battle;
+using FirstProject.Configs;
 using System;
 using Zenject;
 
@@ -8,13 +9,15 @@ namespace FirstProject.Ads
     {
         private readonly BattleFlow _battleFlow;
         private readonly IAdsService _adsService;
+        private readonly RemoteConfigService _configService;
 
         private int _battleCount = 0;
 
-        public BattleAdsTracker(BattleFlow battleFlow, IAdsService adsService)
+        public BattleAdsTracker(BattleFlow battleFlow, IAdsService adsService, RemoteConfigService configService)
         {
             _battleFlow = battleFlow;
             _adsService = adsService;
+            _configService = configService;
         }
 
         public void Initialize()
@@ -31,7 +34,7 @@ namespace FirstProject.Ads
         {
             _battleCount++;
 
-            if (_battleCount % 2 == 0)
+            if (_configService.Data.AdsConfig.InterstitialInterval > 0 && _battleCount % _configService.Data.AdsConfig.InterstitialInterval == 0)
             {
                 _adsService.ShowInterstitialAd();
             }

@@ -4,6 +4,8 @@ using FirstProject.Characters;
 using FirstProject.Shop;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using FirstProject.Ads;
+using FirstProject.Configs;
 
 namespace FirstProject.Battle
 {
@@ -13,14 +15,13 @@ namespace FirstProject.Battle
         private readonly BattleCleanupService _battleCleanupService;
         private readonly Transform _leftSpawnPoint;
         private readonly Transform _rightSpawnPoint;
-        private readonly int _winReward;
         private readonly ProgressModel _model;
         private Character _leftCharacter;
         private Character _rightCharacter;
+        private RemoteConfigService _configService;
         public BattleResult LastWinner { get; private set; }
         public BattleState State { get; private set; }
 
-        public event Action WinScreenShowed;
         public event Action<BattleResult> WinnerDecided;
         public event Action StartScreenShowed;
         public event Action BattleStarted;
@@ -32,23 +33,21 @@ namespace FirstProject.Battle
            CharacterFactory characterFactory,
            BattleCleanupService cleanupService,
            Transform leftSpawnPoint,
-           Transform rightSpawnPoint, ProgressModel model, int winReward)
+           Transform rightSpawnPoint, ProgressModel model, RemoteConfigService configService)
         {
             _characterFactory = characterFactory;
             _battleCleanupService = cleanupService;
             _leftSpawnPoint = leftSpawnPoint;
             _rightSpawnPoint = rightSpawnPoint;
             _model = model;
-            _winReward = winReward;
+            _configService = configService;
         }
+
+
 
         public void ClaimReward()
         {
-            AddCoins(_winReward);
-        }
-        public void AddCoins(int coins)
-        {
-            _model.AddCoins(coins);
+            _model.AddCoins(_configService.Data.AdsConfig.RewardedAdReward);
         }
 
         public void HideShopScreen()
@@ -67,7 +66,7 @@ namespace FirstProject.Battle
             StartScreenShowed?.Invoke();
         }
 
-        public async UniTask StartBattleAsync(CancellationToken token = default)
+        public async UniTask StartBattleAsync(CancellationToken token)
         {
             if (State == BattleState.Loading || State == BattleState.Running)
             {
@@ -77,21 +76,29 @@ namespace FirstProject.Battle
             State = BattleState.Loading;
 
             ClearBattle();
+            try
+            {
 
-            await _characterFactory.LoadCharactersAsync(token);
+                await _characterFactory.LoadCharactersAsync(token);
 
-            token.ThrowIfCancellationRequested();
+                token.ThrowIfCancellationRequested();
 
-            SpawnCharacters();
+                SpawnCharacters();
 
-            State = BattleState.Running;
+                State = BattleState.Running;
 
-            BattleStarted?.Invoke();
+                BattleStarted?.Invoke();
+            }
+            catch (OperationCanceledException)
+            {
+                State = BattleState.StartScreen;
+                throw;
+            }
         }
 
-        public void RestartBattle()
+        public void RestartBattle(CancellationToken token)
         {
-            StartBattleAsync().Forget();
+            StartBattleAsync(token).Forget();
         }
 
         private void SpawnCharacters()
@@ -122,17 +129,15 @@ namespace FirstProject.Battle
             if (_leftCharacter.IsDead)
             {
                 LastWinner = BattleResult.RightWon;
-                WinnerDecided?.Invoke(LastWinner);
                 State = BattleState.Finished;
-                WinScreenShowed?.Invoke();
+                WinnerDecided?.Invoke(LastWinner);
             }
             else if (_rightCharacter.IsDead)
             {
                 LastWinner = BattleResult.LeftWon;
-                WinnerDecided?.Invoke(LastWinner);
                 State = BattleState.Finished;
-                AddCoins(_winReward);
-                WinScreenShowed?.Invoke();
+                WinnerDecided?.Invoke(LastWinner);
+                _model.AddCoins(_configService.Data.BattleSettings.WinReward);
             }
 
             RoundFinished?.Invoke();

@@ -1,35 +1,46 @@
 using System;
+using FirstProject.Configs;
 
 namespace FirstProject.Shop
 {
-    public class ProgressModel
+    public class ProgressModel : Zenject.IInitializable, IDisposable
     {
         private readonly ISaveService _saveService;
-        private readonly UpgradeConfig _upgradeConfig;
+        private readonly RemoteConfigService _configService;
         private SaveData _data;
 
         public int Coins => _data.Coins;
 
         public int HealthLevel => _data.HealthLevel;
 
-        public float HealthMultiplier => (_data.HealthLevel * _upgradeConfig.GetHealthMultiplier());
+        public float HealthMultiplier => _data.HealthLevel * _configService.Data.Upgrades.HealthMultiplierPerPurchase;
 
         public int DamageLevel => _data.DamageLevel;
 
-        public float DamageMultiplier => _data.DamageLevel * _upgradeConfig.GetDamageMultiplier();
+        public float DamageMultiplier => _data.DamageLevel * _configService.Data.Upgrades.DamageMultiplierPerPurchase;
 
         public int AttackSpeedLevel => _data.AttackSpeedLevel;
 
-        public float AttackSpeedMultiplier => _data.AttackSpeedLevel * _upgradeConfig.GetAttackSpeedMultiplier();
+        public float AttackSpeedMultiplier => _data.AttackSpeedLevel * _configService.Data.Upgrades.AttackSpeedMultiplierPerPurchase;
 
 
         public event Action DataChanged;
 
-        public ProgressModel(ISaveService saveService, UpgradeConfig upgradeConfig)
+        public ProgressModel(ISaveService saveService, RemoteConfigService configService)
         {
             _saveService = saveService;
-            _upgradeConfig = upgradeConfig;
+            _configService = configService;
             _data = _saveService.Load(); 
+        }
+
+        public void Initialize()
+        {
+            _configService.OnConfigLoaded += TriggerDataChanged;
+        }
+
+        public void Dispose()
+        {
+            _configService.OnConfigLoaded -= TriggerDataChanged;
         }
 
         public int GetUpgradeCost(UpgradeType type)
@@ -41,17 +52,17 @@ namespace FirstProject.Shop
             {
                 case UpgradeType.Health:
                     currentLevel = _data.HealthLevel;
-                    cost = _upgradeConfig.GetHealthCost(currentLevel);
+                    cost = _configService.Data.Upgrades.BaseHealthCost + (_configService.Data.Upgrades.HealthCostStep * currentLevel);
                     break;
 
                 case UpgradeType.Damage:
                     currentLevel = _data.DamageLevel;
-                    cost = _upgradeConfig.GetDamageCost(currentLevel);
+                    cost = _configService.Data.Upgrades.BaseDamageCost + (_configService.Data.Upgrades.DamageCostStep * currentLevel);
                     break;
-
+                    
                 case UpgradeType.AttackSpeed:
                     currentLevel = _data.AttackSpeedLevel;
-                    cost = _upgradeConfig.GetAttackSpeedCost(currentLevel);
+                    cost = _configService.Data.Upgrades.BaseAttackSpeedCost + (_configService.Data.Upgrades.AttackSpeedCostStep * currentLevel);
                     break;
             }
             return cost;
@@ -94,6 +105,11 @@ namespace FirstProject.Shop
         {
             _data.Coins += amount;
             Save();
+        }
+
+        private void TriggerDataChanged()
+        {
+            DataChanged?.Invoke();
         }
     }
 }

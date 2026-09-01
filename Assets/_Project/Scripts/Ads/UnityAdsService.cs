@@ -36,23 +36,35 @@ namespace FirstProject.Ads
 
         public void OnUnityAdsFailedToLoad(string adUnitID, UnityAdsLoadError error, string message)
         {
-            _onRewardCallback = null;
+            if (adUnitID == REWARDED_AD_UNIT)
+            {
+                _onRewardCallback = null;
+            }
             Debug.Log($"Ad load failed: {message}");
         }
 
         public void OnUnityAdsShowComplete(string adUnitID, UnityAdsShowCompletionState showCompletionState)
         {
-            if (adUnitID == REWARDED_AD_UNIT && showCompletionState == UnityAdsShowCompletionState.COMPLETED)
+            if (adUnitID != REWARDED_AD_UNIT)
+            {
+                return;
+            }
+
+            if (showCompletionState == UnityAdsShowCompletionState.COMPLETED)
             {
                 _onRewardCallback?.Invoke();
                 Debug.Log("Игрок посмотрел рекламу. Выдача награды");
             }
+
             _onRewardCallback = null;
         }
 
         public void OnUnityAdsShowFailure(string adUnitID, UnityAdsShowError error, string message)
         {
-            _onRewardCallback = null;
+            if (adUnitID == REWARDED_AD_UNIT)
+            {
+                _onRewardCallback = null;
+            }
         }
 
         public void OnUnityAdsShowStart(string adUnitID)

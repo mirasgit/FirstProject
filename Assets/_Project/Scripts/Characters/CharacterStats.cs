@@ -1,3 +1,4 @@
+using FirstProject.Configs;
 using FirstProject.MatchupConfigs;
 using System;
 using UnityEngine;
@@ -7,10 +8,8 @@ namespace FirstProject.Characters
 {
     public class CharacterStats : MonoBehaviour
     {
-        [field: SerializeField] public float BaseDamage { get; private set; } = 10;
-        [field: SerializeField] public float BaseHealth { get; private set; } = 100;
-
-        [field: SerializeField] public CharacterClass MyClass { get; private set; }
+        public float BaseDamage { get; private set; }
+        public float BaseHealth { get; private set; }
 
         public float MaxHealth => BaseHealth + (BaseHealth * _healthModifiersSum);
         public float CurrentHealth { get; private set; }
@@ -18,19 +17,34 @@ namespace FirstProject.Characters
 
         public event Action<float, float> HealthChanged;
         public event Action<float> DamageTaken;
-        private MatchupMatrixConfig _matchupMatrix;
+        private RemoteConfigService _configService;
+        private CharacterIdentity _identity;
         private float _damageModifiersSum;
         private float _healthModifiersSum;
 
-        private void Awake()
+        [Inject]
+        public void Construct(RemoteConfigService configService, CharacterIdentity identity)
         {
+            _configService = configService;
+            _identity = identity;
+
+            var config = _configService.GetCharacterConfig(_identity.MyClass);
+
+            BaseHealth = config.BaseHealth;
+            BaseDamage = config.BaseDamage;
             CurrentHealth = MaxHealth;
         }
 
-        [Inject]
-        public void Construct(MatchupMatrixConfig matrixConfig)
+        private float GetMultiplier(CharacterClass attacker, CharacterClass defender)
         {
-            _matchupMatrix = matrixConfig;
+            foreach (var matchup in _configService.Data.Matchups)
+            {
+                if (matchup.Attacker == attacker && matchup.Defender == defender)
+                {
+                    return matchup.DamageMultiplier;
+                }
+            }
+            return _configService.Data.Upgrades.DefaultMultiplier;
         }
 
         public void AddHealthModifier(float modifier)
@@ -44,7 +58,7 @@ namespace FirstProject.Characters
 
         public void TakeDamage(float damage, CharacterClass attackerClass)
         {
-            float multiplier = _matchupMatrix.GetMultiplier(attackerClass, MyClass);
+            float multiplier = GetMultiplier(attackerClass, _identity.MyClass);
             float finalDamage = multiplier * damage;
             CurrentHealth = Mathf.Max(0f, CurrentHealth - finalDamage);
             HealthChanged?.Invoke(CurrentHealth, MaxHealth);

@@ -420,6 +420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2385974025381496950}
   - component: {fileID: 3501029494064030208}
+  - component: {fileID: 6460063470439923153}
   - component: {fileID: 5455666780557975157}
   - component: {fileID: 5063231017309306132}
   - component: {fileID: 5804883697193863740}
@@ -470,11 +471,21 @@ MonoBehaviour:
   _whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
-  _attackCooldown: 0.5
-  _attackSpeed: 1.5
-  _effectConfig: {fileID: 11400000, guid: 2dc4424756e5b2747adda8a21f35d5eb, type: 2}
-  _applyProbabilityPercent: 30
+  _effectType: 2
   _projectilePrefab: {fileID: 7758558058821724251, guid: 12a94a3136db99e42a30a78b518d0c00, type: 3}
+--- !u!114 &6460063470439923153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724761400001412960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7a2bf3899c74c240a4c283893589a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstProject.Characters.CharacterIdentity
+  <MyClass>k__BackingField: 3
 --- !u!114 &5455666780557975157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,9 +510,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c062ccdabec02341ac8b76154c2286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  <BaseDamage>k__BackingField: 10
-  <BaseHealth>k__BackingField: 100
-  <MyClass>k__BackingField: 3
 --- !u!114 &5804883697193863740
 MonoBehaviour:
   m_ObjectHideFlags: 0

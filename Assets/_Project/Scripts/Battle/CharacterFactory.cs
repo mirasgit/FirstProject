@@ -21,7 +21,6 @@ namespace FirstProject.Battle
 
         private readonly List<Character> _loadedPrefabs = new();
 
-        private readonly List<GameObject> _cachedAssets = new();
 
         public CharacterFactory(IInstantiator instantiator, IResourceProvider resourceProvider, ProgressModel model)
         {
@@ -49,7 +48,6 @@ namespace FirstProject.Battle
             foreach (var obj in loadedObjects)
             {
                 _loadedPrefabs.Add(obj.GetComponent<Character>());
-                _cachedAssets.Add(obj);
             }
 
         }
@@ -72,15 +70,14 @@ namespace FirstProject.Battle
 
         public void Dispose()
         {
-            foreach (var prefab  in _cachedAssets)
+            foreach (var prefab in _loadedPrefabs)
             {
                 if (prefab != null)
                 {
-                    _resourceProvider.ReleaseAsset(prefab);
+                    _resourceProvider.ReleaseAsset(prefab.gameObject);
                 }
             }
             _loadedPrefabs.Clear();
-            _cachedAssets.Clear();
         }
     }
 }

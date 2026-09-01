@@ -22,11 +22,11 @@ namespace FirstProject.Characters
                 return;
             }
 
+            var config = _configService.GetCharacterConfig(_identity.MyClass);
+
             Projectile newProjectile = _factory.Create(_projectilePrefab, _attackPoint.position, _attackPoint.rotation);
-            newProjectile.SetFacingDirection(_facing.FacingDirection);
-            newProjectile.SetDamage(_stats.CurrentDamage);
-            newProjectile.SetEffect(TryGetEffect());
-            newProjectile.SetHost(_stats.MyClass);
+
+            newProjectile.Initialize(_identity.MyClass, _stats.CurrentDamage, _facing.FacingDirection, TryGetEffect(), config.Projectile);
         }
     }
 }

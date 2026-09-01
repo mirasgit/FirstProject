@@ -20,6 +20,7 @@ namespace FirstProject.Shop.UI
         {
             _battleFlow.BattleStarted += OnBattleStarted;
             _battleFlow.RoundFinished += OnRoundFinished;
+            _battleFlow.StartScreenShowed += OnStartScreenShowed;
             _view.Subscribe();
             _view.ShopButtonClicked += OnShopButtonClicked;
             _view.BackButtonClicked += OnBackButtonClicked;
@@ -28,14 +29,14 @@ namespace FirstProject.Shop.UI
             _view.AttackSpeedUpgradeButtonClicked += OnAttackSpeedUpgradeButtonClicked;
             _model.DataChanged += OnDataChanged;
 
-            _view.ShowShopEntryPanel();
-            OnDataChanged();
+            _view.HideShop();
         }
 
         public void Dispose()
         {
             _battleFlow.BattleStarted -= OnBattleStarted;
             _battleFlow.RoundFinished -= OnRoundFinished;
+            _battleFlow.StartScreenShowed -= OnStartScreenShowed;
             _view.Unsubscribe();
             _view.ShopButtonClicked -= OnShopButtonClicked;
             _view.BackButtonClicked -= OnBackButtonClicked;
@@ -43,6 +44,12 @@ namespace FirstProject.Shop.UI
             _view.DamageUpgradeButtonClicked -= OnDamageUpgradeButtonClicked;
             _view.AttackSpeedUpgradeButtonClicked -= OnAttackSpeedUpgradeButtonClicked;
             _model.DataChanged -= OnDataChanged;
+        }
+
+        private void OnStartScreenShowed()
+        {
+            _view.ShowShopEntryPanel();
+            OnDataChanged();
         }
 
         private void OnRoundFinished()

@@ -3,14 +3,14 @@ using FirstProject.Characters;
 using Zenject;
 using FirstProject.CharacterEffect;
 using FirstProject.MatchupConfigs;
+using FirstProject.Configs;
 
 namespace FirstProject.Projectiles
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] private int _secondsToDestroy = 4;
-        [SerializeField] private float _moveSpeed = 5f;
+        private float _moveSpeed = 5f;
 
         private CharacterClass _attackerClass;
         private ProjectileRegistry _projectileRegistry;
@@ -38,11 +38,6 @@ namespace FirstProject.Projectiles
             _projectileRegistry.Register(this);
         }
 
-        private void Start()
-        {
-            Destroy(gameObject, _secondsToDestroy);
-        }
-
         private void OnDestroy()
         {
             if (_projectileRegistry == null)
@@ -52,24 +47,21 @@ namespace FirstProject.Projectiles
             _projectileRegistry.Unregister(this);
         }
 
-        public void SetHost(CharacterClass attacker)
+        public void Initialize(
+    CharacterClass attackerClass,
+    float damage,
+    int facingDirection,
+    CharacterApplicableEffect effect,
+    ProjectileSettings config)
         {
-            _attackerClass = attacker;
-        }
-
-        public void SetFacingDirection(int facingDirection)
-        {
-            _facingDirection = facingDirection;
-        }
-
-        public void SetDamage(float damage)
-        {
+            _attackerClass = attackerClass;
             _damage = damage;
-        }
-
-        public void SetEffect(CharacterApplicableEffect effect)
-        {
+            _facingDirection = facingDirection;
             _effect = effect;
+
+            _moveSpeed = config.MoveSpeed;
+
+            Destroy(gameObject, config.LifeSpanInSeconds);
         }
 
         private void HandleMovement()

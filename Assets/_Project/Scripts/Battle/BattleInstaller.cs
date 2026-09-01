@@ -6,9 +6,9 @@ using FirstProject.Shop;
 using FirstProject.Analytics;
 using FirstProject.Battle.UI;
 using FirstProject.Shop.UI;
-using FirstProject.MatchupConfigs;
 using FirstProject.Core;
 using FirstProject.Ads;
+using FirstProject.Configs;
 
 namespace FirstProject.Battle
 {
@@ -19,9 +19,6 @@ namespace FirstProject.Battle
         [SerializeField] private Transform _rightSpawnPoint;
         [SerializeField] private Transform _uiCanvas;
         [SerializeField] private ShopView _shopView;
-        [SerializeField] private MatchupMatrixConfig _matchupMatrix;
-        [SerializeField] private UpgradeConfig _upgradeConfig;
-        [SerializeField] private int _winReward;
 
         public override void InstallBindings()
         {
@@ -31,7 +28,7 @@ namespace FirstProject.Battle
             Container.Bind<BattleCleanupService>().AsSingle();
             Container.BindInterfacesAndSelfTo<CharacterFactory>().AsSingle();
             Container.Bind<BattleView>().FromComponentInNewPrefab(_battleView).UnderTransform(_uiCanvas).AsSingle();
-            Container.Bind<BattleFlow>().AsSingle().WithArguments(_leftSpawnPoint, _rightSpawnPoint, _winReward);
+            Container.Bind<BattleFlow>().AsSingle().WithArguments(_leftSpawnPoint, _rightSpawnPoint);
             Container.BindInterfacesAndSelfTo<BattleEntryPoint>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BattlePresenter>().AsSingle().NonLazy();
             Container.Bind<ProjectileFactory>().AsSingle();
@@ -39,9 +36,8 @@ namespace FirstProject.Battle
             Container.Bind<ShopView>().FromComponentInNewPrefab(_shopView).UnderTransform(_uiCanvas).AsSingle();
             Container.BindInterfacesAndSelfTo<ShopPresenter>().AsSingle().NonLazy();
             Container.Bind<ISaveService>().To<SaveService>().AsSingle();
-            Container.Bind<ProgressModel>().AsSingle();
-            Container.BindInstance(_matchupMatrix).AsSingle();
-            Container.BindInstance(_upgradeConfig).AsSingle();
+            Container.BindInterfacesAndSelfTo<ProgressModel>().AsSingle();
+            Container.Bind<RemoteConfigService>().AsSingle();
             Container.BindInterfacesAndSelfTo<FirebaseAnalyticsService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BattleAnalyticsTracker>().AsSingle().NonLazy();
             Container.Bind<IResourceProvider>().To<AddressablesProvider>().AsSingle();  
