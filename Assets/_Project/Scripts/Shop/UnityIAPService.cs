@@ -15,6 +15,8 @@ namespace FirstProject.Shop
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
             builder.AddProduct("com.game.noads", ProductType.NonConsumable);
+            builder.AddProduct("com.game.coinpack", ProductType.Consumable);
+            builder.AddProduct("com.game.starterpack", ProductType.Consumable);
 
             UnityPurchasing.Initialize(this, builder);
         }
@@ -23,7 +25,21 @@ namespace FirstProject.Shop
         {
             _onPurchaseComplete = onComplete;
 
-            _storeController.InitiatePurchase("com.game.noads");
+            switch (productId)
+            {
+                case ProductId.NoAds:
+                    _storeController.InitiatePurchase("com.game.noads");
+                    break;
+                case ProductId.CoinPack:
+                    _storeController.InitiatePurchase("com.game.coinpack");
+                    break;
+                case ProductId.StarterPack:
+                    _storeController.InitiatePurchase("com.game.starterpack");
+                    break;
+                default:
+                    Debug.Log($"Trying to buy unknown position: {productId}");
+                    break;
+            }
         }
 
         public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
