@@ -12,7 +12,7 @@ namespace FirstProject.UI
         private float _moveSpeed = 1f;
 
         private FloatingTextRegistry _floatingTextRegistry;
-        private RemoteConfigService _configService;
+        private IRemoteConfigService _configService;
         
         public void SetText(string textValue)
         {
@@ -20,7 +20,7 @@ namespace FirstProject.UI
         }
 
         [Inject]
-        public void Construct(FloatingTextRegistry floatingTextRegistry, RemoteConfigService configService)
+        public void Construct(FloatingTextRegistry floatingTextRegistry, IRemoteConfigService configService)
         {
             _configService = configService;
             _floatingTextRegistry = floatingTextRegistry;

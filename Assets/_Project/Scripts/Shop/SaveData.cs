@@ -9,6 +9,7 @@ namespace FirstProject.Shop
         public int HealthLevel;
         public int DamageLevel;
         public int AttackSpeedLevel;
+        public bool IsAdsRemoved;
     }
 
 }

@@ -17,13 +17,13 @@ namespace FirstProject.Characters
 
         public event Action<float, float> HealthChanged;
         public event Action<float> DamageTaken;
-        private RemoteConfigService _configService;
+        private IRemoteConfigService _configService;
         private CharacterIdentity _identity;
         private float _damageModifiersSum;
         private float _healthModifiersSum;
 
         [Inject]
-        public void Construct(RemoteConfigService configService, CharacterIdentity identity)
+        public void Construct(IRemoteConfigService configService, CharacterIdentity identity)
         {
             _configService = configService;
             _identity = identity;

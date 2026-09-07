@@ -65,10 +65,10 @@ namespace FirstProject.Battle.UI
 
         private void OnRewardButtonPressed()
         {
-            _view.HideRewardButton();
             _adsService.ShowRewardedAd(() =>
             {
                 _model.ClaimReward();
+                _view.HideRewardButton();
             });
         }
 

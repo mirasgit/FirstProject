@@ -1,20 +1,18 @@
-using Cysharp.Threading.Tasks;
-using FirstProject.Configs;
-using System;
-using UnityEngine;
 using Zenject;
+using UnityEngine;
+using FirstProject.Configs;
+using Cysharp.Threading.Tasks;
+using System;
 
-namespace FirstProject.Battle
+namespace FirstProject.Menu
 {
-    public class BattleEntryPoint : IInitializable
+    public class MenuEntryPoint : IInitializable
     {
-        private readonly BattleFlow _battleFlow;
         private readonly IRemoteConfigService _configService;
-
-        public BattleEntryPoint(BattleFlow battleflow, IRemoteConfigService configService)
+        
+        public MenuEntryPoint(IRemoteConfigService remoteConfigService)
         {
-            _battleFlow = battleflow;
-            _configService = configService;
+            _configService = remoteConfigService;
         }
 
         public void Initialize()
@@ -27,12 +25,11 @@ namespace FirstProject.Battle
             try
             {
                 await _configService.FetchConfigAsync();
-
-                _battleFlow.ShowStartScreen();
+                Debug.Log("Menu is ready to work");
             }
             catch (Exception exception)
             {
-                Debug.LogException(exception);
+                Debug.Log(exception);
             }
         }
     }

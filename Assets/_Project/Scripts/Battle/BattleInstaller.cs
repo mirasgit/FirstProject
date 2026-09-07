@@ -37,7 +37,7 @@ namespace FirstProject.Battle
             Container.BindInterfacesAndSelfTo<ShopPresenter>().AsSingle().NonLazy();
             Container.Bind<ISaveService>().To<SaveService>().AsSingle();
             Container.BindInterfacesAndSelfTo<ProgressModel>().AsSingle();
-            Container.Bind<RemoteConfigService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<RemoteConfigService>().AsSingle();
             Container.BindInterfacesAndSelfTo<FirebaseAnalyticsService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BattleAnalyticsTracker>().AsSingle().NonLazy();
             Container.Bind<IResourceProvider>().To<AddressablesProvider>().AsSingle();  

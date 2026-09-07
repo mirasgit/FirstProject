@@ -14,14 +14,14 @@ namespace FirstProject.Characters
         private CharacterAnimator _characterAnimator;
         private CharacterDeath _death;
         private CharacterEffects _effects;
-        private RemoteConfigService _configService;
+        private IRemoteConfigService _configService;
 
         private Rigidbody2D _rb;
         private float _currentMoveSpeed;
         private bool _isAllowedToMove;
 
         [Inject]
-        public void Construct(CharacterFacing facing, CharacterAnimator animator, CharacterDeath death, CharacterEffects effects, RemoteConfigService configService, CharacterIdentity identity)
+        public void Construct(CharacterFacing facing, CharacterAnimator animator, CharacterDeath death, CharacterEffects effects, IRemoteConfigService configService, CharacterIdentity identity)
         {
             _facing = facing;
             _characterAnimator = animator;

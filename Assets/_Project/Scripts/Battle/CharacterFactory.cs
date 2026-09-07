@@ -70,13 +70,7 @@ namespace FirstProject.Battle
 
         public void Dispose()
         {
-            foreach (var prefab in _loadedPrefabs)
-            {
-                if (prefab != null)
-                {
-                    _resourceProvider.ReleaseAsset(prefab.gameObject);
-                }
-            }
+            _resourceProvider.ReleaseAll();
             _loadedPrefabs.Clear();
         }
     }

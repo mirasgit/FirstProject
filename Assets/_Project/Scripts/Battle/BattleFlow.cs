@@ -18,7 +18,7 @@ namespace FirstProject.Battle
         private readonly ProgressModel _model;
         private Character _leftCharacter;
         private Character _rightCharacter;
-        private RemoteConfigService _configService;
+        private IRemoteConfigService _configService;
         public BattleResult LastWinner { get; private set; }
         public BattleState State { get; private set; }
 
@@ -33,7 +33,7 @@ namespace FirstProject.Battle
            CharacterFactory characterFactory,
            BattleCleanupService cleanupService,
            Transform leftSpawnPoint,
-           Transform rightSpawnPoint, ProgressModel model, RemoteConfigService configService)
+           Transform rightSpawnPoint, ProgressModel model, IRemoteConfigService configService)
         {
             _characterFactory = characterFactory;
             _battleCleanupService = cleanupService;
@@ -42,8 +42,6 @@ namespace FirstProject.Battle
             _model = model;
             _configService = configService;
         }
-
-
 
         public void ClaimReward()
         {
@@ -93,6 +91,11 @@ namespace FirstProject.Battle
             {
                 State = BattleState.StartScreen;
                 throw;
+            }
+            catch (Exception ex)
+            {
+                State = BattleState.StartScreen;
+                Debug.LogError($"Battle Failed: {ex.Message}");
             }
         }
 

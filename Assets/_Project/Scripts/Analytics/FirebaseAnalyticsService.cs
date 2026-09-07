@@ -1,6 +1,7 @@
 using Firebase;
 using Firebase.Analytics;
 using Firebase.Extensions;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -33,7 +34,7 @@ namespace FirstProject.Analytics
                 }
             });
         }
-        public void LogEvent(string eventName)
+        public void LogEvent(string eventName, Dictionary<string, object> parameters = null)
         {
             if (!_isInitialized)
             {
@@ -41,7 +42,30 @@ namespace FirstProject.Analytics
                 return;
             }
 
-            FirebaseAnalytics.LogEvent(eventName);
+            if (parameters == null || parameters.Count == 0)
+            {
+                FirebaseAnalytics.LogEvent(eventName);
+            }
+            else
+            {
+                var firebaseParameters = new List<Parameter>();
+                foreach (var parameter in parameters)
+                {
+                    if (parameter.Value is int intValue)
+                    {
+                        firebaseParameters.Add(new Parameter(parameter.Key, intValue));
+                    }
+                    else if (parameter.Value is float floatVal)
+                    {
+                        firebaseParameters.Add(new Parameter(parameter.Key, floatVal));
+                    }
+                    else
+                    {
+                        firebaseParameters.Add(new Parameter(parameter.Key, parameter.Value.ToString()));
+                    }
+                }
+                FirebaseAnalytics.LogEvent(eventName, firebaseParameters.ToArray());
+            }
             Debug.Log($"Analytics Event logged: {eventName}");
         }
     }

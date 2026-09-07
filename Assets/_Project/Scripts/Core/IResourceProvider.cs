@@ -8,5 +8,7 @@ namespace FirstProject.Core
     {
         UniTask<T> LoadAssetAsync<T>(string address, CancellationToken token = default) where T : Object;
         void ReleaseAsset(Object asset);
+
+        void ReleaseAll();
     }
 }

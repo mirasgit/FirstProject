@@ -38,5 +38,14 @@ namespace FirstProject.Core
                 _handles.Remove(asset);
             }
         }
+
+        public void ReleaseAll()
+        {
+            foreach (var handle in _handles.Values)
+            {
+                Addressables.Release(handle);
+            }
+            _handles.Clear();
+        }
     }
 }

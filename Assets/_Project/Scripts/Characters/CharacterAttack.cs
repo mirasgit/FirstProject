@@ -14,7 +14,7 @@ namespace FirstProject.Characters
         protected float _attackCooldown;
         protected float _attackSpeed;
 
-        protected RemoteConfigService _configService;
+        protected IRemoteConfigService _configService;
         protected CharacterStats _stats;
         protected CharacterIdentity _identity;
         protected CharacterFacing _facing;
@@ -32,7 +32,7 @@ namespace FirstProject.Characters
             CharacterFacing facing,
             CharacterAnimator characterAnimator,
             CharacterDeath death,
-            CharacterEffects effects, RemoteConfigService configService)
+            CharacterEffects effects, IRemoteConfigService configService)
         {
             _stats = stats;
             _identity = identity;

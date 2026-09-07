@@ -4,20 +4,24 @@ using Firebase.RemoteConfig;
 using Cysharp.Threading.Tasks;
 using FirstProject.MatchupConfigs;
 using Firebase;
+using Newtonsoft.Json;
 
 namespace FirstProject.Configs
 {
-    public class RemoteConfigService 
+    public class RemoteConfigService : IRemoteConfigService
     {
         private const string CONFIG_KEY = "game_config";
-
-        public event Action OnConfigLoaded;
 
         public GameConfigData Data { get; private set; }
 
         public async UniTask FetchConfigAsync()
         {
-            await FirebaseApp.CheckAndFixDependenciesAsync().AsUniTask();
+            var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync().AsUniTask();
+
+            if (dependencyStatus != DependencyStatus.Available)
+            {
+                throw new Exception($"Firebase is not ready. Status: {dependencyStatus}");
+            }
 
             var remoteConfig = FirebaseRemoteConfig.DefaultInstance;
 
@@ -28,14 +32,12 @@ namespace FirstProject.Configs
 
             if (string.IsNullOrEmpty(json))
             {
-                Debug.LogError("?? Remote Config JSON is empty or key not found!");
+                Debug.LogError("Remote Config JSON is empty or key not found!");
                 throw new InvalidOperationException("Remote Config game_config is empty or missing.");
             }
 
-            Data = JsonUtility.FromJson<GameConfigData>(json);
-            Debug.Log("? Remote Config successfully loaded and parsed!");
-
-            OnConfigLoaded?.Invoke();
+            Data = JsonConvert.DeserializeObject<GameConfigData>(json);
+            Debug.Log("Remote Config successfully loaded and parsed!");
         }
 
         public CharacterSettings GetCharacterConfig(CharacterClass characterClass)
@@ -48,8 +50,7 @@ namespace FirstProject.Configs
                 }
             }
 
-            throw new InvalidOperationException(
-                $"Character config not found: {characterClass}");
+            throw new InvalidOperationException($"Character config not found: {characterClass}");
         }
     }
 }
