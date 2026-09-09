@@ -3,6 +3,7 @@ using Zenject;
 using FirstProject.CharacterEffect;
 using FirstProject.Configs;
 using FirstProject.MatchupConfigs;
+
 namespace FirstProject.Characters
 {
     public class CharacterAttack : MonoBehaviour

@@ -2,13 +2,11 @@ using UnityEngine;
 using Zenject;
 using FirstProject.UI;
 using FirstProject.Projectiles;
-using FirstProject.Shop;
 using FirstProject.Analytics;
 using FirstProject.Battle.UI;
 using FirstProject.Shop.UI;
 using FirstProject.Core;
 using FirstProject.Ads;
-using FirstProject.Configs;
 
 namespace FirstProject.Battle
 {
@@ -35,10 +33,6 @@ namespace FirstProject.Battle
             Container.Bind<FloatingTextFactory>().AsSingle();
             Container.Bind<ShopView>().FromComponentInNewPrefab(_shopView).UnderTransform(_uiCanvas).AsSingle();
             Container.BindInterfacesAndSelfTo<ShopPresenter>().AsSingle().NonLazy();
-            Container.Bind<ISaveService>().To<SaveService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ProgressModel>().AsSingle();
-            Container.BindInterfacesAndSelfTo<RemoteConfigService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FirebaseAnalyticsService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BattleAnalyticsTracker>().AsSingle().NonLazy();
             Container.Bind<IResourceProvider>().To<AddressablesProvider>().AsSingle();  
             Container.BindInterfacesAndSelfTo<UnityAdsService>().AsSingle().NonLazy();

@@ -2,9 +2,10 @@ using System;
 using UnityEngine;
 using Firebase.RemoteConfig;
 using Cysharp.Threading.Tasks;
-using FirstProject.MatchupConfigs;
 using Firebase;
 using Newtonsoft.Json;
+using System.Threading;
+using FirstProject.MatchupConfigs;
 
 namespace FirstProject.Configs
 {
@@ -14,9 +15,9 @@ namespace FirstProject.Configs
 
         public GameConfigData Data { get; private set; }
 
-        public async UniTask FetchConfigAsync()
+        public async UniTask FetchConfigAsync(CancellationToken token)
         {
-            var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync().AsUniTask();
+            var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync().AsUniTask().AttachExternalCancellation(token);
 
             if (dependencyStatus != DependencyStatus.Available)
             {
@@ -25,8 +26,8 @@ namespace FirstProject.Configs
 
             var remoteConfig = FirebaseRemoteConfig.DefaultInstance;
 
-            await remoteConfig.FetchAsync(TimeSpan.Zero).AsUniTask();
-            await remoteConfig.ActivateAsync().AsUniTask();
+            await remoteConfig.FetchAsync(TimeSpan.Zero).AsUniTask().AttachExternalCancellation(token);
+            await remoteConfig.ActivateAsync().AsUniTask().AttachExternalCancellation(token);
 
             string json = remoteConfig.GetValue(CONFIG_KEY).StringValue;
 

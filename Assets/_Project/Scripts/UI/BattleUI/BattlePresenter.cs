@@ -16,6 +16,8 @@ namespace FirstProject.Battle.UI
         private const string LEFT_WON_TEXT = "Left Won";
         private const string RIGHT_WON_TEXT = "Right Won";
 
+        private bool _isRewardClaimed;
+
         public BattlePresenter(BattleView view, BattleFlow model, IAdsService adsService)
         {   
             _view = view;
@@ -67,6 +69,7 @@ namespace FirstProject.Battle.UI
         {
             _adsService.ShowRewardedAd(() =>
             {
+                _isRewardClaimed = true;
                 _model.ClaimReward();
                 _view.HideRewardButton();
             });
@@ -86,7 +89,7 @@ namespace FirstProject.Battle.UI
             else if (_model.State == BattleState.Finished)
             {
                 string winnerText = _model.LastWinner == BattleResult.LeftWon ? LEFT_WON_TEXT : RIGHT_WON_TEXT;
-                _view.ShowWinner(winnerText, false);
+                _view.ShowWinner(winnerText, !_isRewardClaimed);
             }
         }
 
@@ -116,6 +119,7 @@ namespace FirstProject.Battle.UI
 
         private void OnWinnerDecided(BattleResult result)
         {
+            _isRewardClaimed = false;
             switch (result)
             {
                 case BattleResult.LeftWon:

@@ -10,31 +10,42 @@ namespace FirstProject.Shop
         private IStoreController _storeController;
         private Action<bool> _onPurchaseComplete;
 
+        private const string NO_ADS_ID = "com.game.noads";
+        private const string COIN_PACK_ID = "com.game.coinpack";
+        private const string STARTER_PACK_ID = "com.game.starterpack";
+
         public void Initialize()
         {
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-            builder.AddProduct("com.game.noads", ProductType.NonConsumable);
-            builder.AddProduct("com.game.coinpack", ProductType.Consumable);
-            builder.AddProduct("com.game.starterpack", ProductType.Consumable);
+            builder.AddProduct(NO_ADS_ID, ProductType.NonConsumable);
+            builder.AddProduct(COIN_PACK_ID, ProductType.Consumable);
+            builder.AddProduct(STARTER_PACK_ID, ProductType.Consumable);
 
             UnityPurchasing.Initialize(this, builder);
         }
 
-        public void BuyProduct(ProductId productId, Action <bool> onComplete)
+        public void BuyProduct(ProductId productId, Action<bool> onComplete)
         {
+            if (_storeController == null) 
+            {
+                Debug.LogError("IAP not initialized"); 
+                onComplete?.Invoke(false); 
+                return; 
+            }
+
             _onPurchaseComplete = onComplete;
 
             switch (productId)
             {
                 case ProductId.NoAds:
-                    _storeController.InitiatePurchase("com.game.noads");
+                    _storeController.InitiatePurchase(NO_ADS_ID);
                     break;
                 case ProductId.CoinPack:
-                    _storeController.InitiatePurchase("com.game.coinpack");
+                    _storeController.InitiatePurchase(COIN_PACK_ID);
                     break;
                 case ProductId.StarterPack:
-                    _storeController.InitiatePurchase("com.game.starterpack");
+                    _storeController.InitiatePurchase(STARTER_PACK_ID);
                     break;
                 default:
                     Debug.Log($"Trying to buy unknown position: {productId}");
@@ -50,10 +61,21 @@ namespace FirstProject.Shop
 
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
         {
-            if (purchaseEvent.purchasedProduct.definition.id == "com.game.noads")
+            string productID = purchaseEvent.purchasedProduct.definition.id;
+            switch (productID)
             {
-                _onPurchaseComplete?.Invoke(true);
+                case NO_ADS_ID: Debug.Log("Bought No Ads"); 
+                    break;
+                case COIN_PACK_ID: Debug.Log("Bought Coin Pack");
+                    break;
+                case STARTER_PACK_ID: Debug.Log("Bought Starter Pack");
+                    break;
+                default:
+                    Debug.LogError($"Unkown product: {productID}");
+                    break;
             }
+            _onPurchaseComplete?.Invoke(true);
+            _onPurchaseComplete = null;
             return PurchaseProcessingResult.Complete;
         }
 
@@ -65,12 +87,12 @@ namespace FirstProject.Shop
 
         public void OnInitializeFailed(InitializationFailureReason error)
         {
-
+            OnInitializeFailed(error, "No message provided");
         }
 
         public void OnInitializeFailed(InitializationFailureReason error, string message)
         {
-
+            Debug.LogError($"IAP Init Failed: {error} - {message}");
         }
     }
 }

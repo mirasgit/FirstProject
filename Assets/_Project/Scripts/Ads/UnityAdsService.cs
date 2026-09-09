@@ -69,12 +69,12 @@ namespace FirstProject.Ads
 
         public void OnUnityAdsShowStart(string adUnitID)
         {
-
+            Debug.Log("Started showing Ad");
         }
 
         public void OnUnityAdsShowClick(string adUnitID)
         {
-
+            Debug.Log("Clicked on showed Ad");
         }
 
         public void OnInitializationComplete()

@@ -1,6 +1,6 @@
 using System;
 
-namespace FirstProject.Shop
+namespace FirstProject.Core
 {
     [Serializable]
     public class SaveData
@@ -10,6 +10,7 @@ namespace FirstProject.Shop
         public int DamageLevel;
         public int AttackSpeedLevel;
         public bool IsAdsRemoved;
+        public long LastSaveTimeTicks;
     }
 
 }

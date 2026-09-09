@@ -51,12 +51,12 @@ namespace FirstProject.Shop.UI
             _upgradeAttackSpeedButton.onClick.RemoveListener(OnAttackSpeedUpgradeButtonClicked);
         }
 
-        public void UpdateData(int coinCount,int healthLVL, int damageLVL, int attackSpeedLVL)
+        public void UpdateData(int coinCount,int healthLevel, int damageLevel, int attackSpeedLevel)
         {
             _coinCounter.text = coinCount.ToString();
-            _healthLevelCounter.text = healthLVL.ToString();
-            _damageLevelCounter.text = damageLVL.ToString();
-            _attackSpeedLevelCounter.text = attackSpeedLVL.ToString();
+            _healthLevelCounter.text = healthLevel.ToString();
+            _damageLevelCounter.text = damageLevel.ToString();
+            _attackSpeedLevelCounter.text = attackSpeedLevel.ToString();
         }
 
         public void UpdateCosts(int healthCost, int damageCost, int attackSpeedCost)

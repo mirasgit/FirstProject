@@ -30,13 +30,7 @@ namespace FirstProject.Characters
         public void ConstructWarrior(CharacterMovement movement)
         {
             _movement = movement;
-            foreach (var charConfig in _configService.Data.Characters)
-            {
-                if (charConfig.ClassType == _identity.MyClass)
-                {
-                    _attackRadius = charConfig.MeleeAttackRadius;
-                }
-            }
+            _attackRadius = _configService.GetCharacterConfig(_identity.MyClass).MeleeAttackRadius; 
         }
 
         private void DetectEnemies()

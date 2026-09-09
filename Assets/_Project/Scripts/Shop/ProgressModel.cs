@@ -1,73 +1,87 @@
-    using System;
-    using System.Collections.Generic;
-    using FirstProject.Analytics;
-    using FirstProject.Configs;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using FirstProject.Analytics;
+using FirstProject.Configs;
+using FirstProject.Core;
 
-    namespace FirstProject.Shop
+namespace FirstProject.Shop
+{
+    public class ProgressModel
     {
-        public class ProgressModel
+        private readonly ISaveService _saveService;
+        private readonly IRemoteConfigService _configService;
+        private readonly IAnalyticsService _analyticsService;
+        private SaveData _data;
+
+        public int Coins => _data.Coins;
+
+        public int HealthLevel => _data.HealthLevel;
+
+        public float HealthMultiplier => _data.HealthLevel * _configService.Data.Upgrades.HealthMultiplierPerPurchase;
+
+        public int DamageLevel => _data.DamageLevel;
+
+        public float DamageMultiplier => _data.DamageLevel * _configService.Data.Upgrades.DamageMultiplierPerPurchase;
+
+        public int AttackSpeedLevel => _data.AttackSpeedLevel;
+
+        public float AttackSpeedMultiplier => _data.AttackSpeedLevel * _configService.Data.Upgrades.AttackSpeedMultiplierPerPurchase;
+
+        public bool IsAdsRemoved => _data.IsAdsRemoved;
+
+        public event Action DataChanged;
+
+        public ProgressModel(ISaveService saveService, IRemoteConfigService configService, IAnalyticsService analyticsService)
         {
-            private readonly ISaveService _saveService;
-            private readonly IRemoteConfigService _configService;
-            private readonly IAnalyticsService _analyticsService;
-            private SaveData _data;
+            _saveService = saveService;
+            _configService = configService;
+            _analyticsService = analyticsService;
+        }
 
-            public int Coins => _data.Coins;
-
-            public int HealthLevel => _data.HealthLevel;
-
-            public float HealthMultiplier => _data.HealthLevel * _configService.Data.Upgrades.HealthMultiplierPerPurchase;
-
-            public int DamageLevel => _data.DamageLevel;
-
-            public float DamageMultiplier => _data.DamageLevel * _configService.Data.Upgrades.DamageMultiplierPerPurchase;
-
-            public int AttackSpeedLevel => _data.AttackSpeedLevel;
-
-            public float AttackSpeedMultiplier => _data.AttackSpeedLevel * _configService.Data.Upgrades.AttackSpeedMultiplierPerPurchase;
-
-            public bool isAdsRemoved => _data.IsAdsRemoved;
-
-            public event Action DataChanged;
-
-            public ProgressModel(ISaveService saveService, IRemoteConfigService configService, IAnalyticsService analyticsService)
+        public async UniTask InitializeDataAsync(ISaveConflictResolver resolver, CancellationToken token = default)
+        {
+            if (_data != null)
             {
-                _saveService = saveService;
-                _configService = configService;
-                _data = _saveService.Load();
-                _analyticsService = analyticsService;
+                return;
             }
+            _data = await _saveService.LoadAsync(resolver, token);
 
-            public void RemoveAds()
+            DataChanged?.Invoke();
+        }
+
+        public void RemoveAds()
+        {
+            _data.IsAdsRemoved = true;
+            Save();
+        }
+
+        public int GetUpgradeCost(UpgradeType type)
+        {
+            int currentLevel = 0;
+            int cost = 0;
+
+            switch (type)
             {
-                _data.IsAdsRemoved = true;
-                Save();
+                case UpgradeType.Health:
+                    currentLevel = _data.HealthLevel;
+                    cost = _configService.Data.Upgrades.BaseHealthCost + (_configService.Data.Upgrades.HealthCostStep * currentLevel);
+                    break;
+
+                case UpgradeType.Damage:
+                    currentLevel = _data.DamageLevel;
+                    cost = _configService.Data.Upgrades.BaseDamageCost + (_configService.Data.Upgrades.DamageCostStep * currentLevel);
+                    break;
+                
+                case UpgradeType.AttackSpeed:
+                    currentLevel = _data.AttackSpeedLevel;
+                    cost = _configService.Data.Upgrades.BaseAttackSpeedCost + (_configService.Data.Upgrades.AttackSpeedCostStep * currentLevel);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(type), type, "No such type");
             }
-
-            public int GetUpgradeCost(UpgradeType type)
-            {
-                int currentLevel = 0;
-                int cost = 0;
-
-                switch (type)
-                {
-                    case UpgradeType.Health:
-                        currentLevel = _data.HealthLevel;
-                        cost = _configService.Data.Upgrades.BaseHealthCost + (_configService.Data.Upgrades.HealthCostStep * currentLevel);
-                        break;
-
-                    case UpgradeType.Damage:
-                        currentLevel = _data.DamageLevel;
-                        cost = _configService.Data.Upgrades.BaseDamageCost + (_configService.Data.Upgrades.DamageCostStep * currentLevel);
-                        break;
-                    
-                    case UpgradeType.AttackSpeed:
-                        currentLevel = _data.AttackSpeedLevel;
-                        cost = _configService.Data.Upgrades.BaseAttackSpeedCost + (_configService.Data.Upgrades.AttackSpeedCostStep * currentLevel);
-                        break;
-                }
-                return cost;
-            }
+            return cost;
+        }
 
         public bool TryUpgrade(UpgradeType upgradeType)
         {
@@ -96,26 +110,27 @@
             Save();
 
             _analyticsService.LogEvent("upgrade_purchased", new Dictionary<string, object> {
-        { "upgrade_type", upgradeType.ToString() },
-        { "cost", currentCost }
-    });
+            { "upgrade_type", upgradeType.ToString() },
+            { "cost", currentCost }
+            });
             return true;
         }
 
         public void Save()
-            {
-                _saveService.Save(_data);
-                DataChanged?.Invoke();
-            }
+        {
+            _data.LastSaveTimeTicks = DateTime.UtcNow.Ticks;
+            _saveService.SaveAsync(_data).Forget();
+            DataChanged?.Invoke();
+        }
 
-            public void AddCoins(int amount)
-            {
-                _data.Coins += amount;
-                Save();
-                _analyticsService.LogEvent("currency_changed", new Dictionary<string, object> {
-                { "amount_added", amount},
-                { "total_coins", _data.Coins }
+        public void AddCoins(int amount)
+        {
+            _data.Coins += amount;
+            Save();
+            _analyticsService.LogEvent("currency_changed", new Dictionary<string, object> {
+            { "amount_added", amount},
+            { "total_coins", _data.Coins }
             });
-            }
         }
     }
+}

@@ -36,7 +36,7 @@ namespace FirstProject.Ads
         private void OnRoundFinished()
         {
             _battleCount++;
-            if (!_progressModel.isAdsRemoved)
+            if (!_progressModel.IsAdsRemoved)
             {
                 if (_configService.Data.AdsConfig.InterstitialInterval > 0 && _battleCount % _configService.Data.AdsConfig.InterstitialInterval == 0)
                 {

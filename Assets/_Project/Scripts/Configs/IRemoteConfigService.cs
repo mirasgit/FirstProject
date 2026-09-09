@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 using FirstProject.MatchupConfigs;
-using UnityEngine;
+using System.Threading;
 
 namespace FirstProject.Configs
 {
@@ -8,9 +8,9 @@ namespace FirstProject.Configs
     {
         GameConfigData Data { get; }
 
-        UniTask FetchConfigAsync();
+        UniTask FetchConfigAsync(CancellationToken token);
 
-        CharacterSettings GetCharacterConfig(CharacterClass characterClass  );
+        CharacterSettings GetCharacterConfig(CharacterClass characterClass);
 
 
     }

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FirstProject.Menu
+namespace FirstProject.Menu.UI
 {
     public class MenuView : MonoBehaviour
     {

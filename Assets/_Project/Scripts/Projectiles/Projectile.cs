@@ -48,11 +48,11 @@ namespace FirstProject.Projectiles
         }
 
         public void Initialize(
-    CharacterClass attackerClass,
-    float damage,
-    int facingDirection,
-    CharacterApplicableEffect effect,
-    ProjectileSettings config)
+        CharacterClass attackerClass,
+        float damage,
+        int facingDirection,
+        CharacterApplicableEffect effect,
+        ProjectileSettings config)
         {
             _attackerClass = attackerClass;
             _damage = damage;

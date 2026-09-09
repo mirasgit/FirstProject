@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+
 namespace FirstProject.CharacterEffect
 {
     public class PoisonEffect : CharacterApplicableEffect

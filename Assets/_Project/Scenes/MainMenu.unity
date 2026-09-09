@@ -598,6 +598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuInstaller
   _menuView: {fileID: 3768335587560974981, guid: f1b93dbddcdfded419babd43f993e562, type: 3}
+  _conflictView: {fileID: 8449671801426731295, guid: a1738419b253b424692955aae7074b66, type: 3}
   _uiCanvas: {fileID: 356671312}
 --- !u!1 &1951446453
 GameObject:

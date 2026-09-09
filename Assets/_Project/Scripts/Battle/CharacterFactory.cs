@@ -15,7 +15,7 @@ namespace FirstProject.Battle
     {
         private readonly IResourceProvider _resourceProvider;   
         private readonly IInstantiator _instantiator;
-        private readonly ProgressModel _model;
+        private readonly ProgressModel _progressModel;
 
         private readonly List<string> _characterAddressKeys = new() { "Warrior", "Archer", "Wizard" };
 
@@ -26,7 +26,7 @@ namespace FirstProject.Battle
         {
             _instantiator = instantiator;
             _resourceProvider = resourceProvider;
-            _model = model;
+            _progressModel = model;
         }
 
         public async UniTask LoadCharactersAsync(CancellationToken token = default)
@@ -60,7 +60,7 @@ namespace FirstProject.Battle
             characterInstance.SetFacingRight(facingRight);
             if (facingRight)
             {
-                characterInstance.ApplyUpgrades(_model.HealthMultiplier, _model.DamageMultiplier, _model.AttackSpeedMultiplier);
+                characterInstance.ApplyUpgrades(_progressModel.HealthMultiplier, _progressModel.DamageMultiplier, _progressModel.AttackSpeedMultiplier);
             }
             CharacterView view = characterInstance.GetComponentInChildren<CharacterView>(true);
             CharacterPresenter presenter = new(view, characterInstance);

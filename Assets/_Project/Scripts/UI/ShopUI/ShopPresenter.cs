@@ -7,11 +7,11 @@ namespace FirstProject.Shop.UI
     public class ShopPresenter : IInitializable, IDisposable
     {
         private readonly ShopView _view;
-        private readonly ProgressModel _model;
+        private readonly ProgressModel _progressModel;
         private readonly BattleFlow _battleFlow;
         public ShopPresenter(ProgressModel model, ShopView view, BattleFlow battleFlow)
         {
-            _model = model;
+            _progressModel = model;
             _view = view;
             _battleFlow = battleFlow;
         }
@@ -27,7 +27,7 @@ namespace FirstProject.Shop.UI
             _view.HealthUpgradeButtonClicked += OnHealthUpgradeButtonClicked;
             _view.DamageUpgradeButtonClicked += OnDamageUpgradeButtonClicked;
             _view.AttackSpeedUpgradeButtonClicked += OnAttackSpeedUpgradeButtonClicked;
-            _model.DataChanged += OnDataChanged;
+            _progressModel.DataChanged += OnDataChanged;
 
             _view.HideShop();
         }
@@ -43,7 +43,7 @@ namespace FirstProject.Shop.UI
             _view.HealthUpgradeButtonClicked -= OnHealthUpgradeButtonClicked;
             _view.DamageUpgradeButtonClicked -= OnDamageUpgradeButtonClicked;
             _view.AttackSpeedUpgradeButtonClicked -= OnAttackSpeedUpgradeButtonClicked;
-            _model.DataChanged -= OnDataChanged;
+            _progressModel.DataChanged -= OnDataChanged;
         }
 
         private void OnStartScreenShowed()
@@ -63,23 +63,23 @@ namespace FirstProject.Shop.UI
         }
         private void OnDataChanged()
         {
-            _view.UpdateData(_model.Coins, _model.HealthLevel, _model.DamageLevel, _model.AttackSpeedLevel);
-            _view.UpdateCosts(_model.GetUpgradeCost(UpgradeType.Health), _model.GetUpgradeCost(UpgradeType.Damage), _model.GetUpgradeCost(UpgradeType.AttackSpeed));
+            _view.UpdateData(_progressModel.Coins, _progressModel.HealthLevel, _progressModel.DamageLevel, _progressModel.AttackSpeedLevel);
+            _view.UpdateCosts(_progressModel.GetUpgradeCost(UpgradeType.Health), _progressModel.GetUpgradeCost(UpgradeType.Damage), _progressModel.GetUpgradeCost(UpgradeType.AttackSpeed));
         }
 
         private void OnHealthUpgradeButtonClicked()
         {
-            _model.TryUpgrade(UpgradeType.Health);
+            _progressModel.TryUpgrade(UpgradeType.Health);
         }
 
         private void OnDamageUpgradeButtonClicked()
         {
-            _model.TryUpgrade(UpgradeType.Damage);
+            _progressModel.TryUpgrade(UpgradeType.Damage);
         }
 
         private void OnAttackSpeedUpgradeButtonClicked()
         {
-            _model.TryUpgrade(UpgradeType.AttackSpeed);
+            _progressModel.TryUpgrade(UpgradeType.AttackSpeed);
         }
 
         private void OnShopButtonClicked()

@@ -4,7 +4,6 @@ using FirstProject.Characters;
 using FirstProject.Shop;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using FirstProject.Ads;
 using FirstProject.Configs;
 
 namespace FirstProject.Battle
@@ -15,10 +14,10 @@ namespace FirstProject.Battle
         private readonly BattleCleanupService _battleCleanupService;
         private readonly Transform _leftSpawnPoint;
         private readonly Transform _rightSpawnPoint;
-        private readonly ProgressModel _model;
+        private readonly ProgressModel _progressModel;
+        private readonly IRemoteConfigService _configService;
         private Character _leftCharacter;
         private Character _rightCharacter;
-        private IRemoteConfigService _configService;
         public BattleResult LastWinner { get; private set; }
         public BattleState State { get; private set; }
 
@@ -39,13 +38,13 @@ namespace FirstProject.Battle
             _battleCleanupService = cleanupService;
             _leftSpawnPoint = leftSpawnPoint;
             _rightSpawnPoint = rightSpawnPoint;
-            _model = model;
+            _progressModel = model;
             _configService = configService;
         }
 
         public void ClaimReward()
         {
-            _model.AddCoins(_configService.Data.AdsConfig.RewardedAdReward);
+            _progressModel.AddCoins(_configService.Data.AdsConfig.RewardedAdReward);
         }
 
         public void HideShopScreen()
@@ -95,7 +94,8 @@ namespace FirstProject.Battle
             catch (Exception ex)
             {
                 State = BattleState.StartScreen;
-                Debug.LogError($"Battle Failed: {ex.Message}");
+                Debug.LogException(ex);
+                ClearBattle();
             }
         }
 
@@ -140,7 +140,7 @@ namespace FirstProject.Battle
                 LastWinner = BattleResult.LeftWon;
                 State = BattleState.Finished;
                 WinnerDecided?.Invoke(LastWinner);
-                _model.AddCoins(_configService.Data.BattleSettings.WinReward);
+                _progressModel.AddCoins(_configService.Data.BattleSettings.WinReward);
             }
 
             RoundFinished?.Invoke();

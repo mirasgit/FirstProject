@@ -26,7 +26,7 @@ namespace FirstProject.Analytics
                     _isInitialized = true;
 
                     FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
-                    Debug.Log("Firebaase analytics successfully initialized!"); 
+                    Debug.Log("Firebase analytics successfully initialized!"); 
                 }
                 else
                 {

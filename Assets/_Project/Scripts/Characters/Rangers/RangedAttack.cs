@@ -1,6 +1,7 @@
 using UnityEngine;
 using Zenject;
 using FirstProject.Projectiles;
+
 namespace FirstProject.Characters
 {
     public class RangedAttack : CharacterAttack
