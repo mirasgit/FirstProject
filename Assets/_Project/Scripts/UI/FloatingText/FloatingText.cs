@@ -1,4 +1,4 @@
-using FirstProject.Configs;
+using FirstProject.Meta.Configs;
 using TMPro;
 using UnityEngine;
 using Zenject;

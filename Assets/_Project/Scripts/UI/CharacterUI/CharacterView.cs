@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace FirstProject.Characters.UI
+namespace FirstProject.UI.Characters
 {
     public class CharacterView : MonoBehaviour
     {

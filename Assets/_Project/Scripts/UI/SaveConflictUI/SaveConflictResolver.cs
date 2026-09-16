@@ -1,10 +1,10 @@
 using Cysharp.Threading.Tasks;
-using FirstProject.Core;
+using FirstProject.Core.SaveSystem;
 using System;
 using System.Threading;
 using Zenject;
 
-namespace FirstProject.Menu.UI
+namespace FirstProject.UI.Menu
 {
     public class SaveConflictResolver : IInitializable, IDisposable, ISaveConflictResolver
     {
@@ -47,26 +47,27 @@ namespace FirstProject.Menu.UI
             string cloudInfo = $"Cloud\n Date: {cloudTime:g}";
 
             _view.Show(localInfo, cloudInfo);
-
-            return await _completionSource.Task.AttachExternalCancellation(token);
+            try
+            {
+                return await _completionSource.Task.AttachExternalCancellation(token);
+            }
+            finally
+            {
+                _view.Hide();
+                _completionSource = null;
+                _localData = null;
+                _cloudData = null;
+            }
         }
 
         private void OnLocalButtonPressed()
         {
-            _view.Hide();
             _completionSource.TrySetResult(_localData);
-            _completionSource = null;
-            _localData = null;
-            _cloudData = null;
         }
 
         private void OnCloudButtonPressed()
         {
-            _view.Hide();
             _completionSource.TrySetResult(_cloudData);
-            _completionSource = null;
-            _localData = null;
-            _cloudData = null;
         }
     }
 }

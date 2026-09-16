@@ -1,8 +1,9 @@
 using Zenject;
 using System;
-using FirstProject.Battle;
+using FirstProject.Meta.Shop;
+using FirstProject.Core.Battle;
 
-namespace FirstProject.Shop.UI
+namespace FirstProject.UI.Shop
 {
     public class ShopPresenter : IInitializable, IDisposable
     {
@@ -30,6 +31,11 @@ namespace FirstProject.Shop.UI
             _progressModel.DataChanged += OnDataChanged;
 
             _view.HideShop();
+
+            if (_battleFlow.State == BattleState.StartScreen)
+            {
+                OnStartScreenShowed();
+            }
         }
 
         public void Dispose()

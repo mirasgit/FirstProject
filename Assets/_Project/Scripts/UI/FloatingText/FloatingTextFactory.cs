@@ -1,5 +1,5 @@
-﻿using Zenject;
-using FirstProject.Core;
+﻿using FirstProject.Core.Battle;
+using Zenject;
 
 namespace FirstProject.UI
 {

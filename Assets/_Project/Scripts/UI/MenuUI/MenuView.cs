@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FirstProject.Menu.UI
+namespace FirstProject.UI.Menu
 {
     public class MenuView : MonoBehaviour
     {
@@ -11,6 +11,12 @@ namespace FirstProject.Menu.UI
 
         public event Action PlayButtonPressed;
         public event Action RemoveAdsButtonPressed;
+
+        public void SetInteractable(bool isInteractable)
+        {
+            _playButton.interactable = isInteractable;
+            _removeAdsButton.interactable = isInteractable;
+        }
 
         public void HideRemoveAdsButton()
         {

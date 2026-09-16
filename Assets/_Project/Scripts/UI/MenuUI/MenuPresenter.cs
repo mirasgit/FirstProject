@@ -1,9 +1,9 @@
-using FirstProject.Core;
-using FirstProject.Shop;
+using FirstProject.Core.SceneLoading;
+using FirstProject.Meta.Shop;
 using System;
 using Zenject;
 
-namespace FirstProject.Menu.UI
+namespace FirstProject.UI.Menu
 {
     public class MenuPresenter : IInitializable, IDisposable
     {
@@ -22,6 +22,7 @@ namespace FirstProject.Menu.UI
 
         public void Initialize()
         {
+            _view.SetInteractable(false);
             _view.Subscribe();
             _view.RemoveAdsButtonPressed += OnRemoveAdsButtonPressed;
             _view.PlayButtonPressed += OnPlayButtonPressed;
@@ -38,6 +39,11 @@ namespace FirstProject.Menu.UI
 
         private void OnDataChanged()
         {
+            if (_progressModel.IsInitialized)
+            {
+                _view.SetInteractable(true);
+            }
+
             if (_progressModel.IsAdsRemoved)
             {
                 _view.HideRemoveAdsButton();

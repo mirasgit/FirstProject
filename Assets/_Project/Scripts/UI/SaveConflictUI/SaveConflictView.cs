@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FirstProject.Menu.UI
+namespace FirstProject.UI.Menu
 {
     public class SaveConflictView : MonoBehaviour
     {

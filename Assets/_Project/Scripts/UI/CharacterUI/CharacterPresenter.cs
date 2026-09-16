@@ -1,7 +1,8 @@
-using FirstProject.CharacterEffect;
+using FirstProject.Core.Characters;
+using FirstProject.Core.Characters.Effects;
 using System.Collections.Generic;
 
-namespace FirstProject.Characters.UI
+namespace FirstProject.UI.Characters
 {
     public class CharacterPresenter
     {

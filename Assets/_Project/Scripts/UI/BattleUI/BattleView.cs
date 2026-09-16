@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FirstProject.Battle.UI
+namespace FirstProject.UI.Battle
 {
     public class BattleView : MonoBehaviour
     {
@@ -31,15 +31,6 @@ namespace FirstProject.Battle.UI
             _restartButton.onClick.AddListener(OnRestartButtonClicked);
             _exitButton.onClick.AddListener(OnExitButtonClicked);
             _rewardButton.onClick.AddListener(OnRewardButtonClicked);
-        }
-
-        public void ExitGame()
-        {
-#if UNITY_EDITOR
-            Debug.Log("Exit Button has been pressed.");
-#else
-            Application.Quit();
-#endif
         }
 
         public void HideRewardButton()

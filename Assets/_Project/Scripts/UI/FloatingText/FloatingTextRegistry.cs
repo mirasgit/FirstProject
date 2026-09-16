@@ -1,4 +1,4 @@
-﻿using FirstProject.Core;
+﻿using FirstProject.Core.Battle;
 
 namespace FirstProject.UI
 {

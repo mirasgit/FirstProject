@@ -1,10 +1,12 @@
 using Cysharp.Threading.Tasks;
-using FirstProject.Ads;
+using FirstProject.Core.Battle;
+using FirstProject.Meta.Ads;
 using System;
 using System.Threading;
+using UnityEngine;
 using Zenject;
 
-namespace FirstProject.Battle.UI
+namespace FirstProject.UI.Battle
 {
     public class BattlePresenter : IInitializable, IDisposable
     {
@@ -104,7 +106,11 @@ namespace FirstProject.Battle.UI
 
         private void OnExitButtonPressed()
         {
-            _view.ExitGame();
+#if UNITY_EDITOR
+            Console.WriteLine("Exit button has been pressed");
+#else
+            Application.Quit();
+#endif
         }
 
         private void OnBattleStarted()
