@@ -51,7 +51,6 @@ namespace FirstProject.Meta.Menu
         {
             try
             {
-                _resourceProvider.ClearCache(_remoteKeys);
 
                 await _authService.LoginAnonymouslyAsync(_cts.Token);
 
