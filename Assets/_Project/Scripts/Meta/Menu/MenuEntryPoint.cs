@@ -3,7 +3,6 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
-using FirstProject.Core.SaveSystem;
 using FirstProject.Core;
 using FirstProject.Meta.Configs;
 using FirstProject.Meta.Shop;
@@ -17,7 +16,6 @@ namespace FirstProject.Meta.Menu
         private readonly CancellationTokenSource _cts = new();
         private readonly UGSAuthService _authService;
         private readonly ProgressModel _progressModel;
-        private readonly ISaveConflictResolver _conflictResolver;
         private readonly IResourceProvider _resourceProvider;
 
         private readonly string[] _remoteKeys = new[] { "Warrior", "Archer", "Wizard" };
@@ -26,13 +24,11 @@ namespace FirstProject.Meta.Menu
             IRemoteConfigService remoteConfigService,
             UGSAuthService authService,
             ProgressModel progress,
-            ISaveConflictResolver resolver,
             IResourceProvider resourceProvider)
         {
             _configService = remoteConfigService;
             _authService = authService;
             _progressModel = progress;
-            _conflictResolver = resolver;
             _resourceProvider = resourceProvider;
         }
 
@@ -60,7 +56,7 @@ namespace FirstProject.Meta.Menu
                 await _resourceProvider.DownloadDependenciesAsync(_remoteKeys, _cts.Token);
                 Debug.Log("Bundles downloaded successfully");
 
-                await _progressModel.InitializeDataAsync(_conflictResolver, _cts.Token);
+                await _progressModel.InitializeDataAsync(_cts.Token);
 
                 Debug.Log("Menu is ready to work");
             }

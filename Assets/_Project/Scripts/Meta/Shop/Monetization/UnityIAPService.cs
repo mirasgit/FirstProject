@@ -17,6 +17,11 @@ namespace FirstProject.Meta.Shop
 
         public void Initialize()
         {
+            var module = StandardPurchasingModule.Instance();
+
+            module.useFakeStoreAlways = true;
+            module.useFakeStoreUIMode = FakeStoreUIMode.StandardUser;
+
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
             builder.AddProduct(NO_ADS_ID, ProductType.NonConsumable);
@@ -73,24 +78,27 @@ namespace FirstProject.Meta.Shop
 
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
         {
+            bool isSuccess = false;
             string productID = purchaseEvent.purchasedProduct.definition.id;
             switch (productID)
             {
-                case NO_ADS_ID: Debug.Log("Bought No Ads"); 
+                case NO_ADS_ID: Debug.Log("Bought No Ads");
+                    isSuccess = true;
                     break;
                 case COIN_PACK_ID: Debug.Log("Bought Coin Pack");
+                    isSuccess = true;
                     break;
                 case STARTER_PACK_ID: Debug.Log("Bought Starter Pack");
+                    isSuccess = true;
                     break;
                 default:
-                    Debug.LogError($"Unkown product: {productID}");
-                    _onPurchaseComplete?.Invoke(false);
-                    _onPurchaseComplete = null;
-                    _isPurchaseInProgress = false;
+                    Debug.Log($"Trying to buy unknown position: {productID}");
+                    isSuccess = false;
                     break;
             }
-            _onPurchaseComplete?.Invoke(true);
+            _onPurchaseComplete?.Invoke(isSuccess);
             _onPurchaseComplete = null;
+            _isPurchaseInProgress = false;
             return PurchaseProcessingResult.Complete;
         }
 

@@ -6,6 +6,7 @@ using FirstProject.UI;
 using FirstProject.UI.Shop;
 using UnityEngine;
 using Zenject;
+using FirstProject.Meta.Multiplayer;
 
 namespace FirstProject.Core.Battle
 {
@@ -34,6 +35,9 @@ namespace FirstProject.Core.Battle
             Container.BindInterfacesAndSelfTo<ShopPresenter>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BattleAnalyticsTracker>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BattleAdsTracker>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<MatchStateService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<NetworkCharacterSpawner>().AsSingle(); 
+            Container.Bind<RemoteCharacterRegistry>().AsSingle();
         }
     }
 }

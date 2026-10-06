@@ -5,7 +5,6 @@ using Cysharp.Threading.Tasks;
 using FirstProject.Core.SaveSystem;
 using FirstProject.Meta.Analytics;
 using FirstProject.Meta.Configs;
-using Unity.VisualScripting;
 
 namespace FirstProject.Meta.Shop
 {
@@ -46,13 +45,13 @@ namespace FirstProject.Meta.Shop
             _analyticsService = analyticsService;
         }
 
-        public async UniTask InitializeDataAsync(ISaveConflictResolver resolver, CancellationToken token = default)
+        public async UniTask InitializeDataAsync(CancellationToken token = default)
         {
             if (_data != null)
             {
                 return;
             }
-            _data = await _saveService.LoadAsync(resolver, token);
+            _data = await _saveService.LoadAsync(token);
 
             DataChanged?.Invoke();
         }

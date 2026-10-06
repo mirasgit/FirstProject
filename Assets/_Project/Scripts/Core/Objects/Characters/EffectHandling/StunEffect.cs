@@ -5,19 +5,26 @@ namespace FirstProject.Core.Characters.Effects
 {
     public class StunEffect : CharacterApplicableEffect
     {
-        private readonly WaitForSeconds _duration;
+        public readonly WaitForSeconds _durationWait;
+        public readonly float _duration;
 
         public StunEffect(float duration)
             : base(EffectType.Stun, "Stunned")
         {
-            _duration = new WaitForSeconds(duration);
+            _duration = duration;
+            _durationWait = new WaitForSeconds(_duration);
+        }
+
+        public override float[] EffectData()
+        {
+            return new float[] { _duration };
         }
 
         public override IEnumerator Run(CharacterEffectContext context)
         {
             context.EnablePlayStun(true);
 
-            yield return _duration;
+            yield return _durationWait;
 
             CancelEffect(context);
         }

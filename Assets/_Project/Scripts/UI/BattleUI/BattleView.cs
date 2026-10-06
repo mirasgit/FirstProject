@@ -14,11 +14,15 @@ namespace FirstProject.UI.Battle
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _exitButton;
         [SerializeField] private Button _rewardButton;
+        [SerializeField] private Button _readyButton;
+        [SerializeField] private GameObject _loadingPanel;
+        [SerializeField] private GameObject _readyPanel;
 
         public event Action StartButtonPressed;
         public event Action RestartButtonPressed;
         public event Action ExitButtonPressed;
         public event Action RewardButtonPressed;
+        public event Action ReadyButtonPressed;
 
         private void Awake()
         {
@@ -31,6 +35,31 @@ namespace FirstProject.UI.Battle
             _restartButton.onClick.AddListener(OnRestartButtonClicked);
             _exitButton.onClick.AddListener(OnExitButtonClicked);
             _rewardButton.onClick.AddListener(OnRewardButtonClicked);
+            _readyButton.onClick.AddListener(OnReadyButtonClicked);
+        }
+
+        public void Unsubscribe()
+        {
+            _startButton.onClick.RemoveListener(OnStartButtonClicked);
+            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+            _exitButton.onClick.RemoveListener(OnExitButtonClicked);
+            _rewardButton.onClick.RemoveListener(OnRewardButtonClicked);
+            _readyButton.onClick.RemoveListener(OnReadyButtonClicked);
+        }
+
+        public void SetReadyButtonInteractable(bool interactable)
+        {
+            _readyButton.interactable = interactable;
+        }
+
+        public void ShowReadyScreen(bool active)
+        {
+            _readyPanel.SetActive(active);    
+        }
+
+        public void ShowLoadingScreen(bool active)
+        {
+            _loadingPanel.SetActive(active);
         }
 
         public void HideRewardButton()
@@ -38,20 +67,16 @@ namespace FirstProject.UI.Battle
             _rewardButton.gameObject.SetActive(false);
         }
 
-        public void OnRewardButtonClicked()
+        public void ShowStartScreen(bool active)
         {
-            RewardButtonPressed?.Invoke();
-        }
-
-        public void ShowStartScreen()
-        {
-            _startPanel.SetActive(true);
-            _winPanel.SetActive(false);
+            _startPanel.SetActive(active);
+            _winPanel.SetActive(!active);
         }
 
         public void HideScreens()
         {
             _startPanel.SetActive(false);
+            _readyPanel.SetActive(false);
             _winPanel.SetActive(false);
         }
 
@@ -61,13 +86,15 @@ namespace FirstProject.UI.Battle
             _winPanel.SetActive(true);
             _rewardButton.gameObject.SetActive(showRewardButton);
         }
-            
-        public void Unsubscribe()
+
+        private void OnReadyButtonClicked()
         {
-            _startButton.onClick.RemoveListener(OnStartButtonClicked);
-            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
-            _exitButton.onClick.RemoveListener(OnExitButtonClicked);
-            _rewardButton.onClick.RemoveListener(OnRewardButtonClicked);
+            ReadyButtonPressed?.Invoke();
+        }
+
+        public void OnRewardButtonClicked()
+        {
+            RewardButtonPressed?.Invoke();
         }
 
         private void OnStartButtonClicked()

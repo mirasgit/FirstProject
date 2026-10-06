@@ -539,9 +539,6 @@ MonoBehaviour:
   _rightSpawnPoint: {fileID: 1160689081}
   _uiCanvas: {fileID: 1797800484}
   _shopView: {fileID: 8972334525386352455, guid: 248a44b7a6f69a444980c1384115082e, type: 3}
-  _matchupMatrix: {fileID: 11400000, guid: 98f073da6b745f14ab9390f0f6591648, type: 2}
-  _upgradeConfig: {fileID: 11400000, guid: 73385f821bd00c942bac8f0559bacbd3, type: 2}
-  _winReward: 100
 --- !u!114 &537967947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1166,7 +1163,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

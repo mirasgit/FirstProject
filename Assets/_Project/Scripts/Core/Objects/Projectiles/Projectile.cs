@@ -83,6 +83,12 @@ namespace FirstProject.Core.Projectiles
                 return;
             }
 
+            if (_damage <= 0f)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             target.TakeDamage(_damage, _attackerClass);
             ApplyEffect(target);
             Destroy(gameObject);

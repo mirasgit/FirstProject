@@ -13,6 +13,15 @@ namespace FirstProject.Core.Characters.Effects
             Name = name;
         }
 
+        public virtual float[] EffectData()
+        {
+            float duration = 0f;
+            float coefficient = 0f;
+            float damage = 0f;
+
+            return new float[] { duration, coefficient, damage};
+        }
+
         public abstract IEnumerator Run(CharacterEffectContext context);
 
         public virtual void CancelEffect(CharacterEffectContext context)

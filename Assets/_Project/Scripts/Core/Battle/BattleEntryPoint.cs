@@ -35,7 +35,7 @@ namespace FirstProject.Core.Battle
             try
             {
                 await _configService.FetchConfigAsync(_cts.Token);
-
+                await _battleFlow.LoadCharactersAsync(_cts.Token);
                 _battleFlow.ShowStartScreen();
             }
             catch (OperationCanceledException)

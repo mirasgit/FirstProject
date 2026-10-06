@@ -1,6 +1,7 @@
 using FirstProject.Core.Battle;
 using FirstProject.Meta.Configs;
 using FirstProject.Meta.Shop;
+using Photon.Pun;
 using System;
 using Zenject;
 
@@ -35,6 +36,11 @@ namespace FirstProject.Meta.Ads
 
         private void OnRoundFinished()
         {
+            if (PhotonNetwork.InRoom)
+            {
+                return;
+            }
+
             _battleCount++;
             if (!_progressModel.IsAdsRemoved)
             {

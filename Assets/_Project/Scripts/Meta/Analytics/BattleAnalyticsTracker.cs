@@ -1,6 +1,7 @@
 using Zenject;
 using System;
 using FirstProject.Core.Battle;
+using Photon.Pun;
 
 namespace FirstProject.Meta.Analytics
 {
@@ -27,13 +28,30 @@ namespace FirstProject.Meta.Analytics
 
         private void OnWinnerDecided(BattleResult result)
         {
-            if (result == BattleResult.RightWon)
+            
+            if (PhotonNetwork.InRoom)
             {
-                _analytics.LogEvent("battle_lost");
+                BattleResult localWinner = PhotonNetwork.IsMasterClient ? BattleResult.LeftWon : BattleResult.RightWon;
+
+                if (result == localWinner)
+                {
+                    _analytics.LogEvent("battle_won");
+                }
+                else
+                {
+                    _analytics.LogEvent("battle_lost");
+                }
             }
-            else if (result == BattleResult.LeftWon)
+            else
             {
-                _analytics.LogEvent("battle_won");
+                if (result == BattleResult.RightWon)
+                {
+                    _analytics.LogEvent("battle_lost");
+                }
+                else if (result == BattleResult.LeftWon)
+                {
+                    _analytics.LogEvent("battle_won");
+                }
             }
         }
     }

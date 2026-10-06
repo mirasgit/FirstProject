@@ -5,7 +5,7 @@ namespace FirstProject.Core.SaveSystem
 {
     public interface ISaveService
     {
-        UniTask<SaveData> LoadAsync(ISaveConflictResolver resolver, CancellationToken token = default);
+        UniTask<SaveData> LoadAsync(CancellationToken token = default);
 
         UniTask SaveAsync(SaveData data, CancellationToken token = default);
     }

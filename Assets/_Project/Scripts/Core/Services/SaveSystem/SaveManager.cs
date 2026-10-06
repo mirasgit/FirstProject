@@ -1,45 +1,53 @@
 using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 
 namespace FirstProject.Core.SaveSystem
 {
     public class SaveManager : ISaveService
     {
-        private readonly ISaveProvider _local;
-        private readonly ISaveProvider _cloud;
+        private readonly IEnumerable<ISaveProvider> _providers;
 
-        public SaveManager(LocalSaveProvider localSaveProvider, CloudSaveProvider cloudSaveProvider)
+        public SaveManager(IEnumerable<ISaveProvider> providers)
         {
-            _local = localSaveProvider;
-            _cloud = cloudSaveProvider;
+            _providers = providers;
         }
 
-        public async UniTask<SaveData> LoadAsync(ISaveConflictResolver resolver, CancellationToken token)
+        public async UniTask<SaveData> LoadAsync(CancellationToken token)
         {
-            SaveData localData = await _local.LoadAsync(token);
-            SaveData cloudData = await _cloud.LoadAsync(token);
+            long lastSaveTimeTicks = 0;
+            var loadData = from p in _providers select p.LoadAsync(token);
+            var newestData = await UniTask.WhenAll(loadData);
+            SaveData latestSave = null;
 
-            if (localData == null && cloudData == null)
+            foreach (var data in newestData)
+            {
+                if (data == null)
+                {
+                    continue;
+                }
+
+                if (data.LastSaveTimeTicks > lastSaveTimeTicks)
+                {
+                    lastSaveTimeTicks = data.LastSaveTimeTicks;
+                    latestSave = data;
+                }
+            }
+
+            if (latestSave == null)
             {
                 return new SaveData();
             }
 
-            if (localData != null && cloudData != null && localData.LastSaveTimeTicks != cloudData.LastSaveTimeTicks)
-            {
-                SaveData resolvedData = await resolver.ResolveConflictAsync(localData, cloudData, token);
-
-                await SaveAsync(resolvedData, token);
-                return resolvedData;
-            }
-
-            SaveData finalData = cloudData ?? localData;
-
-            return finalData;
-        }
+            SaveAsync(latestSave, token).Forget();
+            return latestSave;
+        }   
 
         public async UniTask SaveAsync(SaveData data, CancellationToken token)
         {
-            await UniTask.WhenAll(_local.SaveAsync(data, token), _cloud.SaveAsync(data, token));
+            var saveData = from p in _providers select p.SaveAsync(data, token);
+            await UniTask.WhenAll(saveData);
         }
     }
 }

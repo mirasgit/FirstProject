@@ -54,8 +54,6 @@ namespace FirstProject.Core
             try
             {
                 await handle.ToUniTask(cancellationToken: token);
-
-                Addressables.Release(handle);
             }
             catch (System.Exception ex)
             {

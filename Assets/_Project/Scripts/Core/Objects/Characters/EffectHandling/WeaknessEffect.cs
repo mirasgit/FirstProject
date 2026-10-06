@@ -5,14 +5,21 @@ namespace FirstProject.Core.Characters.Effects
 {
     public class WeaknessEffect : CharacterApplicableEffect
     {
-        private readonly float _coefficient;
-        private readonly WaitForSeconds _weaknessTime;
+        public readonly float _coefficient;
+        public readonly WaitForSeconds _weaknessTime;
+        public readonly float _duration;
 
         public WeaknessEffect(float duration, float coefficient)
             : base(EffectType.Weakness, "Weakness")
         {
+            _duration = duration;
             _coefficient = coefficient;
             _weaknessTime = new WaitForSeconds(duration);
+        }
+
+        public override float[] EffectData()
+        {
+            return new float[] { _duration, _coefficient };
         }
 
         public override IEnumerator Run(CharacterEffectContext context)

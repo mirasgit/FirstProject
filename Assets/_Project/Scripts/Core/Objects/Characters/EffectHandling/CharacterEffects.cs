@@ -1,4 +1,3 @@
-using FirstProject.Core.Characters;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +13,8 @@ namespace FirstProject.Core.Characters.Effects
         private readonly List<CharacterApplicableEffect> _effects = new();
         public event Action<CharacterApplicableEffect> EffectApplied;
         public event Action<CharacterApplicableEffect> EffectEnded;
+
+        public bool IsEffectProcessingEnabled { get; set; } = true;
         
         [Inject]
         public void Construct(CharacterEffectContext context, IKillable killable)
@@ -40,7 +41,11 @@ namespace FirstProject.Core.Characters.Effects
             }
             _effects.Add(effect);
             EffectApplied?.Invoke(effect);
-            StartCoroutine(RunEffect(effect));
+
+            if (IsEffectProcessingEnabled)
+            {
+                StartCoroutine(RunEffect(effect));
+            }
         }
 
         public bool HasEffect(EffectType type)
