@@ -17,11 +17,6 @@ namespace FirstProject.Core.Characters.Effects
             _weaknessTime = new WaitForSeconds(duration);
         }
 
-        public override float[] EffectData()
-        {
-            return new float[] { _duration, _coefficient };
-        }
-
         public override IEnumerator Run(CharacterEffectContext context)
         {
             context.AddDamageModifier(-_coefficient);

@@ -26,7 +26,7 @@ namespace FirstProject.Core.Battle
             Container.Bind<BattleCleanupService>().AsSingle();
             Container.BindInterfacesAndSelfTo<CharacterFactory>().AsSingle();
             Container.Bind<BattleView>().FromComponentInNewPrefab(_battleView).UnderTransform(_uiCanvas).AsSingle();
-            Container.Bind<BattleFlow>().AsSingle().WithArguments(_leftSpawnPoint, _rightSpawnPoint);
+            Container.Bind<BattleFlow>().AsSingle();
             Container.BindInterfacesAndSelfTo<BattleEntryPoint>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BattlePresenter>().AsSingle().NonLazy();
             Container.Bind<ProjectileFactory>().AsSingle();
@@ -38,6 +38,10 @@ namespace FirstProject.Core.Battle
             Container.BindInterfacesAndSelfTo<MatchStateService>().AsSingle();
             Container.BindInterfacesAndSelfTo<NetworkCharacterSpawner>().AsSingle(); 
             Container.Bind<RemoteCharacterRegistry>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PhotonNetworkSpawnerWrapper>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PhotonMultiplayerService>().AsSingle();
+            Container.Bind<OfflineBattleStrategy>().AsSingle().WithArguments(_leftSpawnPoint, _rightSpawnPoint);
+            Container.Bind<OnlineBattleStrategy>().AsSingle().WithArguments(_leftSpawnPoint, _rightSpawnPoint);
         }
     }
 }

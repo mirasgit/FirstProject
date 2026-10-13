@@ -1,7 +1,7 @@
 using FirstProject.Core.SceneLoading;
+using FirstProject.Meta.Menu;
 using FirstProject.Meta.Multiplayer;
 using FirstProject.Meta.Shop;
-using Photon.Pun;
 using System;
 using Zenject;
 
@@ -15,13 +15,15 @@ namespace FirstProject.UI.Menu
         private readonly ISceneLoadService _sceneLoader;
         private readonly PhotonConnectionService _connectionService;
         private readonly ExitGameService _exitGameService;
+        private readonly IMultiplayerService _multiplayerService;
 
         public MenuPresenter(MenuView view,
             ProgressModel progressModel,
             IIAPService iapService,
             ISceneLoadService sceneLoader,
             PhotonConnectionService connectionService,
-            ExitGameService exitGameService)
+            ExitGameService exitGameService,
+            IMultiplayerService multiplayerService)
         {
             _view = view;
             _progressModel = progressModel;
@@ -29,6 +31,7 @@ namespace FirstProject.UI.Menu
             _sceneLoader = sceneLoader;
             _connectionService = connectionService;
             _exitGameService = exitGameService;
+            _multiplayerService = multiplayerService;
         }
 
         public void Initialize()
@@ -53,7 +56,7 @@ namespace FirstProject.UI.Menu
                 OnDataChanged();
             }
 
-            if (PhotonNetwork.IsConnectedAndReady)
+            if (_multiplayerService.IsConnectedAndReady)
             {
                 OnConnectedToMaster();
             }

@@ -1,10 +1,8 @@
 using Cysharp.Threading.Tasks;
-using ExitGames.Client.Photon;
 using FirstProject.Core.Battle;
 using FirstProject.Core.SceneLoading;
 using FirstProject.Meta.Ads;
 using FirstProject.Meta.Multiplayer;
-using Photon.Pun;
 using System;
 using System.Threading;
 using Zenject;
@@ -16,22 +14,29 @@ namespace FirstProject.UI.Battle
         private readonly BattleView _view;
         private readonly BattleFlow _model;
         private readonly IAdsService _adsService;
-        private CancellationTokenSource _battleCts = new CancellationTokenSource();
         private readonly ISceneLoadService _sceneLoader;
         private readonly MatchStateService _matchStateService;
+        private readonly IMultiplayerService _multiplayerService;
 
         private const string LEFT_WON_TEXT = "Left Won";
         private const string RIGHT_WON_TEXT = "Right Won";
 
+        private CancellationTokenSource _battleCts = new CancellationTokenSource();
         private bool _isRewardClaimed;
 
-        public BattlePresenter(BattleView view, BattleFlow model, IAdsService adsService, ISceneLoadService sceneLoader, MatchStateService matchStateService)
+        public BattlePresenter(BattleView view,
+            BattleFlow model,
+            IAdsService adsService,
+            ISceneLoadService sceneLoader,
+            MatchStateService matchStateService,
+            IMultiplayerService multiplayerService)
         {   
             _view = view;
             _model = model;
             _adsService = adsService;
             _sceneLoader = sceneLoader;
             _matchStateService = matchStateService;
+            _multiplayerService = multiplayerService;
         }
 
         public void Initialize()
@@ -84,9 +89,7 @@ namespace FirstProject.UI.Battle
 
         private void OnAllPlayersReady()
         {
-            var hash = new Hashtable { { "IsReady", false } };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-            UnityEngine.Debug.Log("hash is: " +  hash);
+            _multiplayerService.SetReadyState(false);
 
             _view.SetReadyButtonInteractable(true);
 
@@ -127,8 +130,7 @@ namespace FirstProject.UI.Battle
         private void OnReadyButtonPressed()
         {
             _view.SetReadyButtonInteractable(false);
-            var hash = new Hashtable { { "IsReady", true } };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+            _multiplayerService.SetReadyState(true);
         }
 
         private void OnRewardButtonPressed()
@@ -147,7 +149,7 @@ namespace FirstProject.UI.Battle
         }
         private void OnRestartButtonPressed()
         {
-            if (PhotonNetwork.InRoom)
+            if (_multiplayerService.InRoom)
             {
                 _view.HideScreens();
                 _view.ShowReadyScreen(true);
@@ -160,9 +162,9 @@ namespace FirstProject.UI.Battle
 
         private void OnExitButtonPressed()
         {
-            if (PhotonNetwork.InRoom)
+            if (_multiplayerService.InRoom)
             {
-                PhotonNetwork.LeaveRoom();
+                _multiplayerService.LeaveRoom();
                 _sceneLoader.LoadScene(SceneName.MainMenu);
             }
             else
@@ -178,7 +180,7 @@ namespace FirstProject.UI.Battle
 
         private void OnStartScreenShowed()
         {
-            if (PhotonNetwork.InRoom)
+            if (_multiplayerService.InRoom)
             {
                 _view.HideScreens();
                 _view.ShowReadyScreen(true);

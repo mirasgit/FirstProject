@@ -7,11 +7,11 @@ namespace FirstProject.Meta.Multiplayer
 {
     public class NetworkCharacterSpawner : IPunPrefabPool, IInitializable, IDisposable
     {
-        private readonly DiContainer _container;
+        private readonly IInstantiator _instantiator;
 
-        public NetworkCharacterSpawner(DiContainer container)
+        public NetworkCharacterSpawner(IInstantiator instantiator)
         {
-            _container = container;
+            _instantiator = instantiator;
         }
 
         public void Initialize()
@@ -28,7 +28,7 @@ namespace FirstProject.Meta.Multiplayer
         {
             GameObject prefab = Resources.Load<GameObject>(prefabID);
 
-            GameObject instance = _container.InstantiatePrefab(prefab, position, rotation, null);
+            GameObject instance = _instantiator.InstantiatePrefab(prefab, position, rotation, null);
 
             instance.SetActive(false);
 

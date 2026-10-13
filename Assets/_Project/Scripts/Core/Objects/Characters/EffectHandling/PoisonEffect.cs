@@ -18,11 +18,6 @@ namespace FirstProject.Core.Characters.Effects
             _tickDelay = new WaitForSeconds(interval);
         }
 
-        public override float[] EffectData()
-        {
-            return new float[] { _duration, _interval, _tickDamage};
-        }
-
         public override IEnumerator Run(CharacterEffectContext context)
         {
             float elapsed = 0f;

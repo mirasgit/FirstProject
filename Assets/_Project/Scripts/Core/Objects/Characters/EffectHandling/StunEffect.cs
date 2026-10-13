@@ -15,11 +15,6 @@ namespace FirstProject.Core.Characters.Effects
             _durationWait = new WaitForSeconds(_duration);
         }
 
-        public override float[] EffectData()
-        {
-            return new float[] { _duration };
-        }
-
         public override IEnumerator Run(CharacterEffectContext context)
         {
             context.EnablePlayStun(true);

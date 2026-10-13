@@ -70,7 +70,7 @@ namespace FirstProject.Meta.Multiplayer
         {
             if (!_photonView.IsMine)
             {
-                _photonView.RPC(nameof(ApplyEffectRPC), RpcTarget.Others, (int)effect.Type, effect.EffectData());
+                _photonView.RPC(nameof(ApplyEffectRPC), RpcTarget.Others, (int)effect.Type);
             }
         }
 
@@ -83,24 +83,26 @@ namespace FirstProject.Meta.Multiplayer
         }
 
         [PunRPC]
-        private void ApplyEffectRPC(int effectTypeInt, float[] effectData)
+        private void ApplyEffectRPC(int effectTypeInt)
         {
             if (_photonView.IsMine)
             {
                 EffectType type = (EffectType)effectTypeInt;
                 CharacterApplicableEffect effectToApply = null;
 
+                var effectsData = _remoteConfigService.Data.Effects;
 
                 switch (type)
                 {
                     case EffectType.Poison:
-                        effectToApply = new PoisonEffect(effectData[0], effectData[1], effectData[2]);
+                        effectToApply = new PoisonEffect(effectsData.SlightPoison.Duration, effectsData.SlightPoison.Interval, effectsData.SlightPoison.TickDamage);
                         break;
                     case EffectType.Weakness:
-                        effectToApply = new WeaknessEffect(effectData[0], effectData[1]);
+                        effectToApply = new WeaknessEffect(effectsData.SlightWeakness.Duration, effectsData.SlightWeakness.Coefficient);
                         break;
                     case EffectType.Stun:
-                        effectToApply = new StunEffect(effectData[0]);
+                        float stunDuration = _character.GetComponent<CharacterIdentity>().MyClass == CharacterClass.Warrior ? effectsData.MeleeStunDuration : effectsData.RangedStunDuration;
+                        effectToApply = new StunEffect(stunDuration);
                         break;
                 }
 

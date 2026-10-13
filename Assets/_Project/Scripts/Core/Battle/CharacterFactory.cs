@@ -7,25 +7,29 @@ using System.Threading;
 using FirstProject.Meta.Shop;
 using FirstProject.Core.Characters;
 using FirstProject.UI.Characters;
-using Photon.Pun;
+using FirstProject.Meta.Multiplayer;
 
 namespace FirstProject.Core.Battle
 {
     public class CharacterFactory : IDisposable
     {
         private readonly IResourceProvider _resourceProvider;   
-        private readonly DiContainer _container;
+        private readonly IInstantiator _instantiator;
         private readonly ProgressModel _progressModel;
+        private readonly INetworkSpawner _networkSpawner;
 
         private readonly List<string> _characterAddressKeys = new() { "Warrior", "Archer", "Wizard" };
 
         private readonly List<Character> _loadedPrefabs = new();
 
-        public CharacterFactory(DiContainer container, IResourceProvider resourceProvider, ProgressModel model)
+        public CharacterFactory(DiContainer container,
+            IResourceProvider resourceProvider,
+            ProgressModel model, INetworkSpawner networkSpawner)
         {
-            _container = container;
+            _instantiator = container;
             _resourceProvider = resourceProvider;
             _progressModel = model;
+            _networkSpawner = networkSpawner;
         }
 
         public async UniTask LoadCharactersAsync(CancellationToken token = default)
@@ -54,7 +58,7 @@ namespace FirstProject.Core.Battle
         {
             int randomIndex = UnityEngine.Random.Range(0, _loadedPrefabs.Count);
             Character prefab = _loadedPrefabs[randomIndex];
-            Character characterInstance = _container.InstantiatePrefabForComponent<Character>(prefab, spawnPoint.position, Quaternion.identity, null);
+            Character characterInstance = _instantiator.InstantiatePrefabForComponent<Character>(prefab, spawnPoint.position, Quaternion.identity, null);
             if (facingRight)
             {
                 characterInstance.ApplyUpgrades(_progressModel.HealthMultiplier, _progressModel.DamageMultiplier, _progressModel.AttackSpeedMultiplier);
@@ -76,7 +80,8 @@ namespace FirstProject.Core.Battle
                 _progressModel.AttackSpeedMultiplier,            
             };
 
-            GameObject networkObject = PhotonNetwork.Instantiate(_characterAddressKeys[randomIndex], spawnPoint.position, Quaternion.identity, 0, spawnData);
+            GameObject networkObject = _networkSpawner.Instantiate(_characterAddressKeys[randomIndex], spawnPoint.position, Quaternion.identity, spawnData);
+
             Character characterInstance = networkObject.GetComponent<Character>();
 
             CharacterView view = characterInstance.GetComponentInChildren<CharacterView>(true);

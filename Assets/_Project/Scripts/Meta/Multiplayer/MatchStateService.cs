@@ -39,7 +39,7 @@ namespace FirstProject.Meta.Multiplayer
 
         public void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-            if (changedProps.ContainsKey("IsReady"))
+            if (changedProps.ContainsKey(PhotonMultiplayerService.READY_PROPERTY))
             {
                 CheckAllPlayersReady();
             }
@@ -59,7 +59,7 @@ namespace FirstProject.Meta.Multiplayer
 
             foreach (var player in PhotonNetwork.PlayerList)
             {
-                if (player.CustomProperties.TryGetValue("IsReady", out object isReadyObj))
+                if (player.CustomProperties.TryGetValue(PhotonMultiplayerService.READY_PROPERTY, out object isReadyObj))
                 {
                     bool isReady = (bool)isReadyObj;
 
