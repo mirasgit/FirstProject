@@ -15,7 +15,7 @@ namespace FirstProject.Core
         {
             Container.Bind<ISaveService>().To<SaveManager>().AsSingle();
             Container.BindInterfacesAndSelfTo<RemoteConfigService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FirebaseAnalyticsService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<FirebaseAnalyticsService>().AsSingle();
             Container.Bind<ProgressModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<UnityIAPService>().AsSingle();
             Container.Bind<ISceneLoadService>().To<SceneLoadService>().AsSingle();
@@ -23,7 +23,7 @@ namespace FirstProject.Core
             Container.BindInterfacesAndSelfTo<CloudSaveProvider>().AsSingle();
             Container.Bind<UGSAuthService>().AsSingle();
             Container.Bind<IResourceProvider>().To<AddressablesProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<UnityAdsService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<UnityAdsService>().AsSingle();
         }
     }
 }

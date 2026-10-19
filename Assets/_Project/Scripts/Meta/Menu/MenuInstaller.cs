@@ -13,10 +13,11 @@ namespace FirstProject.Meta.Menu
         public override void InstallBindings()
         {
             Container.Bind<MenuView>().FromComponentInNewPrefab(_menuView).UnderTransform(_uiCanvas).AsSingle();
-            Container.BindInterfacesAndSelfTo<MenuPresenter>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<MenuEntryPoint>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<MenuPresenter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<MenuEntryPoint>().AsSingle();
             Container.BindInterfacesAndSelfTo<PhotonConnectionService>().AsSingle();
-            Container.Bind<ExitGameService>().AsSingle().NonLazy();
+            Container.Bind<ExitGameService>().AsSingle();
+            Container.Bind<IMultiplayerService>().To<PhotonMultiplayerService>().AsSingle();
         }
     }
 }
